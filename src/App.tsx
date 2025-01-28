@@ -34,7 +34,7 @@ function App() {
       <div 
         className="h-screen relative flex items-center justify-center"
         style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=2000&q=80")',
+          backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -53,7 +53,7 @@ function App() {
             onClick={scrollToDetails}
             className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
           >
-            Learn More
+            Lue lisää
           </button>
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
             <ChevronDown className="w-8 h-8 text-white" />
@@ -83,8 +83,8 @@ function App() {
             <Users className="w-8 h-8 text-purple-400 mb-4" />
             <h3 className="text-xl font-bold mb-2">Kapasiteetti</h3>
             <p>Niin paljon kuin pöytiä riittää, katsomaan saa myös tulla.</p>
-            <p className="font-bold text-purple-400">/* Tähän voi lisätä tekstiä, jos haluaa */</p>
-            <p className="text-sm">/* Tähän voi lisätä tekstiä, jos haluaa */</p>
+            /*<p className="font-bold text-purple-400">/* Tähän voi lisätä tekstiä, jos haluaa </p> */ 
+            /*<p className="text-sm">/*Tähän voi lisätä tekstiä, jos haluaa</p> */ 
           </div>
 
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
@@ -203,7 +203,7 @@ function App() {
 
             <div className="text-center md:text-right">
               <a 
-                href="#" 
+                href="google.fi" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors"
