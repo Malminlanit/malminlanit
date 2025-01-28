@@ -74,8 +74,8 @@ function App() {
           </div>
           
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
-            <MapPin className="w-8 h-8 text-purple-400 mb-4" />
-            <h3 className="text-xl font-bold mb-2">Location</h3>
+            <MapPin className="w-16 h-16 text-purple-400 mb-4" />
+            <h3 className="text-xl font-bold mb-2">Paikka</h3>
             <p>Malmin sauna</p>
           </div>
 
