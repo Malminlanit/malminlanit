@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import imageName from './assets/logo3.png';
 import { 
   Monitor, 
   Calendar, 
@@ -117,9 +118,9 @@ function App() {
 
             <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
               <Network className="w-8 h-8 text-purple-400 mb-4" />
-              <h3 className="text-xl font-bold mb-4">Network Requirements</h3>
+              <h3 className="text-xl font-bold mb-4">Pelattavat pelit</h3>
               <ul className="space-y-2">
-                <li>• Ethernet Cable (5m min)</li>
+                <li>• Overwatch 2</li>
                 <li>• Updated Games</li>
                 <li>• Steam/Epic Account</li>
                 <li>• Discord Installed</li>
