@@ -30,8 +30,6 @@ function App() {
     }
   };
 
-  return (
-
   const scrollToDetails = () => {
     document.getElementById('details')?.scrollIntoView({ behavior: 'smooth' });
   };
