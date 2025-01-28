@@ -22,9 +22,7 @@ function App() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    setEmail('');
-  };
-  
+    setEmail('');  
   const handlePageChange = (e) => {
     setSelectedPage(e.target.value);
     if (e.target.value) {
