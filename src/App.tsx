@@ -43,7 +43,7 @@ function App() {
         <div className="relative text-center px-4">
           <div className="flex items-center justify-center gap-3 mb-6">
             <Monitor className="w-12 h-12 text-purple-400" />
-            <h1 className="text-6xl font-bold text-white">EPIC LAN 2024</h1>
+            <h1 className="text-6xl font-bold text-white">Malmin LANIT 2025</h1>
           </div>
           <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
             Liity seuraamme vuoden parhampaan tapahtumaan!
@@ -61,7 +61,7 @@ function App() {
         </div>
       </div>
 
-      {/* Event Details */}
+      {/* Tapahtuman tiedot */}
       <div id="details" className="container mx-auto px-4 py-24">
         <h2 className="text-4xl font-bold text-white text-center mb-16">Event Details</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -97,7 +97,7 @@ function App() {
         </div>
       </div>
 
-      {/* What to Bring */}
+      {/* Mitä Malmilla? */}
       <div className="bg-white/5 py-24">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-white text-center mb-16">What to Bring</h2>
