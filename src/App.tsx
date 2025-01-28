@@ -18,12 +18,15 @@ import {
 function App() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [selectedPage, setSelectedPage] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    setEmail('');  
-  const handlePageChange = (e) => {
+    setEmail('');
+  };
+
+  const handlePageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedPage(e.target.value);
     if (e.target.value) {
       window.location.href = e.target.value;  // Siirtää valitulle sivulle
@@ -53,7 +56,6 @@ function App() {
           </div>
           <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
             Liity seuraamme vuoden parhampaan tapahtumaan!
-			
           </p>
           <button 
             onClick={scrollToDetails}
@@ -65,6 +67,20 @@ function App() {
             <ChevronDown className="w-8 h-8 text-white" />
           </div>
         </div>
+      </div>
+
+      {/* Valikko valittaville tapahtumasivuille */}
+      <div className="container mx-auto px-4 py-6">
+        <select 
+          onChange={handlePageChange}
+          value={selectedPage}
+          className="w-full p-4 rounded-md text-white bg-purple-600 focus:ring-2 focus:ring-purple-400"
+        >
+          <option value="">Valitse tapahtuman sivu</option>
+          <option value="/page1">Tapahtuma 1</option>
+          <option value="/page2">Tapahtuma 2</option>
+          <option value="/page3">Tapahtuma 3</option>
+        </select>
       </div>
 
       {/* Tapahtuman tiedot */}
@@ -89,66 +105,18 @@ function App() {
             <Users className="w-8 h-8 text-purple-400 mb-4" />
             <h3 className="text-xl font-bold mb-2">Kapasiteetti</h3>
             <p>Niin paljon kuin pöytiä riittää, katsomaan saa myös tulla.</p>
-            /*<p className="font-bold text-purple-400">/* Tähän voi lisätä tekstiä, jos haluaa </p> */ 
-            /*<p className="text-sm">/*Tähän voi lisätä tekstiä, jos haluaa</p> */ 
           </div>
 
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
             <Coffee className="w-8 h-8 text-purple-400 mb-4" />
             <h3 className="text-xl font-bold mb-2">Ruoka & juoma</h3>
             <p>24/7 Snack Bar, omakustanteinen</p>
-            <p>Lähellä Alepa </p>
-            <p>/* Tähän voi lisätä tekstiä, jos haluaa */</p>
+            <p>Lähellä Alepa</p>
           </div>
         </div>
       </div>
 
-      {/* Mitä Malmilla? */}
-      <div className="bg-white/5 py-24">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-white text-center mb-16">What to Bring</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
-              <Laptop className="w-8 h-8 text-purple-400 mb-4" />
-              <h3 className="text-xl font-bold mb-4">Mitä mukaan?</h3>
-              <ul className="space-y-2">
-                <li>• Pelitietokone tai sen kaltainen laitos</li>
-                <li>• Monitori </li>
-                <li>• Näppäimistö & Hiiri</li>
-                <li>• Kuulokkeet</li>
-                <li>• Kaapelit, virtakaapeli, HDMI yms. </li>
-				<li>• Ethernet-kaapeleita löytyy myös talon puolesta, mutta omankin voi ottaa mukaan. </li>
-              </ul>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
-              <Network className="w-8 h-8 text-purple-400 mb-4" />
-              <h3 className="text-xl font-bold mb-4">Pelattavat pelit</h3>
-              <ul className="space-y-2">
-                <li>• Overwatch 2</li>
-                <li>• Updated Games</li>
-                <li>• Steam/Epic Account</li>
-                <li>• Discord Installed</li>
-                <li>• Updated Drivers</li>
-              </ul>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
-              <Backpack className="w-8 h-8 text-purple-400 mb-4" />
-              <h3 className="text-xl font-bold mb-4">Personal Items</h3>
-              <ul className="space-y-2">
-                <li>• Sleeping Bag</li>
-                <li>• Toiletries</li>
-                <li>• Change of Clothes</li>
-                <li>• Deodorant</li>
-                <li>• Water Bottle</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Registration */}
+      {/* Register */}
       <div className="container mx-auto px-4 py-24">
         <div className="max-w-xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-white mb-8">Register Now</h2>
