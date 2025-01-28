@@ -46,8 +46,8 @@ function App() {
             <h1 className="text-6xl font-bold text-white">EPIC LAN 2024</h1>
           </div>
           <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-            Join us for the biggest gaming event of the year! 48 hours of non-stop gaming,
-            competitions, and unforgettable moments.
+            Liity seuraamme vuoden parhampaan tapahtumaan!
+			
           </p>
           <button 
             onClick={scrollToDetails}
