@@ -24,6 +24,15 @@ function App() {
     setSubmitted(true);
     setEmail('');
   };
+  
+  const handlePageChange = (e) => {
+    setSelectedPage(e.target.value);
+    if (e.target.value) {
+      window.location.href = e.target.value;  // Siirtää valitulle sivulle
+    }
+  };
+
+  return (
 
   const scrollToDetails = () => {
     document.getElementById('details')?.scrollIntoView({ behavior: 'smooth' });
