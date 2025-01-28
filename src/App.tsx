@@ -67,34 +67,32 @@ function App() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
             <Calendar className="w-8 h-8 text-purple-400 mb-4" />
-            <h3 className="text-xl font-bold mb-2">Date & Time</h3>
-            <p>March 15-17, 2024</p>
-            <p>Starts: Friday 18:00</p>
-            <p>Ends: Sunday 18:00</p>
+            <h3 className="text-xl font-bold mb-2">Päivämäärä ja aika</h3>
+            <p>17.-21.4.2025</p>
+            <p>Alkaa: Torstaina 18:00</p>
+            <p>Päättyy: Maanantaina 12:00</p>
           </div>
           
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
             <MapPin className="w-8 h-8 text-purple-400 mb-4" />
             <h3 className="text-xl font-bold mb-2">Location</h3>
-            <p>Gaming Arena</p>
-            <p>123 Gamer Street</p>
-            <p>Tech City, TC 12345</p>
+            <p>Malmin sauna</p>
           </div>
 
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
             <Users className="w-8 h-8 text-purple-400 mb-4" />
-            <h3 className="text-xl font-bold mb-2">Capacity & Price</h3>
-            <p>150 Players Maximum</p>
-            <p className="font-bold text-purple-400">$75 per person</p>
-            <p className="text-sm">Early bird: $60</p>
+            <h3 className="text-xl font-bold mb-2">Kapasiteetti</h3>
+            <p>Niin paljon kuin pöytiä riittää, katsomaan saa myös tulla.</p>
+            <p className="font-bold text-purple-400">/* Tähän voi lisätä tekstiä, jos haluaa */</p>
+            <p className="text-sm">/* Tähän voi lisätä tekstiä, jos haluaa */</p>
           </div>
 
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
             <Coffee className="w-8 h-8 text-purple-400 mb-4" />
-            <h3 className="text-xl font-bold mb-2">Food & Drinks</h3>
-            <p>24/7 Snack Bar</p>
-            <p>Pizza Included</p>
-            <p>Energy Drinks Available</p>
+            <h3 className="text-xl font-bold mb-2">Ruoka & juoma</h3>
+            <p>24/7 Snack Bar, omakustanteinen</p>
+            <p>Lähellä Alepa </p>
+            <p>/* Tähän voi lisätä tekstiä, jos haluaa */</p>
           </div>
         </div>
       </div>
@@ -106,13 +104,14 @@ function App() {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
               <Laptop className="w-8 h-8 text-purple-400 mb-4" />
-              <h3 className="text-xl font-bold mb-4">Gaming Equipment</h3>
+              <h3 className="text-xl font-bold mb-4">Mitä mukaan?</h3>
               <ul className="space-y-2">
-                <li>• Gaming PC/Laptop</li>
-                <li>• Monitor (max 27")</li>
-                <li>• Keyboard & Mouse</li>
-                <li>• Headphones</li>
-                <li>• Power Strip</li>
+                <li>• Pelitietokone tai sen kaltainen laitos</li>
+                <li>• Monitori </li>
+                <li>• Näppäimistö & Hiiri</li>
+                <li>• Kuulokkeet</li>
+                <li>• Kaapelit, virtakaapeli, HDMI yms. </li>
+				<li>• Ethernet-kaapeleita löytyy myös talon puolesta, mutta omankin voi ottaa mukaan. </li>
               </ul>
             </div>
 
