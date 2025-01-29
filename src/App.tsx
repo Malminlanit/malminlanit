@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import logo3 from './assets/logo3.png';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
@@ -24,6 +24,9 @@ function App() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [selectedPage, setSelectedPage] = useState('');
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(1);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,10 +45,31 @@ function App() {
     document.getElementById('details')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Toistopainikkeen toiminto (play/pause)
+  const togglePlayPause = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  // Äänenvoimakkuuden säätö
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900">
       {/* Taustamusiikki */}
-      <audio autoPlay loop>
+      <audio ref={audioRef} autoPlay loop>
         <source src={backgroundMusic} type="audio/mp3" />
         Your browser does not support the audio element.
       </audio>
@@ -187,6 +211,33 @@ function App() {
           </div>
         </div>
       </footer>
+
+      {/* Musiikin hallinta */}
+      <div className="absolute bottom-4 right-4 bg-black/50 p-4 rounded-lg">
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={togglePlayPause}
+            className="text-white bg-purple-600 hover:bg-purple-700 p-2 rounded-full"
+          >
+            {isPlaying ? 'Pysäytä' : 'Toista'}
+          </button>
+
+          <div className="flex items-center space-x-2">
+            <label htmlFor="volume" className="text-white">Äänenvoimakkuus</label>
+            <input
+              id="volume"
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={volume}
+              onChange={handleVolumeChange}
+              className="w-32"
+            />
+            <span className="text-white">{(volume * 100).toFixed(0)}%</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
