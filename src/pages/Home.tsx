@@ -28,7 +28,7 @@ const Home = () => {
       </p>
 
       <div className="mt-10 flex items-center justify-center">
-        <img src={evilbunny} alt="Evil Bunny" className="h-150 w-auto rounded-lg shadow-lg border-4 border-purple-600" />
+        <img src={evilbunny} alt="Evil Bunny" className="h-300 w-auto rounded-lg shadow-lg border-4 border-black-600" />
       </div>
     </div>
   );
