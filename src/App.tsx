@@ -43,7 +43,7 @@ function App() {
   };
 
 
-<img src={logo3.png} alt="Description" />
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900">
@@ -76,7 +76,7 @@ function App() {
           </div>
         </div>
       </div>
-	  
+
 <Router>
       <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white">
         
