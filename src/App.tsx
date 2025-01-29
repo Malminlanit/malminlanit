@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import imageName from './assets/logo3.png';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/Home';
+import About from './pages/About';
+import Contact from './pages/Contact';
 import { 
   Monitor, 
   Calendar, 
@@ -36,6 +41,9 @@ function App() {
   const scrollToDetails = () => {
     document.getElementById('details')?.scrollIntoView({ behavior: 'smooth' });
   };
+
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900">
@@ -115,7 +123,26 @@ function App() {
           </div>
         </div>
       </div>
+<Router>
+      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white">
+        
+        {/* Navigointipalkki */}
+        <nav className="bg-black/30 py-4 px-6 flex justify-center space-x-6">
+          <Link to="/" className="hover:text-purple-400">Etusivu</Link>
+          <Link to="/about" className="hover:text-purple-400">Tietoa</Link>
+          <Link to="/contact" className="hover:text-purple-400">Yhteystiedot</Link>
+        </nav>
 
+        {/* Reitit eri sivuille */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+
+      </div>
+    </Router>
+  );
       {/* Register */}
       <div className="container mx-auto px-4 py-24">
         <div className="max-w-xl mx-auto text-center">
