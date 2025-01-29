@@ -114,7 +114,7 @@ function App() {
           <nav className="bg-black/30 py-4 px-6 flex justify-center space-x-6">
             <Link to="/" className="hover:text-purple-400">Etusivu</Link>
             <Link to="/about" className="hover:text-purple-400">Tietoa</Link>
-            <Link to="/contact" className="hover:text-purple-400">Yhteystiedot</Link>
+            <Link to="/contact" className="hover:text-purple-400">Ohjeet</Link>
           </nav>
 
           {/* Reitit eri sivuille */}
