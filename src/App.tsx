@@ -183,9 +183,9 @@ function App() {
             <div className="text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
                 <Monitor className="w-6 h-6 text-purple-400" />
-                <span className="font-bold text-xl">EPIC LAN</span>
+                <span className="font-bold text-xl">MALMIN LANIT</span>
               </div>
-              <p className="text-gray-400">The Ultimate Gaming Experience</p>
+              <p className="text-gray-400">Alkoholin Huuruista Suunnittelua – Jo Vuodesta 2024</p>
             </div>
             
             <div className="text-center space-y-2">
