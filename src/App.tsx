@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './App.css'; // Jos käytät erillistä CSS-tiedostoa
 import logo3 from './assets/logo3.png';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
