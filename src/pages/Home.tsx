@@ -4,7 +4,7 @@ import evilbunny from '../assets/evilbunny.jpg';
 const Home = () => {
   return (
     <div className="text-white text-center p-10">
-      <h1 className="text-6xl font-bold mb-6 animate-pulse">Tervetuloa Malmin LANEILLE</h1>
+      <h1 className="text-6xl font-bold mb-10 animate-pulse">Tervetuloa Malmin LANEILLE</h1>
       
       <p className="text-lg max-w-3xl mx-auto leading-relaxed">
         Täällä <span className="text-purple-400 font-bold">hikoilu</span> yhdistyy 
@@ -28,7 +28,7 @@ const Home = () => {
       </p>
 
       <div className="mt-10 flex items-center justify-center">
-        <img src={evilbunny} alt="Evil Bunny" className="h-32 w-auto rounded-lg shadow-lg border-4 border-purple-600" />
+        <img src={evilbunny} alt="Evil Bunny" className="h-150 w-auto rounded-lg shadow-lg border-4 border-purple-600" />
       </div>
     </div>
   );
