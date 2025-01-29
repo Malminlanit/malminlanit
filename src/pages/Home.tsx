@@ -1,5 +1,5 @@
 import React from 'react';
-import evilbunny from '../assets/evilbunny.jpg';
+import evilbunny from '../assets/evilbunny2.gif';
 
 const Home = () => {
   return (
