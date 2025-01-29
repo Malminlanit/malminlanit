@@ -22,7 +22,7 @@ const Home = () => {
 
       <p className="mt-4 text-lg max-w-3xl mx-auto leading-relaxed">
         <span className="text-red-500 font-bold">Malmin sauna</span> on se paikka, 
-        missä kaikki tunteet purkautuvat ja <span className="text-green-400 font-bold">voittajat sekä legendat nousevat esiin</span>. 
+        missä kaikki tunteet purkautuvat ja <span className="text-green-400 font-bold">voittajat sekä Legendat nousevat esiin</span>. 
         Tervetuloa liittymään tähän <span className="text-purple-400 font-bold">muistettavimpaan</span> ja 
         <span className="text-blue-400 font-bold"> vahvimpaan yhteisöön</span>, jonka Malmi on koskaan nähnyt!
       </p>
