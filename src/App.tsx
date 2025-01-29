@@ -43,7 +43,7 @@ function App() {
   };
 
 
-
+<img src={logo3.png} alt="Description" />
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900">
@@ -76,24 +76,30 @@ function App() {
           </div>
         </div>
       </div>
+	  
+<Router>
+      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white">
+        
+        {/* Navigointipalkki */}
+        <nav className="bg-black/30 py-4 px-6 flex justify-center space-x-6">
+          <Link to="/" className="hover:text-purple-400">Etusivu</Link>
+          <Link to="/about" className="hover:text-purple-400">Tietoa</Link>
+          <Link to="/contact" className="hover:text-purple-400">Yhteystiedot</Link>
+        </nav>
 
-      {/* Valikko valittaville tapahtumasivuille */}
-      <div className="container mx-auto px-4 py-6">
-        <select 
-          onChange={handlePageChange}
-          value={selectedPage}
-          className="w-full p-4 rounded-md text-white bg-purple-600 focus:ring-2 focus:ring-purple-400"
-        >
-          <option value="">Valitse tapahtuman sivu</option>
-          <option value="/page1">Tapahtuma 1</option>
-          <option value="/page2">Tapahtuma 2</option>
-          <option value="/page3">Tapahtuma 3</option>
-        </select>
+        {/* Reitit eri sivuille */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+
       </div>
-
+    </Router>
+  );
       {/* Tapahtuman tiedot */}
       <div id="details" className="container mx-auto px-4 py-24">
-        <h2 className="text-4xl font-bold text-white text-center mb-16">Event Details</h2>
+        <h2 className="text-4xl font-bold text-white text-center mb-16">Tapahtuman tiedot</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
             <Calendar className="w-8 h-8 text-purple-400 mb-4" />
@@ -123,26 +129,7 @@ function App() {
           </div>
         </div>
       </div>
-<Router>
-      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white">
-        
-        {/* Navigointipalkki */}
-        <nav className="bg-black/30 py-4 px-6 flex justify-center space-x-6">
-          <Link to="/" className="hover:text-purple-400">Etusivu</Link>
-          <Link to="/about" className="hover:text-purple-400">Tietoa</Link>
-          <Link to="/contact" className="hover:text-purple-400">Yhteystiedot</Link>
-        </nav>
 
-        {/* Reitit eri sivuille */}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-
-      </div>
-    </Router>
-  );
       {/* Register */}
       <div className="container mx-auto px-4 py-24">
         <div className="max-w-xl mx-auto text-center">
