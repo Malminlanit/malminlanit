@@ -105,7 +105,7 @@ function App() {
       </div>
 
       <div className="absolute top-0 left-0 p-4">
-        <img src={logo3} alt="Logo" className="h-24 w-auto" />
+        <img src={logo3} alt="Logo" className="h-40 w-auto" />
       </div>
 
       <Router>
@@ -176,7 +176,7 @@ function App() {
           <div className="grid md:grid-cols-3 gap-8 items-center">
             <div className="text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
-                <Monitor className="w-6 h-6 text-purple-400" />
+              <img src={logo3} alt="Logo" className="h-40 w-auto" />
                 <span className="font-bold text-xl">MALMIN LANIT</span>
               </div>
               <p className="text-gray-400">Alkoholin Huuruista Suunnittelua – Jo Vuodesta 2024</p>
@@ -185,28 +185,10 @@ function App() {
             <div className="text-center space-y-2">
               <div className="flex items-center justify-center gap-2">
                 <Mail className="w-5 h-5 text-purple-400" />
-                <a href="mailto:info@epiclan.com" className="hover:text-purple-400 transition-colors">
-                  info@epiclan.com
+                <a href="malminlanit@gmail.com" className="hover:text-purple-400 transition-colors">
+                  malminlanit@gmail.com
                 </a>
               </div>
-              <div className="flex items-center justify-center gap-2">
-                <Phone className="w-5 h-5 text-purple-400" />
-                <a href="tel:+1234567890" className="hover:text-purple-400 transition-colors">
-                  (123) 456-7890
-                </a>
-              </div>
-            </div>
-
-            <div className="text-center md:text-right">
-              <a 
-                href="google.fi" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors"
-              >
-                Tournament Rules
-                <ExternalLink className="w-4 h-4" />
-              </a>
             </div>
           </div>
         </div>
