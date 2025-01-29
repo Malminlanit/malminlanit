@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import imageName from './assets/logo3.png';
+import logo3 from './assets/logo3.png';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
@@ -76,6 +76,10 @@ function App() {
           </div>
         </div>
       </div>
+
+<div className="absolute top-0 left-0 p-4">
+  <img src={logo3} alt="Logo" className="h-16 w-auto" />
+</div>
 
 <Router>
       <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white">
