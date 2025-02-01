@@ -140,6 +140,80 @@ function App() {
         </div>
       </Router>
     </div>
+  
+  {/* Tapahtuman tiedot */}
+      <div id="details" className="container mx-auto px-4 py-24">
+        <h2 className="text-4xl font-bold text-white text-center mb-16">Tapahtuman tiedot</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
+            <Calendar className="w-8 h-8 text-purple-400 mb-4" />
+            <h3 className="text-xl font-bold mb-2">Päivämäärä ja aika</h3>
+            <p>17.-21.4.2025</p>
+            <p>Alkaa: Torstaina 18:00</p>
+            <p>Päättyy: Maanantaina 12:00</p>
+          </div>
+          
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
+            <MapPin className="w-8 h-8 text-purple-400 mb-4" />
+            <h3 className="text-xl font-bold mb-2">Paikka</h3>
+            <p>Malmin sauna, jossa legendat syntyvät ja legendoja kirjoitetaan.</p>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
+            <Users className="w-8 h-8 text-purple-400 mb-4" />
+            <h3 className="text-xl font-bold mb-2">Kapasiteetti</h3>
+            <p>Pöytiä on niin paljon kuin niitä riittää, mutta täällä ei rajoja tunneta. 
+			Jos et pääse pelaamaan, ei hätää, pääset kuitenkin näkemään legendojen synnyn. 
+			Kaikki mahtuvat – joko mukaan peliin tai katsomaan.</p>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
+            <Coffee className="w-8 h-8 text-purple-400 mb-4" />
+            <h3 className="text-xl font-bold mb-2">Ruoka & juoma</h3>
+            <p>24/7 Ruokailu Omakustanteinen – tankkaa itsesi ruualla sekä juomalla ja jaksat taas legendaariset hetket. 24/7 auki riippuen omasta budjetista, 
+			koskaan ei tiedä, milloin iskee nälkä, 
+			mutta täällä vatsat täyttyy, energia nousee, ja peli jatkuu!</p>
+            <p>Lähellä Alepa Teerisuontie</p>
+            <div className="w-full h-96 rounded-lg overflow-hidden shadow-lg">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15836.769048179707!2d24.983312487602227!3d60.25359860310647!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x469209b353fea185%3A0x22cfbb739db1864f!2sAlepa%20Teerisuontie!5e0!3m2!1sfi!2sfi!4v1738146067686!5m2!1sfi!2sfi" 
+                width="600" 
+                height="450" 
+                style={{ border: 0 }} 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+	  
+	{/* Footer */}
+      <footer className="bg-black/30 text-white py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-8 items-center">
+            <div className="text-center md:text-left">
+              <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
+              <img src={logo3} alt="Logo" className="h-16 w-auto" />
+                <span className="font-bold text-xl">MALMIN LANIT</span>
+              </div>
+              <p className="text-gray-400">Alkoholin Huuruista Suunnittelua – Jo Vuodesta 2024</p>
+            </div>
+            
+            <div className="text-center space-y-2">
+              <div className="flex items-center justify-center gap-2">
+                <Mail className="w-5 h-5 text-purple-400" />
+                <a href="malminlanit@gmail.com" className="hover:text-purple-400 transition-colors">
+                  malminlanit@gmail.com
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+  
   );
 }
 
