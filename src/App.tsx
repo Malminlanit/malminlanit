@@ -45,6 +45,10 @@ function App() {
     setEmail('');
   };
 
+const scrollToDetails = () => {
+    document.getElementById('details')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const handlePageChange = (e) => {
     setSelectedPage(e.target.value);
     if (e.target.value) {
@@ -99,6 +103,16 @@ function App() {
     );
   }
 
+{/* Hero Section */}
+      <div 
+        className="h-screen relative flex items-center justify-center"
+        style={{
+          backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900">
       <audio ref={audioRef} autoPlay loop>
@@ -129,7 +143,7 @@ function App() {
               onClick={togglePlayPause} 
               className="text-white hover:text-green-400 focus:outline-none"
             >
-              {isPlaying ? 'Pysäytä musiikki' : 'Soita musiikki'}
+              {isPlaying ? 'Pysäytä' : 'Toista'}
             </button>
             <input 
               type="range" 
