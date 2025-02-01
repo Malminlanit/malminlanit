@@ -151,7 +151,7 @@ function App() {
               <Link to="/" className="hover:text-purple-400">Etusivu</Link>
               <Link to="/about" className="hover:text-purple-400">Tietoa</Link>
               <Link to="/contact" className="hover:text-purple-400">Ohjeet</Link>
-			  <Link to="/contact" className="hover:text-purple-400">Ohjeet</Link>
+			  <Link to="/timetable" className="hover:text-purple-400">Aikataulu</Link>
             </nav>
 
             <Routes>
