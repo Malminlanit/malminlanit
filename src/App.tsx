@@ -132,6 +132,10 @@ function App() {
           </div>
         </div>
       </div>
+	  
+	  <div className="absolute top-0 left-0 p-4">
+        <img src={logo3} alt="Logo" className="h-40 w-auto" />
+      </div>
 
       <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900">
         {/* Taustakuva ei enää koske tätä osaa */}
@@ -159,7 +163,7 @@ function App() {
                 onClick={togglePlayPause} 
                 className="text-white hover:text-green-400 focus:outline-none"
               >
-                {isPlaying ? 'Pysäytä' : 'Toista'}
+                {isPlaying ? ' ' : ' '}
               </button>
               <input 
                 type="range" 
