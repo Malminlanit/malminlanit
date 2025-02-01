@@ -126,6 +126,11 @@ function App() {
         </div>
       </div>
 
+      {/* Taustakuva tulee tähän */}
+      <div className="relative w-full h-screen bg-cover bg-center" style={{ backgroundImage: 'url(/path-to-your-image.jpg)' }}>
+        {/* Täällä voit lisätä jotain sisältöä taustakuvan päälle, jos haluat */}
+      </div>
+
       <audio ref={audioRef} autoPlay loop>
         <source src={backgroundMusic} type="audio/mp3" />
         Your browser does not support the audio element.
