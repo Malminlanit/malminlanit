@@ -111,7 +111,7 @@ const scrollToDetails = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
-		</div>
+	</div>
 
 
   return (
