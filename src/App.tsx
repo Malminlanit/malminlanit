@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import logo3 from './assets/logo3.png';
+import IntroVideo from "./components/IntroVideo";
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -27,6 +28,17 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+const App = () => {
+  const [showHome, setShowHome] = useState(false);
+
+  return (
+    <div>
+      {!showHome && <IntroVideo onFinish={() => setShowHome(true)} />}
+      {showHome && <Home />}
+    </div>
+  );
+};
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
