@@ -120,7 +120,7 @@ function App() {
             <h1 className="text-6xl font-bold text-white">Malmin LANIT 2025</h1>
           </div>
           <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-            Liity seuraamme vuoden parhampaan tapahtumaan!
+            Liity seuraamme vuoden parhaimpaan tapahtumaan!
           </p>
           <button 
             onClick={scrollToDetails}
