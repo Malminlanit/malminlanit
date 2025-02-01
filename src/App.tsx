@@ -35,6 +35,10 @@ function App() {
     setShowIntro(false);
   };
 
+  const handleSkipIntro = () => {
+    setShowIntro(false);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
@@ -73,13 +77,21 @@ function App() {
 
   if (showIntro) {
     return (
-      <video 
-        src={introVideo} 
-        autoPlay 
-        className="w-full h-screen object-cover" 
-        onEnded={handleIntroEnd} 
-        controls
-      />
+      <div className="relative w-full h-screen">
+        <video 
+          src={introVideo} 
+          autoPlay 
+          className="w-full h-screen object-cover" 
+          onEnded={handleIntroEnd} 
+          controls
+        />
+        <button 
+          onClick={handleSkipIntro} 
+          className="absolute top-4 right-4 bg-black/70 text-white px-4 py-2 rounded-md hover:bg-red-500"
+        >
+          Skip
+        </button>
+      </div>
     );
   }
 
@@ -107,6 +119,24 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
+
+          <div className="fixed bottom-4 right-4 bg-black/50 p-4 rounded-xl shadow-lg">
+            <button 
+              onClick={togglePlayPause} 
+              className="text-white hover:text-green-400 focus:outline-none"
+            >
+              {isPlaying ? 'Pysäytä musiikki' : 'Soita musiikki'}
+            </button>
+            <input 
+              type="range" 
+              min="0" 
+              max="1" 
+              step="0.01" 
+              value={volume} 
+              onChange={handleVolumeChange} 
+              className="ml-2"
+            />
+          </div>
         </div>
       </Router>
     </div>
