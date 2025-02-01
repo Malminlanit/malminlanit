@@ -72,7 +72,7 @@ function App() {
   };
 
   useEffect(() => {
-    // Jos introvideo on jo päättynyt, pysäytetään musiikki ja piilotetaan intro.
+    // Jos introvideo on jo päättynyt, musiikki käynnistetään automaattisesti.
     if (!showIntro && audioRef.current && !isPlaying) {
       audioRef.current.play();
       setIsPlaying(true);
