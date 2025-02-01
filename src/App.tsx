@@ -31,10 +31,9 @@ function App() {
   const [showIntro, setShowIntro] = useState(true);
   const audioRef = useRef(null);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setShowIntro(false), 5000); // Piilottaa intron 5 sekunnin jälkeen
-    return () => clearTimeout(timer);
-  }, []);
+  const handleIntroEnd = () => {
+    setShowIntro(false);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -74,7 +73,13 @@ function App() {
 
   if (showIntro) {
     return (
-      <video src={introVideo} autoPlay muted className="w-full h-screen object-cover" />
+      <video 
+        src={introVideo} 
+        autoPlay 
+        className="w-full h-screen object-cover" 
+        onEnded={handleIntroEnd} 
+        controls
+      />
     );
   }
 
