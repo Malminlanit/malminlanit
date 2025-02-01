@@ -104,6 +104,16 @@ function App() {
   }
 
   return (
+  
+    <div 
+		className="h-screen relative flex items-center justify-center"
+        style={{
+          backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+  
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900">
       {/* Taustakuva */}
       <div className="absolute inset-0 bg-black/50" />
