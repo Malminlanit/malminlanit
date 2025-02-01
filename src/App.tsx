@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Timetable from './pages/Timetable';
 import { 
   Monitor, 
   Calendar, 
@@ -150,12 +151,14 @@ function App() {
               <Link to="/" className="hover:text-purple-400">Etusivu</Link>
               <Link to="/about" className="hover:text-purple-400">Tietoa</Link>
               <Link to="/contact" className="hover:text-purple-400">Ohjeet</Link>
+			  <Link to="/contact" className="hover:text-purple-400">Ohjeet</Link>
             </nav>
 
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+			  <Route path="/timetable" element={<Timetable />} />
             </Routes>
 
             <div className="fixed bottom-4 right-4 bg-black/50 p-4 rounded-xl shadow-lg">
