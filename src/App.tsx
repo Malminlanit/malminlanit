@@ -163,7 +163,7 @@ function App() {
                 onClick={togglePlayPause} 
                 className="text-white hover:text-green-400 focus:outline-none"
               >
-                {isPlaying ? ' ' : ' '}
+                {isPlaying ? 'Volume' : ' '}
               </button>
               <input 
                 type="range" 
