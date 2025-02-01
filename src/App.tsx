@@ -106,21 +106,30 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900">
       {/* Taustakuva */}
-      <div 
-        className="h-screen absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
-        }}
-      ></div>
+      <div className="absolute inset-0 bg-black/50" />
+      <div className="relative text-center px-4">
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <Monitor className="w-12 h-12 text-purple-400" />
+          <h1 className="text-6xl font-bold text-white">Malmin LANIT 2025</h1>
+        </div>
+        <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+          Liity seuraamme vuoden parhampaan tapahtumaan!
+        </p>
+        <button 
+          onClick={scrollToDetails}
+          className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
+        >
+          Lue lisää
+        </button>
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <ChevronDown className="w-8 h-8 text-white" />
+        </div>
+      </div>
 
       <audio ref={audioRef} autoPlay loop>
         <source src={backgroundMusic} type="audio/mp3" />
         Your browser does not support the audio element.
       </audio>
-
-      <div className="absolute top-0 left-0 p-4">
-        <img src={logo3} alt="Logo" className="h-40 w-auto" />
-      </div>
 
       <Router>
         <div className="min-h-screen text-white relative">
