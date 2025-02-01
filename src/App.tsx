@@ -104,20 +104,16 @@ function App() {
   }
 
   return (
-  
-    <div 
-		className="h-screen relative flex items-center justify-center"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-  
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900">
-      {/* Taustakuva */}
-      <div className="absolute inset-0 bg-black/50" />
-      <div className="relative text-center px-4">
+  <div
+    className="h-screen relative flex items-center justify-center"
+    style={{
+      backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    }}
+  >
+    <div className="min-h-screen bg-black/50">
+      <div className="relative text-center px-4 py-24">
         <div className="flex items-center justify-center gap-3 mb-6">
           <Monitor className="w-12 h-12 text-purple-400" />
           <h1 className="text-6xl font-bold text-white">Malmin LANIT 2025</h1>
@@ -125,7 +121,7 @@ function App() {
         <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
           Liity seuraamme vuoden parhampaan tapahtumaan!
         </p>
-        <button 
+        <button
           onClick={scrollToDetails}
           className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
         >
@@ -135,50 +131,17 @@ function App() {
           <ChevronDown className="w-8 h-8 text-white" />
         </div>
       </div>
+    </div>
+    <audio ref={audioRef} autoPlay loop>
+      <source src={backgroundMusic} type="audio/mp3" />
+      Your browser does not support the audio element.
+    </audio>
+    <Router>
+      {/* Navigointi ja muut komponentit */}
+    </Router>
+  </div>
+);
 
-      {/* Taustakuva tulee tähän */}
-      <div className="relative w-full h-screen bg-cover bg-center" style={{ backgroundImage: 'url(/path-to-your-image.jpg)' }}>
-        {/* Täällä voit lisätä jotain sisältöä taustakuvan päälle, jos haluat */}
-      </div>
-
-      <audio ref={audioRef} autoPlay loop>
-        <source src={backgroundMusic} type="audio/mp3" />
-        Your browser does not support the audio element.
-      </audio>
-
-      <Router>
-        <div className="min-h-screen text-white relative">
-          <nav className="bg-black/30 py-4 px-6 flex justify-center space-x-6">
-            <Link to="/" className="hover:text-purple-400">Etusivu</Link>
-            <Link to="/about" className="hover:text-purple-400">Tietoa</Link>
-            <Link to="/contact" className="hover:text-purple-400">Ohjeet</Link>
-          </nav>
-
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-
-          <div className="fixed bottom-4 right-4 bg-black/50 p-4 rounded-xl shadow-lg">
-            <button 
-              onClick={togglePlayPause} 
-              className="text-white hover:text-green-400 focus:outline-none"
-            >
-              {isPlaying ? 'Pysäytä' : 'Toista'}
-            </button>
-            <input 
-              type="range" 
-              min="0" 
-              max="1" 
-              step="0.01" 
-              value={volume} 
-              onChange={handleVolumeChange} 
-              className="ml-2"
-            />
-          </div>
-        </div>
-      </Router>
 
       {/* Tapahtuman tiedot */}
       <div id="details" className="container mx-auto px-4 py-24">
