@@ -45,7 +45,7 @@ function App() {
     setEmail('');
   };
 
-const scrollToDetails = () => {
+  const scrollToDetails = () => {
     document.getElementById('details')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -103,17 +103,6 @@ const scrollToDetails = () => {
     );
   }
 
-{/* Hero Section */}
-      <div 
-        className="h-screen relative flex items-center justify-center"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-	</div>
-
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900">
       <audio ref={audioRef} autoPlay loop>
@@ -138,6 +127,18 @@ const scrollToDetails = () => {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
+
+          {/* Hero Section */}
+          <div 
+            className="h-screen relative flex items-center justify-center"
+            style={{
+              backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+            {/* Additional content for Hero Section if needed */}
+          </div>
 
           <div className="fixed bottom-4 right-4 bg-black/50 p-4 rounded-xl shadow-lg">
             <button 
@@ -212,7 +213,7 @@ const scrollToDetails = () => {
           <div className="grid md:grid-cols-3 gap-8 items-center">
             <div className="text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
-              <img src={logo3} alt="Logo" className="h-16 w-auto" />
+                <img src={logo3} alt="Logo" className="h-16 w-auto" />
                 <span className="font-bold text-xl">MALMIN LANIT</span>
               </div>
               <p className="text-gray-400">Alkoholin Huuruista Suunnittelua – Jo Vuodesta 2024</p>
