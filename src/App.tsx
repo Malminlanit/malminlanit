@@ -105,6 +105,14 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900">
+      {/* Taustakuva */}
+      <div 
+        className="h-screen absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+        }}
+      ></div>
+
       <audio ref={audioRef} autoPlay loop>
         <source src={backgroundMusic} type="audio/mp3" />
         Your browser does not support the audio element.
@@ -115,7 +123,7 @@ function App() {
       </div>
 
       <Router>
-        <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white">
+        <div className="min-h-screen text-white relative">
           <nav className="bg-black/30 py-4 px-6 flex justify-center space-x-6">
             <Link to="/" className="hover:text-purple-400">Etusivu</Link>
             <Link to="/about" className="hover:text-purple-400">Tietoa</Link>
@@ -127,18 +135,6 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
-
-          {/* Hero Section */}
-          <div 
-            className="h-screen relative flex items-center justify-center"
-            style={{
-              backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          >
-            {/* Additional content for Hero Section if needed */}
-          </div>
 
           <div className="fixed bottom-4 right-4 bg-black/50 p-4 rounded-xl shadow-lg">
             <button 
@@ -206,7 +202,7 @@ function App() {
           </div>
         </div>
       </div>
-      
+
       {/* Footer */}
       <footer className="bg-black/30 text-white py-12">
         <div className="container mx-auto px-4">
