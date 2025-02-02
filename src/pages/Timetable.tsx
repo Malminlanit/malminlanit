@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import supabase from '../services/supabase';  // Tuodaan supabase.js
 
 const initialScheduleData = {
   "17.4.2025": [
@@ -16,6 +17,24 @@ function Schedule() {
   const [isEditing, setIsEditing] = useState(false);
   const [password, setPassword] = useState('');
   const [scheduleData, setScheduleData] = useState(initialScheduleData);
+
+  // Lataa aikataulu Supabasesta
+  useEffect(() => {
+    const getSchedule = async () => {
+      const { data, error } = await supabase
+        .from('schedules')
+        .select('schedule')
+        .single();  // Oletetaan, että aikataulu tallennetaan yksittäiseksi objektiksi
+
+      if (data) {
+        setScheduleData(data.schedule);
+      } else {
+        console.error('Virhe aikataulun hakemisessa:', error);
+      }
+    };
+
+    getSchedule();
+  }, []);
 
   const handleLogin = () => {
     if (password === 'salasana123') {
@@ -49,14 +68,17 @@ function Schedule() {
   };
 
   const handleSave = async () => {
-    await fetch('/.netlify/functions/saveSchedule', {
-      method: 'POST',
-      body: JSON.stringify({ schedule: scheduleData }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    alert('Aikataulu tallennettu Netlify Functionsilla!');
+    // Tallenna aikataulu Supabaseen
+    const { error } = await supabase
+      .from('schedules')
+      .upsert({ id: 1, schedule: scheduleData });  // Käytetään yksittäistä tallennusta, jos aikataulu on vain yksi
+
+    if (error) {
+      console.error('Virhe aikataulun tallentamisessa:', error);
+    } else {
+      alert('Aikataulu tallennettu Supabaseen!');
+    }
+
     setIsEditing(false);
   };
 
