@@ -12,19 +12,13 @@ const initialScheduleData = {
   ]
 };
 
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
-const REPO_OWNER = process.env.REACT_APP_GITHUB_USERNAME;
-const REPO_NAME = process.env.REACT_APP_GITHUB_REPO;
-const FILE_PATH = process.env.REACT_APP_FILE_PATH;
-
 function Schedule() {
   const [isEditing, setIsEditing] = useState(false);
   const [password, setPassword] = useState('');
   const [scheduleData, setScheduleData] = useState(initialScheduleData);
-  const correctPassword = 'salasana123';
 
   const handleLogin = () => {
-    if (password === correctPassword) {
+    if (password === 'salasana123') {
       setIsEditing(true);
     } else {
       alert('Väärä salasana');
@@ -39,66 +33,8 @@ function Schedule() {
           i === index ? { ...event, [key]: value } : event
         )
       };
-      saveScheduleToGitHub(updatedData); // Päivitä tiedot GitHubiin
       return updatedData;
     });
-  };
-
-  const saveScheduleToGitHub = async (updatedData) => {
-    const fileContent = JSON.stringify(updatedData, null, 2);
-    const base64Content = window.btoa(unescape(encodeURIComponent(fileContent)));
-
-    const sha = await getFileSha();
-
-    try {
-      const response = await fetch(
-        `https://api.github.com/repos/Malminlanit/Malminlanit/contents/public/schelude.json`,
-        {
-          method: 'PUT',
-          headers: {
-            'Authorization': `Bearer ${GITHUB_TOKEN}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            message: 'Päivitetään aikataul',
-            content: base64Content,
-            sha: sha || undefined,
-          })
-        }
-      );
-
-      if (response.ok) {
-        alert('Tiedot päivitetty GitHubiin!');
-      } else {
-        alert('Päivitys epäonnistui!');
-      }
-    } catch (error) {
-      console.error('Virhe päivityksessä: ', error);
-      alert('Päivitys epäonnistui!');
-    }
-  };
-
-  const getFileSha = async () => {
-    try {
-      const response = await fetch(
-        `https://api.github.com/repos/Malminlanit/Malminlanit/contents/public/schelude.json`,
-        {
-          headers: {
-            'Authorization': `Bearer ${GITHUB_TOKEN}`,
-          }
-        }
-      );
-      const data = await response.json();
-
-      if (data.message === "Not Found") {
-        return null;
-      }
-
-      return data.sha;
-    } catch (error) {
-      console.error('Virhe tiedoston SHA:n hakemisessa:', error);
-      return null;
-    }
   };
 
   const handleAddRow = (date) => {
@@ -108,7 +44,6 @@ function Schedule() {
         updatedData[date] = [];
       }
       updatedData[date].push({ time: "", event: "" });
-      saveScheduleToGitHub(updatedData); // Päivitä tiedot GitHubiin
       return updatedData;
     });
   };
