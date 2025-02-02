@@ -2,7 +2,7 @@
 import fetch from 'node-fetch';
 
 exports.handler = async function(event, context) {
-  const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+  const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
   const REPO_OWNER = 'Malminlanit';  // GitHub username
   const REPO_NAME = 'malminlanit';  // Repository name
   const FILE_PATH = 'public/schedule.json';  // Correct file path
