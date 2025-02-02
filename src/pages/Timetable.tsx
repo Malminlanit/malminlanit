@@ -54,7 +54,7 @@ function Schedule() {
         {
           method: 'PUT',
           headers: {
-            'Authorization': `Bearer ${GITHUB_TOKEN}`,
+            'Authorization': `Bearer ${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}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -78,10 +78,10 @@ function Schedule() {
 
   const getFileSha = async () => {
     const response = await fetch(
-      `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`,
+      `https://api.github.com/Malminlanit/malminlanit/public/schelude.json`,
       {
         headers: {
-          'Authorization': `Bearer ${GITHUB_TOKEN}`,
+          'Authorization': `Bearer ${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}`,
         }
       }
     );
