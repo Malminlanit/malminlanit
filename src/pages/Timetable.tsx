@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const scheduleData = {
+const initialScheduleData = {
   "17.4.2025": [
     { time: "09:00", event: "Tervetuloa ja rekisteröityminen" },
     { time: "10:00", event: "Pelit alkavat" },
@@ -47,6 +47,7 @@ function Schedule() {
   const times = ["09:00", "10:00", "12:00", "13:00", "16:00", "18:00", "20:00"];
   const [isEditing, setIsEditing] = useState(false);
   const [password, setPassword] = useState('');
+  const [scheduleData, setScheduleData] = useState(initialScheduleData);
   const correctPassword = 'salasana123';
 
   const handleLogin = () => {
@@ -58,9 +59,17 @@ function Schedule() {
   };
 
   const handleEventChange = (date, time, newEvent) => {
-    scheduleData[date] = scheduleData[date].map(event => 
-      event.time === time ? { ...event, event: newEvent } : event
-    );
+    setScheduleData(prevData => ({
+      ...prevData,
+      [date]: prevData[date].map(event => 
+        event.time === time ? { ...event, event: newEvent } : event
+      )
+    }));
+  };
+
+  const handleSave = () => {
+    alert('Muutokset tallennettu!');
+    setIsEditing(false);
   };
 
   return (
@@ -74,7 +83,7 @@ function Schedule() {
             placeholder="Syötä salasana muokataksesi" 
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-400 px-3 py-2 mr-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-400 px-3 py-2 mr-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button 
             onClick={handleLogin} 
@@ -108,10 +117,10 @@ function Schedule() {
                           type="text" 
                           value={event ? event.event : ''}
                           onChange={(e) => handleEventChange(date, time, e.target.value)}
-                          className="border border-gray-400 px-2 py-1 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="border border-gray-400 px-2 py-1 w-full rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       ) : (
-                        event ? event.event : "-"
+                        <span className="text-black">{event ? event.event : "-"}</span>
                       )}
                     </td>
                   );
@@ -121,6 +130,17 @@ function Schedule() {
           </tbody>
         </table>
       </div>
+
+      {isEditing && (
+        <div className="text-center mt-4">
+          <button 
+            onClick={handleSave} 
+            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            Hyväksy muutokset
+          </button>
+        </div>
+      )}
     </div>
   );
 }
