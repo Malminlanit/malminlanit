@@ -12,6 +12,11 @@ const initialScheduleData = {
   ]
 };
 
+const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN; // Henkilökohtainen käyttöoikeustunnus
+const REPO_OWNER = process.env.REACT_APP_GITHUB_USERNAME; // GitHubin käyttäjätunnus
+const REPO_NAME = process.env.REACT_APP_GITHUB_REPO; // Repositoryn nimi
+const FILE_PATH = 'path/to/schedule.json'; // Tiedoston polku repositoryssä
+
 function Schedule() {
   const [isEditing, setIsEditing] = useState(false);
   const [password, setPassword] = useState('');
@@ -27,36 +32,61 @@ function Schedule() {
   };
 
   const handleEventChange = (date, index, key, value) => {
-    setScheduleData(prevData => ({
-      ...prevData,
-      [date]: prevData[date].map((event, i) => 
-        i === index ? { ...event, [key]: value } : event
-      )
-    }));
-  };
-
-  const handleAddRow = (date) => {
-    setScheduleData(prevData => ({
-      ...prevData,
-      [date]: [...prevData[date], { time: "", event: "" }]
-    }));
-  };
-
-  const handleAddTable = () => {
-    const newDate = prompt('Syötä uusi päivämäärä (esim. 22.4.2025):');
-    if (newDate && !scheduleData[newDate]) {
-      setScheduleData(prevData => ({
+    setScheduleData(prevData => {
+      const updatedData = {
         ...prevData,
-        [newDate]: [{ time: "", event: "" }]
-      }));
-    } else {
-      alert('Päivämäärä on jo olemassa tai syöte on tyhjä.');
+        [date]: prevData[date].map((event, i) =>
+          i === index ? { ...event, [key]: value } : event
+        )
+      };
+      saveScheduleToGitHub(updatedData); // Päivitä tiedot GitHubiin
+      return updatedData;
+    });
+  };
+
+  const saveScheduleToGitHub = async (updatedData) => {
+    const fileContent = JSON.stringify(updatedData, null, 2); // Muunna aikataulu JSON-muotoon
+    const base64Content = btoa(fileContent); // Muunna JSON base64-muotoon, jotta GitHub voi käsitellä sen
+
+    try {
+      const response = await fetch(
+        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${GITHUB_TOKEN}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: 'Päivitetään aikataulu', // Viesti GitHubin commitille
+            content: base64Content, // Tiedoston sisältö base64-muodossa
+            sha: await getFileSha() // Tarvitaan tiedoston SHA-1, jos tiedosto on olemassa
+          })
+        }
+      );
+
+      if (response.ok) {
+        alert('Tiedot päivitetty GitHubiin!');
+      } else {
+        alert('Päivitys epäonnistui!');
+      }
+    } catch (error) {
+      console.error('Virhe päivityksessä: ', error);
+      alert('Päivitys epäonnistui!');
     }
   };
 
-  const handleSave = () => {
-    alert('Muutokset tallennettu!');
-    setIsEditing(false);
+  const getFileSha = async () => {
+    const response = await fetch(
+      `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${GITHUB_TOKEN}`,
+        }
+      }
+    );
+    const data = await response.json();
+    return data.sha; // Tiedoston SHA-1
   };
 
   return (
@@ -77,17 +107,6 @@ function Schedule() {
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Kirjaudu
-          </button>
-        </div>
-      )}
-
-      {isEditing && (
-        <div className="text-center mb-4">
-          <button 
-            onClick={handleAddTable} 
-            className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          >
-            + Lisää uusi taulukko
           </button>
         </div>
       )}
