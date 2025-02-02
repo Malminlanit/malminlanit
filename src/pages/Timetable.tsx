@@ -50,7 +50,7 @@ function Schedule() {
 
     try {
       const response = await fetch(
-        `https://api.github.com/${REPO_OWNER}/${REPO_NAME}/${FILE_PATH}`,
+        `https://api.github.com/Malminlanit/malminlanit/public/schelude.json`,
         {
           method: 'PUT',
           headers: {
