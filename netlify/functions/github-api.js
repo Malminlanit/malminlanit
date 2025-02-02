@@ -3,13 +3,13 @@ import fetch from 'node-fetch';
 
 exports.handler = async function(event, context) {
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-  const REPO_OWNER = 'Malminlanit';
-  const REPO_NAME = 'malminlanit';
-  const FILE_PATH = 'public/schelude.json';
+  const REPO_OWNER = 'Malminlanit';  // GitHub username
+  const REPO_NAME = 'malminlanit';  // Repository name
+  const FILE_PATH = 'public/schedule.json';  // Correct file path
 
   try {
     const response = await fetch(
-      `https://api.github.com/Malminlanit/malminlanit/public/schelude.json}`,
+      `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`,
       {
         method: 'GET',
         headers: {

@@ -12,10 +12,10 @@ const initialScheduleData = {
   ]
 };
 
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN; // Henkilökohtainen käyttöoikeustunnus
-const REPO_OWNER = process.env.REACT_APP_GITHUB_USERNAME; // GitHubin käyttäjätunnus
-const REPO_NAME = process.env.REACT_APP_GITHUB_REPO; // Repositoryn nimi
-const FILE_PATH = process.env.REACT_APP_FILE_PATH; // Käytetään ympäristömuuttujaa 
+const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
+const REPO_OWNER = process.env.REACT_APP_GITHUB_USERNAME;
+const REPO_NAME = process.env.REACT_APP_GITHUB_REPO;
+const FILE_PATH = process.env.REACT_APP_FILE_PATH;
 
 function Schedule() {
   const [isEditing, setIsEditing] = useState(false);
@@ -45,8 +45,8 @@ function Schedule() {
   };
 
   const saveScheduleToGitHub = async (updatedData) => {
-    const fileContent = JSON.stringify(updatedData, null, 2); // Muunna aikataulu JSON-muotoon
-    const base64Content = window.btoa(unescape(encodeURIComponent(fileContent))); // Muunna JSON base64-muotoon
+    const fileContent = JSON.stringify(updatedData, null, 2);
+    const base64Content = window.btoa(unescape(encodeURIComponent(fileContent)));
 
     const sha = await getFileSha();
 
@@ -60,9 +60,9 @@ function Schedule() {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            message: 'Päivitetään aikataulu', // Viesti GitHubin commitille
-            content: base64Content, // Tiedoston sisältö base64-muodossa
-            sha: sha || undefined, // Tarvitaan tiedoston SHA-1, jos tiedosto on olemassa
+            message: 'Päivitetään aikataulu',
+            content: base64Content,
+            sha: sha || undefined,
           })
         }
       );
@@ -91,19 +91,31 @@ function Schedule() {
       const data = await response.json();
 
       if (data.message === "Not Found") {
-        return null; // Return null if the file doesn't exist
+        return null;
       }
 
-      return data.sha; // Tiedoston SHA-1
+      return data.sha;
     } catch (error) {
       console.error('Virhe tiedoston SHA:n hakemisessa:', error);
       return null;
     }
   };
 
+  const handleAddRow = (date) => {
+    setScheduleData(prevData => {
+      const updatedData = { ...prevData };
+      if (!updatedData[date]) {
+        updatedData[date] = [];
+      }
+      updatedData[date].push({ time: "", event: "" });
+      saveScheduleToGitHub(updatedData); // Päivitä tiedot GitHubiin
+      return updatedData;
+    });
+  };
+
   const handleSave = () => {
     alert('Muutokset on tallennettu!');
-    setIsEditing(false); // Lopetetaan muokkaustila
+    setIsEditing(false);
   };
 
   return (
