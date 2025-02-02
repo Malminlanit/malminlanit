@@ -105,34 +105,39 @@ function App() {
   }
 
   return (
-    <div className="h-screen relative">
-      {/* Taustakuva vain tämän osan taakse */}
-      <div 
-        className="w-full h-screen bg-cover bg-center relative"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
-        }}
-      >
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="relative text-center px-4 py-24">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <Monitor className="w-12 h-12 text-purple-400" />
-            <h1 className="text-6xl font-bold text-white">Malmin LANIT 2025</h1>
-          </div>
-          <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-            Liity seuraamme vuoden parhaimpaan tapahtumaan!
-          </p>
-          <button 
-            onClick={scrollToDetails}
-            className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
-          >
-            Lue lisää
-          </button>
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 animate-bounce">
-            <ChevronDown className="w-8 h-8 text-white" />
-          </div>
+  <div className="h-screen relative">
+    {/* Taustakuva vain tämän osan taakse */}
+    <div 
+      className="w-full h-screen bg-cover bg-center relative"
+      style={{
+        backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+      }}
+    >
+      <div className="absolute inset-0 bg-black/50" />
+      <div className="relative text-center px-4 py-24">
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <Monitor className="w-12 h-12 text-purple-400" />
+          <h1 className="text-6xl font-bold text-white">Malmin LANIT 2025</h1>
+        </div>
+        <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+          Liity seuraamme vuoden parhaimpaan tapahtumaan!
+        </p>
+        <button 
+          onClick={scrollToDetails}
+          className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
+        >
+          Lue lisää
+        </button>
+
+        {/* Nuolen sijainti, painikkeen alapuolelle */}
+        <div className="absolute top-[calc(100%+16px)] left-1/2 transform -translate-x-1/2 animate-bounce">
+          <ChevronDown className="w-8 h-8 text-white" />
         </div>
       </div>
+    </div>
+  </div>
+);
+
 	  
 	  <div className="absolute top-0 left-0 p-4">
         <img src={logo3} alt="Logo" className="h-40 w-auto" />
