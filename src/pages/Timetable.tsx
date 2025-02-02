@@ -64,7 +64,7 @@ function Schedule() {
   };
 
   return (
-    <div className="schedule-container">
+    <div className="schedule-container p-4">
       <h2 className="text-3xl text-center mb-6">Aikataulu: 17.-21.4.2025</h2>
 
       {!isEditing && (
@@ -74,9 +74,12 @@ function Schedule() {
             placeholder="Syötä salasana muokataksesi" 
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border px-2 py-1 mr-2"
+            className="border border-gray-400 px-3 py-2 mr-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <button onClick={handleLogin} className="bg-blue-500 text-white px-4 py-1 rounded">
+          <button 
+            onClick={handleLogin} 
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
             Kirjaudu
           </button>
         </div>
@@ -86,26 +89,26 @@ function Schedule() {
         <table className="w-full table-auto border-collapse border border-gray-500">
           <thead>
             <tr>
-              <th className="border border-gray-400 px-4 py-2">Aika</th>
+              <th className="border border-gray-400 px-4 py-2 bg-gray-100">Aika</th>
               {Object.keys(scheduleData).map((date) => (
-                <th key={date} className="border border-gray-400 px-4 py-2">{date}</th>
+                <th key={date} className="border border-gray-400 px-4 py-2 bg-gray-100">{date}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {times.map((time) => (
               <tr key={time}>
-                <td className="border border-gray-400 px-4 py-2">{time}</td>
+                <td className="border border-gray-400 px-4 py-2 bg-gray-50 font-semibold">{time}</td>
                 {Object.keys(scheduleData).map((date) => {
                   const event = scheduleData[date].find((e) => e.time === time);
                   return (
-                    <td key={date} className="border border-gray-400 px-4 py-2 text-center">
+                    <td key={date} className="border border-gray-400 px-4 py-2 text-center bg-white">
                       {isEditing ? (
                         <input 
                           type="text" 
                           value={event ? event.event : ''}
                           onChange={(e) => handleEventChange(date, time, e.target.value)}
-                          className="border px-1 py-0.5 w-full"
+                          className="border border-gray-400 px-2 py-1 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       ) : (
                         event ? event.event : "-"
