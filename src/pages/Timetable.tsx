@@ -42,7 +42,7 @@ function Schedule() {
     }));
   };
 
-  const handleAddDay = () => {
+  const handleAddTable = () => {
     const newDate = prompt('Syötä uusi päivämäärä (esim. 22.4.2025):');
     if (newDate && !scheduleData[newDate]) {
       setScheduleData(prevData => ({
@@ -84,51 +84,31 @@ function Schedule() {
       {isEditing && (
         <div className="text-center mb-4">
           <button 
-            onClick={handleAddDay} 
+            onClick={handleAddTable} 
             className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
-            + Lisää päivä
+            + Lisää uusi taulukko
           </button>
         </div>
       )}
 
-      <div className="overflow-x-auto">
-        <table className="w-full table-auto border-collapse border border-gray-500">
-          <thead>
-            <tr>
-              <th className="border border-gray-400 px-4 py-2 bg-gray-100">Aika</th>
-              {Object.keys(scheduleData).map((date) => (
-                <th key={date} className="border border-gray-400 px-4 py-2 bg-gray-100">
-                  {isEditing ? (
-                    <input 
-                      type="text" 
-                      value={date}
-                      onChange={(e) => {
-                        const newDate = e.target.value;
-                        setScheduleData(prev => {
-                          const updated = { ...prev };
-                          updated[newDate] = updated[date];
-                          delete updated[date];
-                          return updated;
-                        });
-                      }}
-                      className="border border-gray-400 px-2 py-1 w-full rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <span className="text-black">{date}</span>
-                  )}
-                  {isEditing && (
-                    <button onClick={() => handleAddRow(date)} className="ml-2 text-sm text-blue-500">+ Lisää rivi</button>
-                  )}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {Object.keys(scheduleData).map((date) => (
-              scheduleData[date].map((event, index) => (
+      {Object.keys(scheduleData).map((date) => (
+        <div key={date} className="overflow-x-auto mb-6">
+          <h3 className="text-xl text-center text-black font-bold mb-2">{date}</h3>
+          <table className="w-full table-auto border-collapse border border-gray-500">
+            <thead>
+              <tr>
+                <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Aika</th>
+                <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Tapahtuma</th>
+                {isEditing && (
+                  <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Toiminnot</th>
+                )}
+              </tr>
+            </thead>
+            <tbody>
+              {scheduleData[date].map((event, index) => (
                 <tr key={index}>
-                  <td className="border border-gray-400 px-4 py-2 bg-gray-50 font-semibold">
+                  <td className="border border-gray-400 px-4 py-2 bg-gray-50">
                     {isEditing ? (
                       <input
                         type="text"
@@ -152,12 +132,17 @@ function Schedule() {
                       <span className="text-black">{event.event || "-"}</span>
                     )}
                   </td>
+                  {isEditing && (
+                    <td className="border border-gray-400 px-4 py-2 text-center bg-gray-50">
+                      <button onClick={() => handleAddRow(date)} className="text-sm text-blue-500">+ Lisää rivi</button>
+                    </td>
+                  )}
                 </tr>
-              ))
-            ))}
-          </tbody>
-        </table>
-      </div>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ))}
 
       {isEditing && (
         <div className="text-center mt-4">
