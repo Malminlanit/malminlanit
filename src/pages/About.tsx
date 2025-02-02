@@ -14,7 +14,7 @@ const About = () => {
       </p>
       <span className="font-bold text-2xl">legendoja
 	  </span>
-	<div className="h-20"></div>    	  
+	<div className="h-5"></div>    	  
       <p className="text-lg leading-relaxed mb-4">
         yksi strategia ja ottelu kerrallaan.
       </p>
