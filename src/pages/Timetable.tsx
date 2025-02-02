@@ -9,42 +9,10 @@ const initialScheduleData = {
     { time: "16:00", event: "Välitauko" },
     { time: "18:00", event: "Illallinen" },
     { time: "20:00", event: "Yöpelit ja rentoutuminen" },
-  ],
-  "18.4.2025": [
-    { time: "09:00", event: "Pelit jatkuvat" },
-    { time: "12:00", event: "Lounastauko" },
-    { time: "13:00", event: "Kilpailut jatkuvat" },
-    { time: "16:00", event: "Välitauko" },
-    { time: "18:00", event: "Illallinen" },
-    { time: "20:00", event: "Yöpelit ja rentoutuminen" },
-  ],
-  "19.4.2025": [
-    { time: "09:00", event: "Pelit jatkuvat" },
-    { time: "12:00", event: "Lounastauko" },
-    { time: "13:00", event: "Kilpailut jatkuvat" },
-    { time: "16:00", event: "Välitauko" },
-    { time: "18:00", event: "Illallinen" },
-    { time: "20:00", event: "Yöpelit ja rentoutuminen" },
-  ],
-  "20.4.2025": [
-    { time: "09:00", event: "Pelit jatkuvat" },
-    { time: "12:00", event: "Lounastauko" },
-    { time: "13:00", event: "Kilpailut jatkuvat" },
-    { time: "16:00", event: "Välitauko" },
-    { time: "18:00", event: "Illallinen" },
-    { time: "20:00", event: "Yöpelit ja rentoutuminen" },
-  ],
-  "21.4.2025": [
-    { time: "09:00", event: "Pelit jatkuvat" },
-    { time: "12:00", event: "Lounastauko" },
-    { time: "13:00", event: "Kilpailut jatkuvat" },
-    { time: "16:00", event: "Välitauko" },
-    { time: "18:00", event: "Illallinen ja päättäjäiset" },
   ]
 };
 
 function Schedule() {
-  const times = ["09:00", "10:00", "12:00", "13:00", "16:00", "18:00", "20:00"];
   const [isEditing, setIsEditing] = useState(false);
   const [password, setPassword] = useState('');
   const [scheduleData, setScheduleData] = useState(initialScheduleData);
@@ -58,12 +26,19 @@ function Schedule() {
     }
   };
 
-  const handleEventChange = (date, time, newEvent) => {
+  const handleEventChange = (date, index, key, value) => {
     setScheduleData(prevData => ({
       ...prevData,
-      [date]: prevData[date].map(event => 
-        event.time === time ? { ...event, event: newEvent } : event
+      [date]: prevData[date].map((event, i) => 
+        i === index ? { ...event, [key]: value } : event
       )
+    }));
+  };
+
+  const handleAddRow = (date) => {
+    setScheduleData(prevData => ({
+      ...prevData,
+      [date]: [...prevData[date], { time: "", event: "" }]
     }));
   };
 
@@ -100,32 +75,62 @@ function Schedule() {
             <tr>
               <th className="border border-gray-400 px-4 py-2 bg-gray-100">Aika</th>
               {Object.keys(scheduleData).map((date) => (
-                <th key={date} className="border border-gray-400 px-4 py-2 bg-gray-100">{date}</th>
+                <th key={date} className="border border-gray-400 px-4 py-2 bg-gray-100">
+                  {isEditing ? (
+                    <input 
+                      type="text" 
+                      value={date}
+                      onChange={(e) => {
+                        const newDate = e.target.value;
+                        setScheduleData(prev => {
+                          const updated = { ...prev };
+                          updated[newDate] = updated[date];
+                          delete updated[date];
+                          return updated;
+                        });
+                      }}
+                      className="border border-gray-400 px-2 py-1 w-full rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    date
+                  )}
+                  {isEditing && (
+                    <button onClick={() => handleAddRow(date)} className="ml-2 text-sm text-blue-500">+ Lisää rivi</button>
+                  )}
+                </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {times.map((time) => (
-              <tr key={time}>
-                <td className="border border-gray-400 px-4 py-2 bg-gray-50 font-semibold">{time}</td>
-                {Object.keys(scheduleData).map((date) => {
-                  const event = scheduleData[date].find((e) => e.time === time);
-                  return (
-                    <td key={date} className="border border-gray-400 px-4 py-2 text-center bg-white">
-                      {isEditing ? (
-                        <input 
-                          type="text" 
-                          value={event ? event.event : ''}
-                          onChange={(e) => handleEventChange(date, time, e.target.value)}
-                          className="border border-gray-400 px-2 py-1 w-full rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                      ) : (
-                        <span className="text-black">{event ? event.event : "-"}</span>
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
+            {Object.keys(scheduleData).map((date) => (
+              scheduleData[date].map((event, index) => (
+                <tr key={index}>
+                  <td className="border border-gray-400 px-4 py-2 bg-gray-50 font-semibold">
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        value={event.time}
+                        onChange={(e) => handleEventChange(date, index, 'time', e.target.value)}
+                        className="border border-gray-400 px-2 py-1 w-full rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    ) : (
+                      event.time
+                    )}
+                  </td>
+                  <td className="border border-gray-400 px-4 py-2 text-center bg-white">
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        value={event.event}
+                        onChange={(e) => handleEventChange(date, index, 'event', e.target.value)}
+                        className="border border-gray-400 px-2 py-1 w-full rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    ) : (
+                      event.event || "-"
+                    )}
+                  </td>
+                </tr>
+              ))
             ))}
           </tbody>
         </table>
