@@ -1,11 +1,11 @@
 // netlify/functions/github-api.js
-const fetch = require('node-fetch'); // Tarvitset node-fetch-paketin
+import fetch from 'node-fetch';
 
 exports.handler = async function(event, context) {
-  const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // Käytä ympäristömuuttujaa
-  const REPO_OWNER = 'Malminlanit'; // GitHubin käyttäjätunnus
-  const REPO_NAME = 'malminlanit'; // Repositoryn nimi
-  const FILE_PATH = 'public/schelude.json'; // Tiedoston polku
+  const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+  const REPO_OWNER = 'Malminlanit';
+  const REPO_NAME = 'malminlanit';
+  const FILE_PATH = 'public/schelude.json';
 
   try {
     const response = await fetch(
