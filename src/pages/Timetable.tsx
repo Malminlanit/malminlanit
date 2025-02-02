@@ -60,7 +60,7 @@ function Schedule() {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            message: 'Päivitetään aikataulu',
+            message: 'Päivitetään aikataul',
             content: base64Content,
             sha: sha || undefined,
           })
