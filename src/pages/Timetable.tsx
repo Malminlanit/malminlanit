@@ -48,8 +48,15 @@ function Schedule() {
     });
   };
 
-  const handleSave = () => {
-    alert('Muutokset on tallennettu!');
+  const handleSave = async () => {
+    await fetch('/.netlify/functions/saveSchedule', {
+      method: 'POST',
+      body: JSON.stringify({ schedule: scheduleData }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    alert('Aikataulu tallennettu Netlify Functionsilla!');
     setIsEditing(false);
   };
 
