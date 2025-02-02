@@ -52,7 +52,7 @@ function Schedule() {
 
     try {
       const response = await fetch(
-        `https://api.github.com/Malminlanit/Malminlanit/src/public/schelude.json`,
+        `https://api.github.com/repos/Malminlanit/Malminlanit/src/public/schelude.json`,
         {
           method: 'PUT',
           headers: {
@@ -81,7 +81,7 @@ function Schedule() {
   const getFileSha = async () => {
     try {
       const response = await fetch(
-        `https://api.github.com/Malminlanit/Malminlanit/src/public/schelude.json`,
+        `https://api.github.com/repos/Malminlanit/Malminlanit/src/public/schelude.json`,
         {
           headers: {
             'Authorization': `Bearer ${GITHUB_TOKEN}`,

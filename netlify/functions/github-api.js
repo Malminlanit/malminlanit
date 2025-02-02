@@ -9,7 +9,7 @@ exports.handler = async function(event, context) {
 
   try {
     const response = await fetch(
-      `https://api.github.com/Malminlanit/Malminlanit/src/public/schelude.json`,
+      `https://api.github.com/repos/Malminlanit/Malminlanit/src/public/schelude.json`,
       {
         method: 'GET',
         headers: {
