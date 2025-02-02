@@ -5,11 +5,11 @@ exports.handler = async function(event, context) {
   const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
   const REPO_OWNER = 'Malminlanit';  // GitHub username
   const REPO_NAME = 'malminlanit';  // Repository name
-  const FILE_PATH = 'public/schedule.json';  // Correct file path
+  const FILE_PATH = 'src/public/schedule.json';  // Correct file path
 
   try {
     const response = await fetch(
-      `https://api.github.com/Malminlanit/Malminlanit/public/schelude.json`,
+      `https://api.github.com/Malminlanit/Malminlanit/src/public/schelude.json`,
       {
         method: 'GET',
         headers: {
