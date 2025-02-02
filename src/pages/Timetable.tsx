@@ -52,6 +52,17 @@ function Schedule() {
           i === index ? { ...event, [key]: value } : event
         )
       };
+
+      // Tallennetaan muutos Supabaseen reaaliaikaisesti
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('schedules')
+          .upsert({ id: 1, schedule: updatedData }); // päivitetään aikataulu
+        if (error) {
+          console.error('Virhe aikataulun tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
       return updatedData;
     });
   };
@@ -63,12 +74,23 @@ function Schedule() {
         updatedData[date] = [];
       }
       updatedData[date].push({ time: "", event: "" });
+
+      // Tallennetaan muutos Supabaseen reaaliaikaisesti
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('schedules')
+          .upsert({ id: 1, schedule: updatedData });
+        if (error) {
+          console.error('Virhe aikataulun tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
       return updatedData;
     });
   };
 
   const handleSave = async () => {
-    // Tallenna aikataulu Supabaseen
+    // Tallennetaan aikataulu Supabaseen
     const { error } = await supabase
       .from('schedules')
       .upsert({ id: 1, schedule: scheduleData });
