@@ -122,15 +122,15 @@ function App() {
           <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
             Liity seuraamme vuoden parhaimpaan tapahtumaan!
           </p>
-          <button 
-            onClick={scrollToDetails}
-            className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
-          >
-            Lue lisää
-          </button>
-          <div className="absolute top- [calc(100%+16px)]left-1/2 -translate-x-1/2 animate-bounce">
-            <ChevronDown className="w-8 h-8 text-white" />
-          </div>
+		  <div className="absolute inset-x-0 bottom-24 flex flex-col items-center">
+				<button 
+				onClick={scrollToDetails}
+				className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
+			  >
+				Lue lisää
+			  </button>
+			  <ChevronDown className="w-8 h-8 text-white animate-bounce mt-4" />
+		   </div>
         </div>
       </div>
 	  
