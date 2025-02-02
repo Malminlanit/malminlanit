@@ -21,8 +21,9 @@ const About = () => {
         <p className="text-lg leading-relaxed">
           Valmistaudu sukeltamaan Malmin sykkeeseen, jossa virtaava olut ja eeppiset pelit luovat täydellisen alustan maailman parhaalle turnaukselle!
         </p>
+		
 		<div className="mt-10 flex items-center justify-center">
-			<img src={mother} alt="Mother" className="h-300 w-auto rounded-lg shadow-lg" />
+		  <img src={mother} alt="Mother" className="h-300 w-auto rounded-lg shadow-lg" />
       </div>
     </div>
   );
