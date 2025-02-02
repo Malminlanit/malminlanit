@@ -42,6 +42,18 @@ function Schedule() {
     }));
   };
 
+  const handleAddDay = () => {
+    const newDate = prompt('Syötä uusi päivämäärä (esim. 22.4.2025):');
+    if (newDate && !scheduleData[newDate]) {
+      setScheduleData(prevData => ({
+        ...prevData,
+        [newDate]: [{ time: "", event: "" }]
+      }));
+    } else {
+      alert('Päivämäärä on jo olemassa tai syöte on tyhjä.');
+    }
+  };
+
   const handleSave = () => {
     alert('Muutokset tallennettu!');
     setIsEditing(false);
@@ -49,7 +61,7 @@ function Schedule() {
 
   return (
     <div className="schedule-container p-4">
-      <h2 className="text-3xl text-center mb-6">Aikataulu: 17.-21.4.2025</h2>
+      <h2 className="text-3xl text-center mb-6">Aikataulu</h2>
 
       {!isEditing && (
         <div className="text-center mb-4">
@@ -65,6 +77,17 @@ function Schedule() {
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Kirjaudu
+          </button>
+        </div>
+      )}
+
+      {isEditing && (
+        <div className="text-center mb-4">
+          <button 
+            onClick={handleAddDay} 
+            className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            + Lisää päivä
           </button>
         </div>
       )}
@@ -92,7 +115,7 @@ function Schedule() {
                       className="border border-gray-400 px-2 py-1 w-full rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   ) : (
-                    date
+                    <span className="text-black">{date}</span>
                   )}
                   {isEditing && (
                     <button onClick={() => handleAddRow(date)} className="ml-2 text-sm text-blue-500">+ Lisää rivi</button>
@@ -114,7 +137,7 @@ function Schedule() {
                         className="border border-gray-400 px-2 py-1 w-full rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     ) : (
-                      event.time
+                      <span className="text-black">{event.time}</span>
                     )}
                   </td>
                   <td className="border border-gray-400 px-4 py-2 text-center bg-white">
@@ -126,7 +149,7 @@ function Schedule() {
                         className="border border-gray-400 px-2 py-1 w-full rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     ) : (
-                      event.event || "-"
+                      <span className="text-black">{event.event || "-"}</span>
                     )}
                   </td>
                 </tr>
