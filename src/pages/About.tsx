@@ -12,8 +12,9 @@ const About = () => {
       <p className="text-lg leading-relaxed mb-4">
         Täällä, missä kaverukset, tietokoneet ja nörttiys kohtaavat, syntyy tapahtumia, jotka jäävät historiaan. Me emme vain pelaa – me luomme
       </p>
-      <span className="font-bold text-2xl">legendoja</span>
-	  <br>
+      <span className="font-bold text-2xl">legendoja
+	  </span>
+	  <p> </>
       <p className="text-lg leading-relaxed mb-4">
         yksi strategia ja ottelu kerrallaan.
       </p>
