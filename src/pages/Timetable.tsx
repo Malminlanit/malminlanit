@@ -41,8 +41,8 @@ function Schedule() {
           <pre>{JSON.stringify(scheduleData, null, 2)}</pre>  {/* Näytetään haettu data */}
         </div>
       ) : (
-        <p>Ladataan aikataulua...</p>  {/* Näytetään latausviesti */}
-      )}
+        <p>Ladataan aikataulua...</p> ) {/* Näytetään latausviesti */}
+      }
     </div>
   );
 }
