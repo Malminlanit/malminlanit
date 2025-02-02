@@ -5,7 +5,7 @@
     { "time": "12:00", "event": "Lounastauko" },
     { "time": "13:00", "event": "Kilpailut jatkuvat" },
     { "time": "16:00", "event": "Välitauko" },
-    { "time": "18:00", "event": "Illallinen" },
+    { "time": "18:00", "event": "Illalline" },
     { "time": "20:00", "event": "Yöpelit ja rentoutuminen" }
   ]
 }
