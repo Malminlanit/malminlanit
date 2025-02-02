@@ -9,7 +9,7 @@ exports.handler = async function(event, context) {
 
   try {
     const response = await fetch(
-      `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`,
+      `https://api.github.com/repos/Malminlanit/malminlanit/public/schelude.json}`,
       {
         method: 'GET',
         headers: {
