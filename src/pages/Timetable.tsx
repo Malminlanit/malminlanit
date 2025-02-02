@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import supabase from '../services/supabase';  // Tuodaan supabase.js
+import supabase from '../services/supabase.js';  // Tuodaan supabase.js
 
 const initialScheduleData = {
   "17.4.2025": [
