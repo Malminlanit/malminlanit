@@ -71,7 +71,7 @@ function Schedule() {
     // Tallenna aikataulu Supabaseen
     const { error } = await supabase
       .from('schedules')
-      .upsert({ id: 1, schedule: scheduleData });  // Käytetään yksittäistä tallennusta, jos aikataulu on vain yksi
+      .upsert({ id: 1, schedule: scheduleData });
 
     if (error) {
       console.error('Virhe aikataulun tallentamisessa:', error);
