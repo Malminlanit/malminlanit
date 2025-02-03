@@ -66,4 +66,4 @@ const Lore = () => {
       </div>
     </div>
   );
-};
+;
