@@ -149,11 +149,11 @@ function App() {
         <Router>
           <div className="min-h-screen text-white relative">
             <nav className="bg-black/30 py-4 px-6 flex justify-center space-x-6">
-              <Link to="/" className="hover:text-purple-400">Etusivu</Link>
-              <Link to="/about" className="hover:text-purple-400">Tietoa</Link>
-              <Link to="/contact" className="hover:text-purple-400">Ohjeet</Link>
-			  <Link to="/timetable" className="hover:text-purple-400">Aikataulu</Link>
-			  <Link to="/Lore" className="hover:text-purple-400">Lore</Link>
+              <Link to="/" className="text-lg hover:text-purple-400">Etusivu</Link>
+              <Link to="/about" className="text-lg hover:text-purple-400">Tietoa</Link>
+              <Link to="/contact" className="text-lg hover:text-purple-400">Ohjeet</Link>
+			  <Link to="/timetable" className="text-lg hover:text-purple-400">Aikataulu</Link>
+			  <Link to="/Lore" className="text-lg hover:text-purple-400">Lore</Link>
             </nav>
 
             <Routes>
