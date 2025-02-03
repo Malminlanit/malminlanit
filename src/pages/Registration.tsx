@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import supabase from '../services/supabase'; // Oletetaan, että Supabase on konfiguroitu
+import supabase from '../services/supabase';
 
 const RegistrationForm = () => {
   const [gameTag, setGameTag] = useState('');
@@ -8,19 +7,19 @@ const RegistrationForm = () => {
   const [bringingPC, setBringingPC] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const [registeredUsers, setRegisteredUsers] = useState<string[]>([]);
+  const [registrations, setRegistrations] = useState<string[]>([]);
 
   const availableDays = ['2025-04-17', '2025-04-18', '2025-04-19', '2025-04-20', '2025-04-21'];
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const { data, error } = await supabase.from('registrations').select('game_tag');
-      if (error) console.error('Virhe ladattaessa käyttäjiä:', error);
-      else setRegisteredUsers(data.map((entry) => entry.game_tag));
-    };
+    fetchRegistrations();
+  }, []);
 
-    fetchUsers();
-  }, [success]);
+  const fetchRegistrations = async () => {
+    const { data, error } = await supabase.from('registrations').select('game_tag');
+    if (data) setRegistrations(data.map((item) => item.game_tag));
+    if (error) console.error('Virhe haettaessa ilmoittautumisia:', error);
+  };
 
   const handleDayChange = (day: string) => {
     setSelectedDays((prevDays) =>
@@ -30,7 +29,6 @@ const RegistrationForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!gameTag || selectedDays.length === 0) {
       setError('Pelitunnus ja vähintään yksi saapumispäivämäärä ovat pakollisia!');
       return;
@@ -38,7 +36,6 @@ const RegistrationForm = () => {
 
     try {
       const sortedDays = [...selectedDays].sort();
-
       const { error } = await supabase
         .from('registrations')
         .insert([{ game_tag: gameTag, selected_days: sortedDays, bringing_pc: bringingPC }]);
@@ -49,17 +46,15 @@ const RegistrationForm = () => {
       setGameTag('');
       setSelectedDays([]);
       setBringingPC(false);
+      fetchRegistrations();
     } catch (error) {
       setError('Ilmoittautuminen epäonnistui. Yritä uudelleen!');
     }
   };
 
   return (
-    <div className="p-6 bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white rounded-xl shadow-lg max-w-lg mx-auto">
-      <h2 className="text-4xl font-bold text-center mb-4">Ilmoittautuminen Lan-tapahtumaan</h2>
-
-      {error && <p className="text-red-500">{error}</p>}
-      {success && <p className="text-green-500">Ilmoittautuminen onnistui!</p>}
+    <div className="p-6 bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white rounded-xl shadow-lg max-w-lg mx-auto space-y-8">
+      <h2 className="text-4xl font-bold text-center">Ilmoittautuminen Lan-tapahtumaan</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -76,20 +71,18 @@ const RegistrationForm = () => {
 
         <div>
           <label className="block text-lg">Valitse saapumispäivämäärät</label>
-          <div className="space-y-2">
-            {availableDays.map((day) => (
-              <div key={day} className="flex items-center">
-                <input
-                  type="checkbox"
-                  id={day}
-                  checked={selectedDays.includes(day)}
-                  onChange={() => handleDayChange(day)}
-                  className="w-4 h-4 mr-2"
-                />
-                <label htmlFor={day} className="text-white">{day}</label>
-              </div>
-            ))}
-          </div>
+          {availableDays.map((day) => (
+            <div key={day} className="flex items-center">
+              <input
+                type="checkbox"
+                id={day}
+                checked={selectedDays.includes(day)}
+                onChange={() => handleDayChange(day)}
+                className="w-4 h-4 mr-2"
+              />
+              <label htmlFor={day} className="text-white">{day}</label>
+            </div>
+          ))}
         </div>
 
         <div>
@@ -98,10 +91,10 @@ const RegistrationForm = () => {
             type="checkbox"
             id="bringingPC"
             checked={bringingPC}
-            onChange={() => setBringingPC((prevState) => !prevState)}
+            onChange={() => setBringingPC((prev) => !prev)}
             className="w-4 h-4 mr-2"
           />
-          <span className="text-white">Kyllä, tuon koneen.</span>
+          <span>Kyllä, tuon koneen.</span>
         </div>
 
         <button
@@ -112,34 +105,37 @@ const RegistrationForm = () => {
         </button>
       </form>
 
-      {/* 🎯 Rekisteröityneiden laatikko */}
-      <div className="mt-8">
-        <h3 className="text-2xl font-bold text-center mb-2">Jo rekisteröityneet</h3>
-        <div className="relative h-40 overflow-hidden bg-black bg-opacity-20 rounded-lg border border-indigo-400 shadow-inner">
-          {registeredUsers.map((user, index) => (
-            <motion.div
-              key={index}
-              className="absolute bg-white text-black font-semibold px-3 py-1 rounded-full shadow-md"
-              animate={{
-                x: ['0%', '80%', '0%'], // Pomppii vasemmalta oikealle ja takaisin
-                y: [0, 10, 0], // Kevyt pystysuuntainen pomppu
-              }}
-              transition={{
-                duration: 4 + Math.random() * 2, // Satunnainen kesto
-                repeat: Infinity,
-                repeatType: 'loop',
-                ease: 'easeInOut',
-                delay: Math.random(), // Satunnainen viive
-              }}
-              style={{
-                top: `${Math.random() * 80}%`, // Satunnainen pystysijainti
-              }}
-            >
-              {user}
-            </motion.div>
-          ))}
-        </div>
+      <div className="bg-black p-4 rounded-lg relative h-60 overflow-hidden border-2 border-indigo-500">
+        <h3 className="text-xl text-center mb-2">Jo rekisteröityneet</h3>
+        {registrations.map((tag, index) => (
+          <div
+            key={index}
+            className="bouncing-tag absolute bg-indigo-400 text-black px-2 py-1 rounded shadow-md font-bold"
+            style={{
+              left: `${Math.random() * 90}%`,
+              top: `${Math.random() * 90}%`,
+              animationDuration: `${3 + Math.random() * 2}s`,
+              animationDirection: Math.random() > 0.5 ? 'normal' : 'reverse',
+            }}
+          >
+            {tag}
+          </div>
+        ))}
       </div>
+
+      <style>{`
+        .bouncing-tag {
+          animation: bounce 4s infinite alternate ease-in-out;
+        }
+        @keyframes bounce {
+          from {
+            transform: translate(0, 0);
+          }
+          to {
+            transform: translate(100px, 100px);
+          }
+        }
+      `}</style>
     </div>
   );
 };
