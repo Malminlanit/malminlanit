@@ -72,9 +72,9 @@ const Lore = () => {
 					"Malmin lanit eivät ole pelkästään pelejä varten.\n\n" +
 					"Ne ovat paikka, jossa Varjokuningas ei koskaan voita. Koska niin kauan kuin joku nauraa, jakaa hetken ystävän kanssa ja muistaa, että he eivät ole yksin, Varjokuningas pysyy siellä, minne hän kuuluu – varjoihin."
 				}
-
-              }
-            />
+				/>
+          }
+          />  
           )}
           {selectedStory === 'story2' && (
             <Story
