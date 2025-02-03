@@ -342,8 +342,9 @@ function TournamentBracket() {
                           Lisää pelaaja A
                         </button>
                       )}
-                      <br />
-                      <strong>Joukkue B:</strong> 
+                    </div>
+                    <div className="text-sm text-gray-700">
+                      <strong>Joukkue B:</strong>
                       {isEditing && match.teamB.map((player, i) => (
                         <input
                           key={i}
@@ -365,29 +366,16 @@ function TournamentBracket() {
                     </div>
                   </td>
                   <td className="border border-gray-400 px-4 py-2 bg-white text-black">
-                    <input 
-                      type="number" 
-                      value={match.scoreA}
-                      onChange={(e) => handleScoreChange(date, index, 'scoreA', e.target.value)}
-                      className={`w-16 bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
-                      disabled={!isEditing}
-                    />
-                    -
-                    <input 
-                      type="number" 
-                      value={match.scoreB}
-                      onChange={(e) => handleScoreChange(date, index, 'scoreB', e.target.value)}
-                      className={`w-16 bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
-                      disabled={!isEditing}
-                    />
+                    <strong>{match.teamA.join(' / ')}</strong> - {match.scoreA} <br />
+                    <strong>{match.teamB.join(' / ')}</strong> - {match.scoreB}
                   </td>
                   {isEditing && (
                     <td className="border border-gray-400 px-4 py-2 bg-white text-black">
-                      <button
+                      <button 
                         onClick={() => handleDeleteMatch(date, index)}
-                        className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg"
+                        className="bg-red-500 text-white px-4 py-2 rounded-lg focus:outline-none"
                       >
-                        Poista ottelu
+                        Poista
                       </button>
                     </td>
                   )}
@@ -398,20 +386,23 @@ function TournamentBracket() {
           {isEditing && (
             <button 
               onClick={() => handleAddMatch(date)}
-              className="bg-green-500 text-white px-6 py-2 mt-4 rounded-lg"
+              className="mt-4 bg-green-500 text-white px-6 py-2 rounded-lg focus:outline-none"
             >
-              Lisää uusi ottelu
+              Lisää ottelu
             </button>
           )}
         </div>
       ))}
+
       {isEditing && (
-        <button
-          onClick={handleSave}
-          className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 mt-6 rounded-lg"
-        >
-          Tallenna muutokset
-        </button>
+        <div className="text-center mt-6">
+          <button 
+            onClick={handleSave}
+            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg"
+          >
+            Tallenna
+          </button>
+        </div>
       )}
     </div>
   );
