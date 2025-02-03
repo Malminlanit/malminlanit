@@ -3,17 +3,25 @@ import supabase from '../services/supabase'; // Oletetaan, että Supabase on kon
 
 const RegistrationForm = () => {
   const [gameTag, setGameTag] = useState('');
-  const [arrivalDate, setArrivalDate] = useState('');
+  const [selectedDays, setSelectedDays] = useState<string[]>([]); // Talletetaan valitut päivät
   const [bringingPC, setBringingPC] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+
+  const availableDays = ['2025-04-17', '2025-04-18', '2025-04-19', '2025-04-20', '2025-04-21'];
+
+  const handleDayChange = (day: string) => {
+    setSelectedDays(prevDays =>
+      prevDays.includes(day) ? prevDays.filter(d => d !== day) : [...prevDays, day]
+    );
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Yksinkertainen validointi
-    if (!gameTag || !arrivalDate) {
-      setError('Pelitunnus ja saapumispäivämäärä ovat pakollisia!');
+    if (!gameTag || selectedDays.length === 0) {
+      setError('Pelitunnus ja vähintään yksi saapumispäivämäärä ovat pakollisia!');
       return;
     }
 
@@ -21,7 +29,7 @@ const RegistrationForm = () => {
       const { error } = await supabase
         .from('registrations')
         .insert([
-          { game_tag: gameTag, arrival_date: arrivalDate, bringing_pc: bringingPC }
+          { game_tag: gameTag, selected_days: selectedDays, bringing_pc: bringingPC }
         ]);
 
       if (error) throw error;
@@ -29,7 +37,7 @@ const RegistrationForm = () => {
       // Ilmoittautuminen onnistui
       setSuccess(true);
       setGameTag('');
-      setArrivalDate('');
+      setSelectedDays([]);
       setBringingPC(false);
     } catch (error) {
       setError('Ilmoittautuminen epäonnistui. Yritä uudelleen!');
@@ -55,19 +63,23 @@ const RegistrationForm = () => {
             required
           />
         </div>
-        
+
         <div>
-          <label htmlFor="arrivalDate" className="block text-lg">Saapumispäivämäärä</label>
-          <input
-            type="date"
-            id="arrivalDate"
-            value={arrivalDate}
-            onChange={(e) => setArrivalDate(e.target.value)}
-            min="2025-04-17" // Minimi päivämäärä
-            max="2025-04-21" // Maksimi päivämäärä
-            className="w-full p-2 rounded-md border border-gray-300 bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-600"
-            required
-          />
+          <label className="block text-lg">Valitse saapumispäivämäärät</label>
+          <div className="space-y-2">
+            {availableDays.map((day) => (
+              <div key={day} className="flex items-center">
+                <input
+                  type="checkbox"
+                  id={day}
+                  checked={selectedDays.includes(day)}
+                  onChange={() => handleDayChange(day)}
+                  className="w-4 h-4 mr-2"
+                />
+                <label htmlFor={day} className="text-white">{day}</label>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div>
