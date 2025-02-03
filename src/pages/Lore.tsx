@@ -65,7 +65,7 @@ const Lore = () => {
 				}		
           />		  
           )}
-		</div>
+		
 		
           {selectedStory === 'story2' && (
             <Story
