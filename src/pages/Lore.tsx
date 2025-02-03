@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Story from './Story'; // Assuming you have a Story component
+import Story from '../components/Story'; // Assuming you have a Story component
 
 const Lore = () => {
   const [selectedStory, setSelectedStory] = useState('story1');
