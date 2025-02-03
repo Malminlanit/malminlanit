@@ -19,22 +19,23 @@ const RegistrationForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Yksinkertainen validointi
     if (!gameTag || selectedDays.length === 0) {
       setError('Pelitunnus ja vähintään yksi saapumispäivämäärä ovat pakollisia!');
       return;
     }
 
     try {
+      // Lajitellaan päivämäärät ennen tallennusta
+      const sortedDays = [...selectedDays].sort();
+
       const { error } = await supabase
         .from('registrations')
         .insert([
-          { game_tag: gameTag, selected_days: selectedDays, bringing_pc: bringingPC }
+          { game_tag: gameTag, selected_days: sortedDays, bringing_pc: bringingPC }
         ]);
 
       if (error) throw error;
 
-      // Ilmoittautuminen onnistui
       setSuccess(true);
       setGameTag('');
       setSelectedDays([]);
