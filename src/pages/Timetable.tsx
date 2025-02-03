@@ -137,6 +137,25 @@ function Schedule() {
     });
   };
 
+  const handleDeleteDay = (date) => {
+    setScheduleData(prevData => {
+      const updatedData = { ...prevData };
+      delete updatedData[date]; // Poistaa päivän
+
+      // Tallennetaan muutos Supabaseen reaaliaikaisesti
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('schedules')
+          .upsert({ id: 1, schedule: updatedData });
+        if (error) {
+          console.error('Virhe aikataulun tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
+      return updatedData;
+    });
+  };
+
   const handleSave = async () => {
     // Tallennetaan aikataulu Supabaseen
     const { error } = await supabase
@@ -195,7 +214,17 @@ function Schedule() {
 
       {Object.keys(scheduleData).map((date) => (
         <div key={date} className="overflow-x-auto mb-6">
-          <h3 className="text-xl text-center text-white font-bold mb-2">{date}</h3>
+          <h3 className="text-xl text-center text-black font-bold mb-2">
+            {date}
+            {isEditing && (
+              <button 
+                onClick={() => handleDeleteDay(date)}
+                className="text-sm text-red-500 ml-4"
+              >
+                Poista päivä
+              </button>
+            )}
+          </h3>
           <table className="w-full table-auto border-collapse border border-gray-500">
             <thead>
               <tr>
@@ -242,6 +271,16 @@ function Schedule() {
               ))}
             </tbody>
           </table>
+          {isEditing && (
+            <div className="text-center mt-4">
+              <button 
+                onClick={() => handleAddRow(date)} 
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                Lisää rivi
+              </button>
+            </div>
+          )}
         </div>
       ))}
 
