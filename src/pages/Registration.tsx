@@ -8,7 +8,13 @@ interface BouncingTag {
   y: number;
   dx: number;
   dy: number;
+  color: string;
 }
+
+const getRandomColor = () => {
+  const colors = ['#FF6B6B', '#6BCB77', '#4D96FF', '#FFD93D', '#845EC2', '#FF9671'];
+  return colors[Math.floor(Math.random() * colors.length)];
+};
 
 const RegistrationForm = () => {
   const [gameTag, setGameTag] = useState('');
@@ -28,8 +34,9 @@ const RegistrationForm = () => {
           game_tag: item.game_tag,
           x: Math.random() * 300,
           y: Math.random() * 300,
-          dx: Math.random() > 0.5 ? 2 : -2,
-          dy: Math.random() > 0.5 ? 2 : -2,
+          dx: (Math.random() > 0.5 ? 1 : -1) * (1 + Math.random() * 2),
+          dy: (Math.random() > 0.5 ? 1 : -1) * (1 + Math.random() * 2),
+          color: getRandomColor(),
         }));
         setBouncingTags(tags);
       }
@@ -45,17 +52,17 @@ const RegistrationForm = () => {
           let newX = tag.x + tag.dx;
           let newY = tag.y + tag.dy;
 
-          if (newX <= 0 || newX >= 350) tag.dx *= -1;
-          if (newY <= 0 || newY >= 350) tag.dy *= -1;
+          if (newX <= 0 || newX >= 360) tag.dx *= -1;
+          if (newY <= 0 || newY >= 360) tag.dy *= -1;
 
           return {
             ...tag,
-            x: newX <= 0 || newX >= 350 ? tag.x + tag.dx : newX,
-            y: newY <= 0 || newY >= 350 ? tag.y + tag.dy : newY,
+            x: newX <= 0 || newX >= 360 ? tag.x + tag.dx : newX,
+            y: newY <= 0 || newY >= 360 ? tag.y + tag.dy : newY,
           };
         })
       );
-    }, 20);
+    }, 16); // 60 FPS
 
     return () => clearInterval(interval);
   }, []);
@@ -78,21 +85,21 @@ const RegistrationForm = () => {
 
   return (
     <div className="p-6 text-white max-w-lg mx-auto">
-      <h2 className="text-4xl font-bold text-center mb-4">Ilmoittautuminen Lan-tapahtumaan</h2>
+      <h2 className="text-4xl font-extrabold text-center mb-4 text-indigo-300 drop-shadow-lg">Ilmoittautuminen Lan-tapahtumaan</h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 bg-indigo-800 p-4 rounded-xl shadow-md">
         <input
           type="text"
           value={gameTag}
           onChange={(e) => setGameTag(e.target.value)}
           placeholder="Pelitunnus"
-          className="w-full p-2 rounded-md bg-white text-black"
+          className="w-full p-2 rounded-md bg-white text-black shadow-inner"
           required
         />
 
         <div>
           {availableDays.map((day) => (
-            <label key={day} className="block">
+            <label key={day} className="block text-sm">
               <input
                 type="checkbox"
                 checked={selectedDays.includes(day)}
@@ -101,32 +108,40 @@ const RegistrationForm = () => {
                     prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
                   )
                 }
+                className="mr-2"
               />
               {day}
             </label>
           ))}
         </div>
 
-        <label>
+        <label className="flex items-center">
           <input
             type="checkbox"
             checked={bringingPC}
             onChange={() => setBringingPC((prev) => !prev)}
+            className="mr-2"
           />
-          Kone mukana
+          Tuon oman koneen
         </label>
 
-        <button type="submit" className="w-full bg-indigo-600 py-2 rounded-lg">Ilmoittaudu</button>
+        <button type="submit" className="w-full bg-indigo-600 py-2 rounded-lg hover:bg-indigo-700 transition">Ilmoittaudu</button>
       </form>
 
       <div className="mt-10">
-        <h3 className="text-2xl font-bold text-center mb-2">Jo rekisteröityneet</h3>
-        <div className="relative w-80 h-80 border-2 border-white mx-auto overflow-hidden bg-black">
+        <h3 className="text-2xl font-bold text-center mb-3 text-teal-400 drop-shadow-md">🎮 Jo rekisteröityneet 🎮</h3>
+        <div className="relative w-96 h-96 border-4 border-teal-500 mx-auto rounded-xl overflow-hidden bg-gray-900 shadow-lg">
           {bouncingTags.map((tag) => (
             <div
               key={tag.id}
-              className="absolute bg-indigo-500 text-white px-2 py-1 rounded"
-              style={{ left: tag.x, top: tag.y }}
+              className="absolute text-white font-bold text-sm px-3 py-2 rounded-full shadow-md"
+              style={{
+                left: tag.x,
+                top: tag.y,
+                backgroundColor: tag.color,
+                boxShadow: `0 0 10px ${tag.color}`,
+                transition: 'transform 0.1s',
+              }}
             >
               {tag.game_tag}
             </div>
