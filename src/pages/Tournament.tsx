@@ -43,7 +43,7 @@ const initialMatchData = {
 function TournamentBracket() {
   const [isEditing, setIsEditing] = useState(false);
   const [password, setPassword] = useState('');
-  const [selectedGameType, setSelectedGameType] = useState("Tappelupeli");  // Pelityypin valinta
+  const [selectedGameType, setSelectedGameType] = useState("Tappelupeli");
   const [matchData, setMatchData] = useState(initialMatchData);
   const [tempMatchData, setTempMatchData] = useState(initialMatchData);
 
@@ -181,7 +181,7 @@ function TournamentBracket() {
         </div>
       )}
 
-      {Object.keys(tempMatchData[selectedGameType]).map((date) => (
+      {Object.keys(tempMatchData[selectedGameType] || {}).map((date) => (
         <div key={date} className="overflow-x-auto mb-6 bg-white/20 backdrop-blur-lg rounded-xl">
           <h3 className="text-xl text-center text-black font-bold mb-2">
             {date}
@@ -217,22 +217,24 @@ function TournamentBracket() {
                           <input
                             type="text"
                             value={match.teamA.join(", ")}
-                            onChange={(e) =>
-                              match.teamA.map((player, playerIndex) =>
-                                handlePlayerChange(selectedGameType, date, index, 'teamA', playerIndex, e.target.value)
-                              )
-                            }
+                            onChange={(e) => {
+                              const players = e.target.value.split(", ");
+                              players.forEach((player, playerIndex) => {
+                                handlePlayerChange(selectedGameType, date, index, 'teamA', playerIndex, player);
+                              });
+                            }}
                             className="border px-2 py-1 rounded-lg"
                           />
                           {" vs "}
                           <input
                             type="text"
                             value={match.teamB.join(", ")}
-                            onChange={(e) =>
-                              match.teamB.map((player, playerIndex) =>
-                                handlePlayerChange(selectedGameType, date, index, 'teamB', playerIndex, e.target.value)
-                              )
-                            }
+                            onChange={(e) => {
+                              const players = e.target.value.split(", ");
+                              players.forEach((player, playerIndex) => {
+                                handlePlayerChange(selectedGameType, date, index, 'teamB', playerIndex, player);
+                              });
+                            }}
                             className="border px-2 py-1 rounded-lg"
                           />
                         </>
