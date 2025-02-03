@@ -240,7 +240,7 @@ function TournamentBracket() {
 
   return (
     <div className="bracket-container min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white p-6">
-      <h2 className="text-4xl font-bold text-center mb-6">Kahden joukkueen Tappeluturnaus</h2>
+      <h2 className="text-4xl font-bold text-center mb-6">Turnaukset</h2>
 
       {!isEditing && (
         <div className="text-center mb-4">
@@ -264,7 +264,7 @@ function TournamentBracket() {
         <div className="text-center mb-4">
           <input 
             type="text" 
-            placeholder="Syötä uusi päivämäärä"
+            placeholder="Syötä uusi turnaus"
             value={newDay}
             onChange={(e) => setNewDay(e.target.value)}
             className="border border-gray-400 px-4 py-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500"
