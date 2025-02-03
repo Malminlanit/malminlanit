@@ -2,31 +2,49 @@ import React, { useState, useEffect } from 'react';
 import supabase from '../services/supabase.js';
 
 const initialMatchData = {
-  "Päivämäärä 1": [
-    {
-      time: "10:00",
-      match: "Joukkue A vs Joukkue B",
-      teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"],
-      teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"],
-      scoreA: 0,
-      scoreB: 0
-    }
-  ]
+  "Tappelupeli": {
+    "Päivämäärä 1": [
+      {
+        time: "10:00",
+        match: "Joukkue A vs Joukkue B",
+        teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"],
+        teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"],
+        scoreA: 0,
+        scoreB: 0
+      }
+    ]
+  },
+  "FPS": {
+    "Päivämäärä 1": [
+      {
+        time: "12:00",
+        match: "Joukkue A vs Joukkue B",
+        teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"],
+        teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"],
+        scoreA: 0,
+        scoreB: 0
+      }
+    ]
+  },
+  "MOBA": {
+    "Päivämäärä 1": [
+      {
+        time: "14:00",
+        match: "Joukkue A vs Joukkue B",
+        teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"],
+        teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"],
+        scoreA: 0,
+        scoreB: 0
+      }
+    ]
+  }
 };
 
 function TournamentBracket() {
   const [isEditing, setIsEditing] = useState(false);
   const [password, setPassword] = useState('');
+  const [selectedGameType, setSelectedGameType] = useState("Tappelupeli");  // Pelityypin valinta
   const [matchData, setMatchData] = useState(initialMatchData);
-  const [newDay, setNewDay] = useState('');
-  const [gameType, setGameType] = useState('Tappelupeli');
-  const [gameResults, setGameResults] = useState({
-    "Tappelupeli": [],
-    "FPS": [],
-    "MOBA": []
-  });
-
-  // Tallentaa väliaikaisia muokkauksia
   const [tempMatchData, setTempMatchData] = useState(initialMatchData);
 
   useEffect(() => {
@@ -38,7 +56,7 @@ function TournamentBracket() {
 
       if (data) {
         setMatchData(data.match_data);
-        setTempMatchData(data.match_data); // Asetetaan myös väliaikainen tila
+        setTempMatchData(data.match_data);
       } else {
         console.error('Virhe turnauksen tietojen hakemisessa:', error);
       }
@@ -55,45 +73,48 @@ function TournamentBracket() {
     }
   };
 
-  const handleScoreChange = (date, index, team, value) => {
+  const handleScoreChange = (gameType, date, index, team, value) => {
     setTempMatchData(prevData => {
       const updatedData = {
         ...prevData,
-        [date]: prevData[date].map((match, i) =>
-          i === index ? { ...match, [team]: value } : match
-        )
+        [gameType]: {
+          ...prevData[gameType],
+          [date]: prevData[gameType][date].map((match, i) =>
+            i === index ? { ...match, [team]: value } : match
+          )
+        }
       };
       return updatedData;
     });
   };
 
-  const handlePlayerChange = (date, matchIndex, teamIndex, playerIndex, value) => {
+  const handlePlayerChange = (gameType, date, matchIndex, teamIndex, playerIndex, value) => {
     setTempMatchData(prevData => {
       const updatedData = { ...prevData };
-      updatedData[date][matchIndex][teamIndex][playerIndex] = value;
+      updatedData[gameType][date][matchIndex][teamIndex][playerIndex] = value;
       return updatedData;
     });
   };
 
-  const handleMatchTimeChange = (date, matchIndex, value) => {
+  const handleMatchTimeChange = (gameType, date, matchIndex, value) => {
     setTempMatchData(prevData => {
       const updatedData = { ...prevData };
-      updatedData[date][matchIndex].time = value;
+      updatedData[gameType][date][matchIndex].time = value;
       return updatedData;
     });
   };
 
-  const handleAddMatch = (date) => {
+  const handleAddMatch = (gameType, date) => {
     setTempMatchData(prevData => {
       const updatedData = { ...prevData };
-      if (!updatedData[date]) {
-        updatedData[date] = [];
+      if (!updatedData[gameType][date]) {
+        updatedData[gameType][date] = [];
       }
-      updatedData[date].push({
+      updatedData[gameType][date].push({
         time: "",
         match: "Joukkue A vs Joukkue B",
-        teamA: ["", "", "", "", ""],  // Tyhjät pelaajat
-        teamB: ["", "", "", "", ""],  // Tyhjät pelaajat
+        teamA: ["", "", "", "", ""],
+        teamB: ["", "", "", "", ""],
         scoreA: 0,
         scoreB: 0
       });
@@ -101,34 +122,10 @@ function TournamentBracket() {
     });
   };
 
-  const handleDeleteMatch = (date, index) => {
+  const handleDeleteMatch = (gameType, date, index) => {
     setTempMatchData(prevData => {
       const updatedData = { ...prevData };
-      updatedData[date].splice(index, 1);
-      return updatedData;
-    });
-  };
-
-  const handleAddDay = () => {
-    if (!newDay) {
-      alert('Syötä päivämäärä');
-      return;
-    }
-
-    setTempMatchData(prevData => {
-      const updatedData = { ...prevData };
-      if (!updatedData[newDay]) {
-        updatedData[newDay] = [{ time: "", match: "", teamA: [], teamB: [], scoreA: 0, scoreB: 0 }];
-      }
-      setNewDay('');
-      return updatedData;
-    });
-  };
-
-  const handleDeleteDay = (date) => {
-    setTempMatchData(prevData => {
-      const updatedData = { ...prevData };
-      delete updatedData[date];
+      updatedData[gameType][date].splice(index, 1);
       return updatedData;
     });
   };
@@ -142,7 +139,7 @@ function TournamentBracket() {
       console.error('Virhe turnauksen tietojen tallentamisessa:', error);
     } else {
       alert('Turnauksen tiedot tallennettu Supabaseen!');
-      setMatchData(tempMatchData);  // Vahvistetaan muutokset
+      setMatchData(tempMatchData);
       setIsEditing(false);
     }
   };
@@ -173,8 +170,8 @@ function TournamentBracket() {
         <div className="text-center mb-4">
           <label className="mr-4 text-black">Valitse peli:</label>
           <select
-            value={gameType}
-            onChange={(e) => setGameType(e.target.value)}
+            value={selectedGameType}
+            onChange={(e) => setSelectedGameType(e.target.value)}
             className="border border-gray-400 px-4 py-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
             <option value="Tappelupeli">Tappelupeli</option>
@@ -184,18 +181,10 @@ function TournamentBracket() {
         </div>
       )}
 
-      {Object.keys(tempMatchData).map((date) => (
+      {Object.keys(tempMatchData[selectedGameType]).map((date) => (
         <div key={date} className="overflow-x-auto mb-6 bg-white/20 backdrop-blur-lg rounded-xl">
           <h3 className="text-xl text-center text-black font-bold mb-2">
             {date}
-            {isEditing && (
-              <button
-                onClick={() => handleDeleteDay(date)}
-                className="text-sm text-red-500 ml-4"
-              >
-                Poista päivä
-              </button>
-            )}
           </h3>
           <table className="w-full table-auto border-collapse">
             <thead>
@@ -207,14 +196,14 @@ function TournamentBracket() {
               </tr>
             </thead>
             <tbody>
-              {tempMatchData[date].map((match, index) => (
+              {tempMatchData[selectedGameType][date].map((match, index) => (
                 <tr key={index} className="text-center">
                   <td className="border border-gray-400 px-4 py-2 text-black">
                     {isEditing ? (
                       <input
                         type="time"
                         value={match.time}
-                        onChange={(e) => handleMatchTimeChange(date, index, e.target.value)}
+                        onChange={(e) => handleMatchTimeChange(selectedGameType, date, index, e.target.value)}
                         className="border px-2 py-1 rounded-lg"
                       />
                     ) : (
@@ -230,7 +219,7 @@ function TournamentBracket() {
                             value={match.teamA.join(", ")}
                             onChange={(e) =>
                               match.teamA.map((player, playerIndex) =>
-                                handlePlayerChange(date, index, 'teamA', playerIndex, e.target.value)
+                                handlePlayerChange(selectedGameType, date, index, 'teamA', playerIndex, e.target.value)
                               )
                             }
                             className="border px-2 py-1 rounded-lg"
@@ -241,7 +230,7 @@ function TournamentBracket() {
                             value={match.teamB.join(", ")}
                             onChange={(e) =>
                               match.teamB.map((player, playerIndex) =>
-                                handlePlayerChange(date, index, 'teamB', playerIndex, e.target.value)
+                                handlePlayerChange(selectedGameType, date, index, 'teamB', playerIndex, e.target.value)
                               )
                             }
                             className="border px-2 py-1 rounded-lg"
@@ -258,14 +247,14 @@ function TournamentBracket() {
                         <input
                           type="number"
                           value={match.scoreA}
-                          onChange={(e) => handleScoreChange(date, index, 'scoreA', e.target.value)}
+                          onChange={(e) => handleScoreChange(selectedGameType, date, index, 'scoreA', e.target.value)}
                           className="border px-2 py-1 rounded-lg"
                         />{" "}
                         -{" "}
                         <input
                           type="number"
                           value={match.scoreB}
-                          onChange={(e) => handleScoreChange(date, index, 'scoreB', e.target.value)}
+                          onChange={(e) => handleScoreChange(selectedGameType, date, index, 'scoreB', e.target.value)}
                           className="border px-2 py-1 rounded-lg"
                         />
                       </div>
@@ -277,7 +266,7 @@ function TournamentBracket() {
                     {isEditing && (
                       <>
                         <button
-                          onClick={() => handleDeleteMatch(date, index)}
+                          onClick={() => handleDeleteMatch(selectedGameType, date, index)}
                           className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
                         >
                           Poista ottelu
@@ -291,24 +280,6 @@ function TournamentBracket() {
           </table>
         </div>
       ))}
-
-      {isEditing && (
-        <div className="text-center mt-8">
-          <h3 className="text-xl text-black font-bold mb-4">Lisää uusi päivä</h3>
-          <input
-            type="date"
-            value={newDay}
-            onChange={(e) => setNewDay(e.target.value)}
-            className="border px-4 py-2 rounded-lg bg-white text-black"
-          />
-          <button
-            onClick={handleAddDay}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg ml-4"
-          >
-            Lisää päivä
-          </button>
-        </div>
-      )}
 
       {isEditing && (
         <div className="text-center mt-6">
