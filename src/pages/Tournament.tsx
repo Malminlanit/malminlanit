@@ -1,9 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import supabase from '../services/supabase.js';
+import React, { useState, useEffect } from 'react'; 
+import supabase from '../services/supabase.js'; 
 
 const initialMatchData = {
   "Päivämäärä 1": [
-    { time: "10:00", match: "Joukkue A vs Joukkue B", teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"], teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"], scoreA: 0, scoreB: 0 }
+    { 
+      time: "10:00", 
+      match: "Joukkue A vs Joukkue B", 
+      teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"], 
+      teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"], 
+      scoreA: 0, 
+      scoreB: 0,
+      format: "Best of 3"  // Pelimuoto lisätty
+    }
   ]
 };
 
@@ -11,7 +19,8 @@ function TournamentBracket() {
   const [isEditing, setIsEditing] = useState(false);
   const [password, setPassword] = useState('');
   const [matchData, setMatchData] = useState(initialMatchData);
-  const [newDay, setNewDay] = useState('');
+  const [newDay, setNewDay] = useState(''); 
+  const [newFormat, setNewFormat] = useState('Best of 3');  // Pelimuodon valinta
 
   useEffect(() => {
     const getMatchData = async () => {
@@ -72,7 +81,8 @@ function TournamentBracket() {
         teamA: ["", "", "", "", ""],  // Tyhjät pelaajat
         teamB: ["", "", "", "", ""],  // Tyhjät pelaajat
         scoreA: 0,
-        scoreB: 0
+        scoreB: 0,
+        format: newFormat  // Lisää pelimuoto
       });
 
       const saveToSupabase = async () => {
@@ -115,7 +125,7 @@ function TournamentBracket() {
     setMatchData(prevData => {
       const updatedData = { ...prevData };
       if (!updatedData[newDay]) {
-        updatedData[newDay] = [{ time: "", match: "", teamA: [], teamB: [], scoreA: 0, scoreB: 0 }];
+        updatedData[newDay] = [{ time: "", match: "", teamA: [], teamB: [], scoreA: 0, scoreB: 0, format: newFormat }];
       }
 
       const saveToSupabase = async () => {
@@ -195,6 +205,15 @@ function TournamentBracket() {
             onChange={(e) => setNewDay(e.target.value)}
             className="border border-gray-400 px-4 py-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
+          <select 
+            value={newFormat}
+            onChange={(e) => setNewFormat(e.target.value)}
+            className="border border-gray-400 px-4 py-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            <option value="Best of 1">Best of 1</option>
+            <option value="Best of 3">Best of 3</option>
+            <option value="Best of 5">Best of 5</option>
+          </select>
           <button 
             onClick={handleAddDay} 
             className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg focus:outline-none"
@@ -223,6 +242,7 @@ function TournamentBracket() {
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Aika</th>
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Ottelu</th>
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Pisteet</th>
+                <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Pelimuoto</th> {/* Pelimuoto sarake */}
                 {isEditing && (
                   <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Toiminnot</th>
                 )}
@@ -249,7 +269,7 @@ function TournamentBracket() {
                           onChange={(e) => handleScoreChange(date, index, 'scoreA', e.target.value)}
                           className="w-16 px-3 py-2 bg-gray-100 rounded-md"
                         />
-                        -
+                        - 
                         <input
                           type="number"
                           value={match.scoreB}
@@ -261,6 +281,7 @@ function TournamentBracket() {
                       `${match.scoreA} - ${match.scoreB}`
                     )}
                   </td>
+                  <td className="border border-gray-400 px-4 py-2 bg-white text-black">{match.format}</td> {/* Pelimuoto */}
                   {isEditing && (
                     <td className="border border-gray-400 px-4 py-2 bg-white text-black">
                       <button 
