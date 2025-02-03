@@ -9,8 +9,7 @@ const initialMatchData = {
       teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"], 
       teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"], 
       scoreA: 0, 
-      scoreB: 0,
-      format: "Best of 3"  // Pelimuoto lisätty
+      scoreB: 0
     }
   ]
 };
@@ -19,8 +18,7 @@ function TournamentBracket() {
   const [isEditing, setIsEditing] = useState(false);
   const [password, setPassword] = useState('');
   const [matchData, setMatchData] = useState(initialMatchData);
-  const [newDay, setNewDay] = useState(''); 
-  const [newFormat, setNewFormat] = useState('Best of 3');  // Pelimuodon valinta
+  const [newDay, setNewDay] = useState('');
 
   useEffect(() => {
     const getMatchData = async () => {
@@ -69,6 +67,35 @@ function TournamentBracket() {
     });
   };
 
+  const handleTeamChange = (date, index, team, playerIndex, value) => {
+    setMatchData(prevData => {
+      const updatedData = {
+        ...prevData,
+        [date]: prevData[date].map((match, i) =>
+          i === index
+            ? {
+                ...match,
+                [team]: match[team].map((player, j) =>
+                  j === playerIndex ? value : player
+                ),
+              }
+            : match
+        ),
+      };
+
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('matches')
+          .upsert({ id: 1, match_data: updatedData });
+        if (error) {
+          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
+      return updatedData;
+    });
+  };
+
   const handleAddMatch = (date) => {
     setMatchData(prevData => {
       const updatedData = { ...prevData };
@@ -82,7 +109,6 @@ function TournamentBracket() {
         teamB: ["", "", "", "", ""],  // Tyhjät pelaajat
         scoreA: 0,
         scoreB: 0,
-        format: newFormat  // Lisää pelimuoto
       });
 
       const saveToSupabase = async () => {
@@ -125,7 +151,7 @@ function TournamentBracket() {
     setMatchData(prevData => {
       const updatedData = { ...prevData };
       if (!updatedData[newDay]) {
-        updatedData[newDay] = [{ time: "", match: "", teamA: [], teamB: [], scoreA: 0, scoreB: 0, format: newFormat }];
+        updatedData[newDay] = [{ time: "", match: "", teamA: [], teamB: [], scoreA: 0, scoreB: 0 }];
       }
 
       const saveToSupabase = async () => {
@@ -176,7 +202,7 @@ function TournamentBracket() {
 
   return (
     <div className="bracket-container min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white p-6">
-      <h2 className="text-4xl font-bold text-center mb-6">5v5 Turnauskaavio</h2>
+      <h2 className="text-4xl font-bold text-center mb-6">Kahden joukkueen Tappeluturnaus</h2>
 
       {!isEditing && (
         <div className="text-center mb-4">
@@ -205,15 +231,6 @@ function TournamentBracket() {
             onChange={(e) => setNewDay(e.target.value)}
             className="border border-gray-400 px-4 py-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
-          <select 
-            value={newFormat}
-            onChange={(e) => setNewFormat(e.target.value)}
-            className="border border-gray-400 px-4 py-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500"
-          >
-            <option value="Best of 1">Best of 1</option>
-            <option value="Best of 3">Best of 3</option>
-            <option value="Best of 5">Best of 5</option>
-          </select>
           <button 
             onClick={handleAddDay} 
             className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg focus:outline-none"
@@ -242,7 +259,6 @@ function TournamentBracket() {
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Aika</th>
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Ottelu</th>
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Pisteet</th>
-                <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Pelimuoto</th> {/* Pelimuoto sarake */}
                 {isEditing && (
                   <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Toiminnot</th>
                 )}
@@ -251,37 +267,62 @@ function TournamentBracket() {
             <tbody>
               {matchData[date].map((match, index) => (
                 <tr key={index}>
-                  <td className="border border-gray-400 px-4 py-2 bg-white text-black">{match.time}</td>
                   <td className="border border-gray-400 px-4 py-2 bg-white text-black">
-                    {match.match} 
+                    <input 
+                      type="time" 
+                      value={match.time}
+                      onChange={(e) => handleScoreChange(date, index, 'time', e.target.value)}
+                      className="w-20 bg-gray-100 rounded-md"
+                    />
+                  </td>
+                  <td className="border border-gray-400 px-4 py-2 bg-white text-black">
+                    <input 
+                      type="text" 
+                      value={match.match}
+                      onChange={(e) => handleScoreChange(date, index, 'match', e.target.value)}
+                      className="w-full bg-gray-100 rounded-md"
+                    />
                     <div className="text-sm text-gray-700">
-                      <strong>Joukkue A:</strong> {match.teamA.join(', ')}
+                      <strong>Joukkue A:</strong> 
+                      {match.teamA.map((player, i) => (
+                        <input
+                          key={i}
+                          type="text"
+                          value={player}
+                          onChange={(e) => handleTeamChange(date, index, 'teamA', i, e.target.value)}
+                          className="w-20 bg-gray-100 m-1 rounded-md"
+                        />
+                      ))}
                       <br />
-                      <strong>Joukkue B:</strong> {match.teamB.join(', ')}
+                      <strong>Joukkue B:</strong> 
+                      {match.teamB.map((player, i) => (
+                        <input
+                          key={i}
+                          type="text"
+                          value={player}
+                          onChange={(e) => handleTeamChange(date, index, 'teamB', i, e.target.value)}
+                          className="w-20 bg-gray-100 m-1 rounded-md"
+                        />
+                      ))}
                     </div>
                   </td>
                   <td className="border border-gray-400 px-4 py-2 bg-white text-black">
-                    {isEditing ? (
-                      <div>
-                        <input
-                          type="number"
-                          value={match.scoreA}
-                          onChange={(e) => handleScoreChange(date, index, 'scoreA', e.target.value)}
-                          className="w-16 px-3 py-2 bg-gray-100 rounded-md"
-                        />
-                        - 
-                        <input
-                          type="number"
-                          value={match.scoreB}
-                          onChange={(e) => handleScoreChange(date, index, 'scoreB', e.target.value)}
-                          className="w-16 px-3 py-2 bg-gray-100 rounded-md"
-                        />
-                      </div>
-                    ) : (
-                      `${match.scoreA} - ${match.scoreB}`
-                    )}
+                    <div>
+                      <input
+                        type="number"
+                        value={match.scoreA}
+                        onChange={(e) => handleScoreChange(date, index, 'scoreA', e.target.value)}
+                        className="w-16 px-3 py-2 bg-gray-100 rounded-md"
+                      />
+                      -
+                      <input
+                        type="number"
+                        value={match.scoreB}
+                        onChange={(e) => handleScoreChange(date, index, 'scoreB', e.target.value)}
+                        className="w-16 px-3 py-2 bg-gray-100 rounded-md"
+                      />
+                    </div>
                   </td>
-                  <td className="border border-gray-400 px-4 py-2 bg-white text-black">{match.format}</td> {/* Pelimuoto */}
                   {isEditing && (
                     <td className="border border-gray-400 px-4 py-2 bg-white text-black">
                       <button 
