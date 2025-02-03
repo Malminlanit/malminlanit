@@ -3,8 +3,8 @@ import supabase from '../services/supabase'; // Oletetaan, että Supabase on kon
 
 const RegistrationForm = () => {
   const [gameTag, setGameTag] = useState('');
-  const [arrivalDate, setArrivalDate] = useState(''); // Muutettu saapumisaika päivämääräksi
-  const [bringingPC, setBringingPC] = useState(false); // Uusi tila koneen mukanaololle
+  const [arrivalDate, setArrivalDate] = useState('');
+  const [bringingPC, setBringingPC] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
@@ -19,9 +19,9 @@ const RegistrationForm = () => {
 
     try {
       const { error } = await supabase
-        .from('registrations') // Oletetaan, että taulun nimi on 'registrations'
+        .from('registrations')
         .insert([
-          { game_tag: gameTag, arrival_date: arrivalDate, bringing_pc: bringingPC } // Tallennetaan myös 'bringingPC'
+          { game_tag: gameTag, arrival_date: arrivalDate, bringing_pc: bringingPC }
         ]);
 
       if (error) throw error;
@@ -59,10 +59,12 @@ const RegistrationForm = () => {
         <div>
           <label htmlFor="arrivalDate" className="block text-lg">Saapumispäivämäärä</label>
           <input
-            type="date" // Muutettu input-tyypiksi "date"
+            type="date"
             id="arrivalDate"
             value={arrivalDate}
             onChange={(e) => setArrivalDate(e.target.value)}
+            min="2025-04-17" // Minimi päivämäärä
+            max="2025-04-21" // Maksimi päivämäärä
             className="w-full p-2 rounded-md border border-gray-300 bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-600"
             required
           />
