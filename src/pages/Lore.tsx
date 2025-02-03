@@ -46,7 +46,7 @@ const Lore = () => {
 					"Kuningatar Taimi, Malmin suvereeni valtias, oli viisas ja hyväsydäminen. \n\n" +
 					"Hänen valtakuntansa oli täynnä salaisuuksia, ja hänen hallitsemansa Malmi oli kuin elävä organismi, joka hengitti katujen ja kujien välistä henkeä. Kuningatar Taimi oli kuitenkin pidetty enemmän kuin pelätty. Hän hallitsi Malmin kulmakaupunkia lempeällä kädellä, mutta tiesi, että salaisuudet saattavat kääntyä koko valtakunnan kohtaloksi. \n\n" +
 					"Malmin katujen välinen kulkureitti, tunnettu nimellä Kuun polku, oli vanha salainen tie, joka kuljetti asukkaita vuosituhansia taaksepäin." +
-					"Tälle tielle oli piilotettu kadonneita aarteita ja kadonnut voima, mutta vain harvat olivat uskaltaneet astua sen varjoon. Moni oli kadonnut matkoillaan, mutta vain harvat palasivat kertomaan mitä he olivat nähneet." +
+					"Tälle tielle oli piilotettu kadonneita aarteita ja kadonnut voima, mutta vain harvat olivat uskaltaneet astua sen varjoon. Moni oli kadonnut matkoillaan, mutta vain harvat palasivat kertomaan mitä he olivat nähneet. " +
 					"Eräänä päivänä saapui Malmiin nuori seikkailija, Väinö, joka oli kuullut tarinoita Kuun polusta ja päätti itse astua sen varjoon.\n\n" +
 					"Väinö ei ollut tavallinen kulkija; hänellä oli oma, salainen tehtävänsä. Hän oli saanut tietää, että polun syvimmässä päässä piileksii Varjokuningas, ikivanha olento, joka oli vuosikymmenet pidätetty Malmin syvyyksissä. Kuningas oli unohdettu, mutta Väinö oli löytänyt sen jäljet.\n\n" +
 					"Väinö ei ollut matkalla yksin." +
