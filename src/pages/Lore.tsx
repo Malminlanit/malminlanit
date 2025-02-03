@@ -1,6 +1,6 @@
 const Lore = () => {
   const [selectedStory, setSelectedStory] = useState('story1');
-
+}
   const handleStoryChange = (story) => {
     setSelectedStory(story);
   };
