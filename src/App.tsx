@@ -21,7 +21,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import backgroundMusic from './assets/background-music.mp3';
-import introVideo from './assets/intro.mp4'; // Importoi intro-video
+import introVideo from './assets/intro.mp4'; // Import intro video
 
 function App() {
   const [email, setEmail] = useState('');
@@ -77,7 +77,6 @@ function App() {
   };
 
   useEffect(() => {
-    // Jos introvideo on jo päättynyt, musiikki käynnistetään automaattisesti.
     if (!showIntro && audioRef.current && !isPlaying) {
       audioRef.current.play();
       setIsPlaying(true);
@@ -105,41 +104,38 @@ function App() {
   }
 
   return (
-  <div className="h-screen relative">
-    {/* Taustakuva vain tämän osan taakse */}
-    <div 
-      className="w-full h-screen bg-cover bg-center relative"
-      style={{
-        backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
-      }}
-    >
-      <div className="absolute inset-0 bg-black/50" />
-      <div className="relative text-center px-4 py-24">
-        <div className="flex items-center justify-center gap-3 mb-6">
-          <Monitor className="w-12 h-12 text-purple-400" />
-          <h1 className="text-6xl font-bold text-white">Malmin LANIT 2025</h1>
-        </div>
-        <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-          Liity seuraamme vuoden parhaimpaan tapahtumaan!
-        </p>
-        <button 
-          onClick={scrollToDetails}
-          className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
-        >
-          Lue lisää
-        </button>
+    <div className="h-screen relative">
+      {/* Taustakuva vain tämän osan taakse */}
+      <div 
+        className="w-full h-screen bg-cover bg-center relative"
+        style={{
+          backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+        }}
+      >
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative text-center px-4 py-24">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <Monitor className="w-12 h-12 text-purple-400" />
+            <h1 className="text-6xl font-bold text-white">Malmin LANIT 2025</h1>
+          </div>
+          <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+            Liity seuraamme vuoden parhaimpaan tapahtumaan!
+          </p>
+          <button 
+            onClick={scrollToDetails}
+            className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
+          >
+            Lue lisää
+          </button>
 
-        {/* Nuolen sijainti, painikkeen alapuolelle */}
-        <div className="absolute top-[calc(100%+16px)] left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronDown className="w-8 h-8 text-white" />
+          {/* Nuolen sijainti, painikkeen alapuolelle */}
+          <div className="absolute top-[calc(100%+16px)] left-1/2 transform -translate-x-1/2 animate-bounce">
+            <ChevronDown className="w-8 h-8 text-white" />
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-);
 
-	  	
-	  <div className="absolute top-0 left-0 p-4">
+      <div className="absolute top-0 left-0 p-4">
         <img src={logo3} alt="Logo" className="h-40 w-auto" />
       </div>
 
@@ -156,14 +152,14 @@ function App() {
               <Link to="/" className="hover:text-purple-400">Etusivu</Link>
               <Link to="/about" className="hover:text-purple-400">Tietoa</Link>
               <Link to="/contact" className="hover:text-purple-400">Ohjeet</Link>
-			  <Link to="/timetable" className="hover:text-purple-400">Aikataulu</Link>
+              <Link to="/timetable" className="hover:text-purple-400">Aikataulu</Link>
             </nav>
 
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
-			  <Route path="/timetable" element={<Timetable />} />
+              <Route path="/timetable" element={<Timetable />} />
             </Routes>
 
             <div className="fixed bottom-4 right-4 bg-black/50 p-4 rounded-xl shadow-lg">
@@ -242,16 +238,18 @@ function App() {
                   <img src={logo3} alt="Logo" className="h-16 w-auto" />
                   <span className="font-bold text-xl">MALMIN LANIT</span>
                 </div>
-                <p className="text-gray-400">Alkoholin Huuruista Suunnittelua – Jo Vuodesta 2024</p>
+                <p className="text-gray-400">Alkoholin Huuruista Suunnittelua - jo vuodesta 2024.</p>
               </div>
-              
-              <div className="text-center space-y-2">
-                <div className="flex items-center justify-center gap-2">
-                  <Mail className="w-5 h-5 text-purple-400" />
-                  <a href="mailto:malminlanit@gmail.com" className="hover:text-purple-400 transition-colors">
-                    malminlanit@gmail.com
-                  </a>
-                </div>
+              <div className="text-center">
+                <ul className="space-y-2">
+                  <li><Link to="/" className="text-white hover:text-purple-400">Etusivu</Link></li>
+                  <li><Link to="/about" className="text-white hover:text-purple-400">Tietoa</Link></li>
+                  <li><Link to="/contact" className="text-white hover:text-purple-400">Ohjeet</Link></li>
+                  <li><Link to="/timetable" className="text-white hover:text-purple-400">Aikataulu</Link></li>
+                </ul>
+              </div>
+              <div className="text-center">
+                <p className="text-gray-400">Tapahtuma #malminlanit</p>
               </div>
             </div>
           </div>
