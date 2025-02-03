@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import supabase from '../services/supabase.js';  // Tuodaan supabase.js
 
 const initialScheduleData = {
@@ -75,6 +75,25 @@ function Schedule() {
         updatedData[date] = [];
       }
       updatedData[date].push({ time: "", event: "" });
+
+      // Tallennetaan muutos Supabaseen reaaliaikaisesti
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('schedules')
+          .upsert({ id: 1, schedule: updatedData });
+        if (error) {
+          console.error('Virhe aikataulun tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
+      return updatedData;
+    });
+  };
+
+  const handleDeleteRow = (date, index) => {
+    setScheduleData(prevData => {
+      const updatedData = { ...prevData };
+      updatedData[date].splice(index, 1); // Poistaa rivin
 
       // Tallennetaan muutos Supabaseen reaaliaikaisesti
       const saveToSupabase = async () => {
@@ -176,7 +195,7 @@ function Schedule() {
 
       {Object.keys(scheduleData).map((date) => (
         <div key={date} className="overflow-x-auto mb-6">
-          <h3 className="text-xl text-center text-black font-bold mb-2">{date}</h3>
+          <h3 className="text-xl text-center text-white font-bold mb-2">{date}</h3>
           <table className="w-full table-auto border-collapse border border-gray-500">
             <thead>
               <tr>
@@ -216,7 +235,7 @@ function Schedule() {
                   </td>
                   {isEditing && (
                     <td className="border border-gray-400 px-4 py-2 text-center bg-gray-50">
-                      <button onClick={() => handleAddRow(date)} className="text-sm text-blue-500">+ Lisää rivi</button>
+                      <button onClick={() => handleDeleteRow(date, index)} className="text-sm text-red-500">Poista rivi</button>
                     </td>
                   )}
                 </tr>
