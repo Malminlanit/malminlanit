@@ -100,6 +100,35 @@ function TournamentBracket() {
     });
   };
 
+  const handleAddPlayer = (date, index, team) => {
+    if (!isEditing) return;
+
+    setMatchData(prevData => {
+      const updatedData = {
+        ...prevData,
+        [date]: prevData[date].map((match, i) =>
+          i === index
+            ? {
+                ...match,
+                [team]: [...match[team], ""], // Lisää tyhjä kenttä joukkueen pelaajalle
+              }
+            : match
+        ),
+      };
+
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('matches')
+          .upsert({ id: 1, match_data: updatedData });
+        if (error) {
+          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
+      return updatedData;
+    });
+  };
+
   const handleAddMatch = (date) => {
     if (!isEditing) return;
 
@@ -305,6 +334,12 @@ function TournamentBracket() {
                           disabled={!isEditing}
                         />
                       ))}
+                      <button
+                        onClick={() => handleAddPlayer(date, index, 'teamA')}
+                        className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
+                      >
+                        Lisää pelaaja A
+                      </button>
                       <br />
                       <strong>Joukkue B:</strong> 
                       {match.teamB.map((player, i) => (
@@ -317,6 +352,12 @@ function TournamentBracket() {
                           disabled={!isEditing}
                         />
                       ))}
+                      <button
+                        onClick={() => handleAddPlayer(date, index, 'teamB')}
+                        className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
+                      >
+                        Lisää pelaaja B
+                      </button>
                     </div>
                   </td>
                   <td className="border border-gray-400 px-4 py-2 bg-white text-black">
@@ -340,9 +381,9 @@ function TournamentBracket() {
                   </td>
                   {isEditing && (
                     <td className="border border-gray-400 px-4 py-2 bg-white text-black">
-                      <button 
-                        onClick={() => handleDeleteMatch(date, index)} 
-                        className="bg-red-500 text-white px-4 py-2 rounded-lg"
+                      <button
+                        onClick={() => handleDeleteMatch(date, index)}
+                        className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg"
                       >
                         Poista ottelu
                       </button>
@@ -354,8 +395,8 @@ function TournamentBracket() {
           </table>
           {isEditing && (
             <button 
-              onClick={() => handleAddMatch(date)} 
-              className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg mt-4"
+              onClick={() => handleAddMatch(date)}
+              className="bg-green-500 text-white px-6 py-2 mt-4 rounded-lg"
             >
               Lisää uusi ottelu
             </button>
@@ -363,9 +404,9 @@ function TournamentBracket() {
         </div>
       ))}
       {isEditing && (
-        <button 
+        <button
           onClick={handleSave}
-          className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg mt-4"
+          className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 mt-6 rounded-lg"
         >
           Tallenna muutokset
         </button>
