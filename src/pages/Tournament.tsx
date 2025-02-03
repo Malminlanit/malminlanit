@@ -324,60 +324,62 @@ function TournamentBracket() {
                     />
                     <div className="text-sm text-gray-700">
                       <strong>Joukkue A:</strong> 
-                      {match.teamA.map((player, i) => (
+                      {isEditing && match.teamA.map((player, i) => (
                         <input
                           key={i}
                           type="text"
                           value={player}
                           onChange={(e) => handleTeamChange(date, index, 'teamA', i, e.target.value)}
-                          className={`w-20 bg-gray-200 m-1 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                          className={`w-20 bg-gray-200 m-1 rounded-md text-black`}
                           disabled={!isEditing}
                         />
                       ))}
-                      <button
-                        onClick={() => handleAddPlayer(date, index, 'teamA')}
-                        className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
-                      >
-                        Lisää pelaaja A
-                      </button>
+                      {isEditing && (
+                        <button
+                          onClick={() => handleAddPlayer(date, index, 'teamA')}
+                          className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
+                        >
+                          Lisää pelaaja A
+                        </button>
+                      )}
                       <br />
                       <strong>Joukkue B:</strong> 
-                      {match.teamB.map((player, i) => (
+                      {isEditing && match.teamB.map((player, i) => (
                         <input
                           key={i}
                           type="text"
                           value={player}
                           onChange={(e) => handleTeamChange(date, index, 'teamB', i, e.target.value)}
-                          className={`w-20 bg-gray-200 m-1 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                          className={`w-20 bg-gray-200 m-1 rounded-md text-black`}
                           disabled={!isEditing}
                         />
                       ))}
-                      <button
-                        onClick={() => handleAddPlayer(date, index, 'teamB')}
-                        className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
-                      >
-                        Lisää pelaaja B
-                      </button>
+                      {isEditing && (
+                        <button
+                          onClick={() => handleAddPlayer(date, index, 'teamB')}
+                          className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
+                        >
+                          Lisää pelaaja B
+                        </button>
+                      )}
                     </div>
                   </td>
                   <td className="border border-gray-400 px-4 py-2 bg-white text-black">
-                    <div>
-                      <input
-                        type="number"
-                        value={match.scoreA}
-                        onChange={(e) => handleScoreChange(date, index, 'scoreA', e.target.value)}
-                        className={`w-16 px-3 py-2 bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
-                        disabled={!isEditing}
-                      />
-                      -
-                      <input
-                        type="number"
-                        value={match.scoreB}
-                        onChange={(e) => handleScoreChange(date, index, 'scoreB', e.target.value)}
-                        className={`w-16 px-3 py-2 bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
-                        disabled={!isEditing}
-                      />
-                    </div>
+                    <input 
+                      type="number" 
+                      value={match.scoreA}
+                      onChange={(e) => handleScoreChange(date, index, 'scoreA', e.target.value)}
+                      className={`w-16 bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                      disabled={!isEditing}
+                    />
+                    -
+                    <input 
+                      type="number" 
+                      value={match.scoreB}
+                      onChange={(e) => handleScoreChange(date, index, 'scoreB', e.target.value)}
+                      className={`w-16 bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                      disabled={!isEditing}
+                    />
                   </td>
                   {isEditing && (
                     <td className="border border-gray-400 px-4 py-2 bg-white text-black">
