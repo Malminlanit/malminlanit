@@ -38,7 +38,7 @@ function TournamentBracket() {
   }, []);
 
   const handleLogin = () => {
-    if (password === 'salasana123') {
+    if (password === 'malminvauhti') {
       setIsEditing(true);
     } else {
       alert('Väärä salasana');
