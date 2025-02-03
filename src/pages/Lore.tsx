@@ -83,7 +83,7 @@ const Lore = () => {
 					"Alma käytti ikivanhoja riimuja luodakseen suojia, mutta huomasi pian, että pelkkä magia ei riittänyt. He tarvitsivat Malmin sielun – sen, mikä teki Malmista kodin.\n\n" +
 					"Kuningatar Taimi astui etulinjaan, ei kruunussa vaan panssarissa, johon oli kaiverrettu Malmin vanhimmat symbolit.\n\n" +
 					"Hänen äänensä kantoi yli taistelun myrskyn:\n\n" +
-					"\"Malmi ei ole vain paikka. Se on muisto, ystävyys ja rohkeus. Niin kauan kuin muistamme keitä olemme, mikään varjo ei voi meitä niellä.\"\n\n" +
+					"Malmi ei ole vain paikka. Se on muisto, ystävyys ja rohkeus. Niin kauan kuin muistamme keitä olemme, mikään varjo ei voi meitä niellä.\"\n\n" +
 					"Nämä sanat sytyttivät toivon liekin jokaisen sotilaan sydämessä.\n\n" +
 					"Iivari, joka oli kamppaillut omien varjojensa kanssa, teki lopulta uhrauksen. Hän hyppäsi suoraan legioonan sydämeen, varastaen heidän johtavan amuletin, joka piti heidät yhteydessä Varjokuninkaaseen. Hänen tekonsa antoi Väinölle ja Almalle mahdollisuuden suorittaa viimeisen rituaalin — sellaisen, jonka voima tuli Malmin ihmisistä itsestään.\n\n" +
 					"Varjolegioona hajosi, ja Varjokuninkaan ote maailmasta murtui.\n\n" +
