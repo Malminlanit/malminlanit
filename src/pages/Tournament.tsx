@@ -239,27 +239,27 @@ function TournamentBracket() {
                           />
                         </>
                       ) : (
-                        `${match.teamA.join(', ')} vs ${match.teamB.join(', ')}` 
+                        `${match.teamA.join(", ")} vs ${match.teamB.join(", ")}`
                       )}
                     </div>
                   </td>
                   <td className="border border-gray-400 px-4 py-2 text-black">
                     {isEditing ? (
-                      <div>
+                      <>
                         <input
                           type="number"
                           value={match.scoreA}
-                          onChange={(e) => handleScoreChange(selectedGameType, date, index, 'scoreA', e.target.value)}
+                          onChange={(e) => handleScoreChange(selectedGameType, date, index, 'scoreA', parseInt(e.target.value))}
                           className="border px-2 py-1 rounded-lg"
-                        />{" "}
-                        -{" "}
+                        />
+                        {" - "}
                         <input
                           type="number"
                           value={match.scoreB}
-                          onChange={(e) => handleScoreChange(selectedGameType, date, index, 'scoreB', e.target.value)}
+                          onChange={(e) => handleScoreChange(selectedGameType, date, index, 'scoreB', parseInt(e.target.value))}
                           className="border px-2 py-1 rounded-lg"
                         />
-                      </div>
+                      </>
                     ) : (
                       `${match.scoreA} - ${match.scoreB}`
                     )}
@@ -269,9 +269,9 @@ function TournamentBracket() {
                       <>
                         <button
                           onClick={() => handleDeleteMatch(selectedGameType, date, index)}
-                          className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
+                          className="bg-red-600 text-white px-4 py-2 rounded-lg"
                         >
-                          Poista ottelu
+                          Poista
                         </button>
                       </>
                     )}
@@ -280,6 +280,16 @@ function TournamentBracket() {
               ))}
             </tbody>
           </table>
+          {isEditing && (
+            <div className="text-center mt-4">
+              <button
+                onClick={() => handleAddMatch(selectedGameType, date)}
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg focus:outline-none"
+              >
+                Lisää Ottelu
+              </button>
+            </div>
+          )}
         </div>
       ))}
 
@@ -287,9 +297,9 @@ function TournamentBracket() {
         <div className="text-center mt-6">
           <button
             onClick={handleSave}
-            className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg focus:outline-none"
           >
-            Hyväksy muutokset
+            Tallenna
           </button>
         </div>
       )}
