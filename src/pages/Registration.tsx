@@ -51,7 +51,7 @@ const RegistrationForm = () => {
             id="gameTag"
             value={gameTag}
             onChange={(e) => setGameTag(e.target.value)}
-            className="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+            className="w-full p-2 rounded-md border border-gray-300 bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-600"
             required
           />
         </div>
@@ -63,7 +63,7 @@ const RegistrationForm = () => {
             id="arrivalTime"
             value={arrivalTime}
             onChange={(e) => setArrivalTime(e.target.value)}
-            className="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+            className="w-full p-2 rounded-md border border-gray-300 bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-600"
             required
           />
         </div>
