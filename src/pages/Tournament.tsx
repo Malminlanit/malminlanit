@@ -9,10 +9,7 @@ const initialMatchData = {
       teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"], 
       teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"], 
       scoreA: 0, 
-      scoreB: 0,
-      pointType: 'team', // 'individual' or 'team'
-      individualScoresA: [0, 0, 0, 0, 0], // Yksilöiden pisteet
-      individualScoresB: [0, 0, 0, 0, 0]  // Yksilöiden pisteet
+      scoreB: 0
     }
   ]
 };
@@ -48,14 +45,14 @@ function TournamentBracket() {
     }
   };
 
-  const handleScoreChange = (date, index, team, value) => {
+  const handleScoreChange = (date, index, field, value) => {
     if (!isEditing) return;
 
     setMatchData(prevData => {
       const updatedData = {
         ...prevData,
         [date]: prevData[date].map((match, i) =>
-          i === index ? { ...match, [team]: value } : match
+          i === index ? { ...match, [field]: value } : match
         )
       };
 
@@ -72,7 +69,7 @@ function TournamentBracket() {
     });
   };
 
-  const handleIndividualScoreChange = (date, index, team, playerIndex, value) => {
+  const handleTeamChange = (date, index, team, playerIndex, value) => {
     if (!isEditing) return;
 
     setMatchData(prevData => {
@@ -82,10 +79,8 @@ function TournamentBracket() {
           i === index
             ? {
                 ...match,
-                [`individualScores${team === 'teamA' ? 'A' : 'B'}`]: match[
-                  `individualScores${team === 'teamA' ? 'A' : 'B'}`
-                ].map((score, j) =>
-                  j === playerIndex ? value : score
+                [team]: match[team].map((player, j) =>
+                  j === playerIndex ? value : player
                 ),
               }
             : match
@@ -149,9 +144,6 @@ function TournamentBracket() {
         teamB: ["", "", "", "", ""],  // Tyhjät pelaajat
         scoreA: 0,
         scoreB: 0,
-        pointType: 'team', // Default 'team'
-        individualScoresA: [0, 0, 0, 0, 0],
-        individualScoresB: [0, 0, 0, 0, 0]
       });
 
       const saveToSupabase = async () => {
@@ -173,6 +165,49 @@ function TournamentBracket() {
     setMatchData(prevData => {
       const updatedData = { ...prevData };
       updatedData[date].splice(index, 1);
+
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('matches')
+          .upsert({ id: 1, match_data: updatedData });
+        if (error) {
+          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
+      return updatedData;
+    });
+  };
+
+  const handleAddDay = () => {
+    if (!isEditing || !newDay) return;
+
+    setMatchData(prevData => {
+      const updatedData = { ...prevData };
+      if (!updatedData[newDay]) {
+        updatedData[newDay] = [{ time: "", match: "", teamA: [], teamB: [], scoreA: 0, scoreB: 0 }];
+      }
+
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('matches')
+          .upsert({ id: 1, match_data: updatedData });
+        if (error) {
+          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
+      setNewDay('');
+      return updatedData;
+    });
+  };
+
+  const handleDeleteDay = (date) => {
+    if (!isEditing) return;
+
+    setMatchData(prevData => {
+      const updatedData = { ...prevData };
+      delete updatedData[date];
 
       const saveToSupabase = async () => {
         const { error } = await supabase
@@ -331,35 +366,23 @@ function TournamentBracket() {
                     </div>
                   </td>
                   <td className="border border-gray-400 px-4 py-2 bg-white text-black">
-                    <strong>{match.teamA.join(' / ')}</strong> - {match.scoreA} <br />
-                    <strong>{match.teamB.join(' / ')}</strong> - {match.scoreB}
-                    <div className="mt-2">
-                      {match.pointType === 'individual' && (
-                        <>
-                          <strong>Yksilöpisteet A:</strong> 
-                          {match.individualScoresA.map((score, i) => (
-                            <input
-                              key={i}
-                              type="number"
-                              value={score}
-                              onChange={(e) => handleIndividualScoreChange(date, index, 'teamA', i, e.target.value)}
-                              className="w-12 bg-gray-200 m-1 rounded-md text-black"
-                            />
-                          ))}
-                          <br />
-                          <strong>Yksilöpisteet B:</strong>
-                          {match.individualScoresB.map((score, i) => (
-                            <input
-                              key={i}
-                              type="number"
-                              value={score}
-                              onChange={(e) => handleIndividualScoreChange(date, index, 'teamB', i, e.target.value)}
-                              className="w-12 bg-gray-200 m-1 rounded-md text-black"
-                            />
-                          ))}
-                        </>
-                      )}
-                    </div>
+                    <strong>{match.teamA.join(' / ')}</strong> - 
+                    <input 
+                      type="number" 
+                      value={match.scoreA}
+                      onChange={(e) => handleScoreChange(date, index, 'scoreA', e.target.value)}
+                      className="w-12 bg-gray-200 text-black text-center"
+                      disabled={!isEditing}
+                    /> 
+                    <br />
+                    <strong>{match.teamB.join(' / ')}</strong> - 
+                    <input 
+                      type="number" 
+                      value={match.scoreB}
+                      onChange={(e) => handleScoreChange(date, index, 'scoreB', e.target.value)}
+                      className="w-12 bg-gray-200 text-black text-center"
+                      disabled={!isEditing}
+                    />
                   </td>
                   {isEditing && (
                     <td className="border border-gray-400 px-4 py-2 bg-white text-black">
@@ -390,7 +413,7 @@ function TournamentBracket() {
         <div className="text-center mt-6">
           <button 
             onClick={handleSave}
-            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg focus:outline-none"
+            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg"
           >
             Tallenna
           </button>
