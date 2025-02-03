@@ -161,7 +161,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
 			  <Route path="/timetable" element={<Timetable />} />
-			  <Route path="/Lore" element={<Timetable />} />
+			  <Route path="/Lore" element={<Lore />} />
             </Routes>
 
             <div className="fixed bottom-4 right-4 bg-black/50 p-4 rounded-xl shadow-lg">
