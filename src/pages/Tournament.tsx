@@ -26,6 +26,9 @@ function TournamentBracket() {
     "MOBA": []
   });
 
+  // Tallentaa väliaikaisia muokkauksia
+  const [tempMatchData, setTempMatchData] = useState(initialMatchData);
+
   useEffect(() => {
     const getMatchData = async () => {
       const { data, error } = await supabase
@@ -35,6 +38,7 @@ function TournamentBracket() {
 
       if (data) {
         setMatchData(data.match_data);
+        setTempMatchData(data.match_data); // Asetetaan myös väliaikainen tila
       } else {
         console.error('Virhe turnauksen tietojen hakemisessa:', error);
       }
@@ -52,65 +56,35 @@ function TournamentBracket() {
   };
 
   const handleScoreChange = (date, index, team, value) => {
-    setMatchData(prevData => {
+    setTempMatchData(prevData => {
       const updatedData = {
         ...prevData,
         [date]: prevData[date].map((match, i) =>
           i === index ? { ...match, [team]: value } : match
         )
       };
-
-      const saveToSupabase = async () => {
-        const { error } = await supabase
-          .from('matches')
-          .upsert({ id: 1, match_data: updatedData });
-        if (error) {
-          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
-        }
-      };
-      saveToSupabase();
       return updatedData;
     });
   };
 
   const handlePlayerChange = (date, matchIndex, teamIndex, playerIndex, value) => {
-    setMatchData(prevData => {
+    setTempMatchData(prevData => {
       const updatedData = { ...prevData };
       updatedData[date][matchIndex][teamIndex][playerIndex] = value;
-
-      const saveToSupabase = async () => {
-        const { error } = await supabase
-          .from('matches')
-          .upsert({ id: 1, match_data: updatedData });
-        if (error) {
-          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
-        }
-      };
-      saveToSupabase();
       return updatedData;
     });
   };
 
   const handleMatchTimeChange = (date, matchIndex, value) => {
-    setMatchData(prevData => {
+    setTempMatchData(prevData => {
       const updatedData = { ...prevData };
       updatedData[date][matchIndex].time = value;
-
-      const saveToSupabase = async () => {
-        const { error } = await supabase
-          .from('matches')
-          .upsert({ id: 1, match_data: updatedData });
-        if (error) {
-          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
-        }
-      };
-      saveToSupabase();
       return updatedData;
     });
   };
 
   const handleAddMatch = (date) => {
-    setMatchData(prevData => {
+    setTempMatchData(prevData => {
       const updatedData = { ...prevData };
       if (!updatedData[date]) {
         updatedData[date] = [];
@@ -123,34 +97,14 @@ function TournamentBracket() {
         scoreA: 0,
         scoreB: 0
       });
-
-      const saveToSupabase = async () => {
-        const { error } = await supabase
-          .from('matches')
-          .upsert({ id: 1, match_data: updatedData });
-        if (error) {
-          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
-        }
-      };
-      saveToSupabase();
       return updatedData;
     });
   };
 
   const handleDeleteMatch = (date, index) => {
-    setMatchData(prevData => {
+    setTempMatchData(prevData => {
       const updatedData = { ...prevData };
       updatedData[date].splice(index, 1);
-
-      const saveToSupabase = async () => {
-        const { error } = await supabase
-          .from('matches')
-          .upsert({ id: 1, match_data: updatedData });
-        if (error) {
-          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
-        }
-      };
-      saveToSupabase();
       return updatedData;
     });
   };
@@ -161,40 +115,20 @@ function TournamentBracket() {
       return;
     }
 
-    setMatchData(prevData => {
+    setTempMatchData(prevData => {
       const updatedData = { ...prevData };
       if (!updatedData[newDay]) {
         updatedData[newDay] = [{ time: "", match: "", teamA: [], teamB: [], scoreA: 0, scoreB: 0 }];
       }
-
-      const saveToSupabase = async () => {
-        const { error } = await supabase
-          .from('matches')
-          .upsert({ id: 1, match_data: updatedData });
-        if (error) {
-          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
-        }
-      };
-      saveToSupabase();
       setNewDay('');
       return updatedData;
     });
   };
 
   const handleDeleteDay = (date) => {
-    setMatchData(prevData => {
+    setTempMatchData(prevData => {
       const updatedData = { ...prevData };
       delete updatedData[date];
-
-      const saveToSupabase = async () => {
-        const { error } = await supabase
-          .from('matches')
-          .upsert({ id: 1, match_data: updatedData });
-        if (error) {
-          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
-        }
-      };
-      saveToSupabase();
       return updatedData;
     });
   };
@@ -202,31 +136,15 @@ function TournamentBracket() {
   const handleSave = async () => {
     const { error } = await supabase
       .from('matches')
-      .upsert({ id: 1, match_data: matchData });
+      .upsert({ id: 1, match_data: tempMatchData });
 
     if (error) {
       console.error('Virhe turnauksen tietojen tallentamisessa:', error);
     } else {
       alert('Turnauksen tiedot tallennettu Supabaseen!');
+      setMatchData(tempMatchData);  // Vahvistetaan muutokset
+      setIsEditing(false);
     }
-
-    setIsEditing(false);
-  };
-
-  const getMatchName = (gameType, teamA, teamB) => {
-    if (gameType === 'Tappelupeli') {
-      return `${teamA} vs ${teamB} - Tappelupeli`;
-    }
-    return `${teamA} vs ${teamB}`;
-  };
-
-  const handleGameResult = (gameType, match) => {
-    const updatedResults = { ...gameResults };
-    updatedResults[gameType].push({
-      match: `${match.teamA.join(", ")} vs ${match.teamB.join(", ")}`,
-      score: `${match.scoreA} - ${match.scoreB}`
-    });
-    setGameResults(updatedResults);
   };
 
   return (
@@ -266,7 +184,7 @@ function TournamentBracket() {
         </div>
       )}
 
-      {Object.keys(matchData).map((date) => (
+      {Object.keys(tempMatchData).map((date) => (
         <div key={date} className="overflow-x-auto mb-6 bg-white/20 backdrop-blur-lg rounded-xl">
           <h3 className="text-xl text-center text-black font-bold mb-2">
             {date}
@@ -289,7 +207,7 @@ function TournamentBracket() {
               </tr>
             </thead>
             <tbody>
-              {matchData[date].map((match, index) => (
+              {tempMatchData[date].map((match, index) => (
                 <tr key={index} className="text-center">
                   <td className="border border-gray-400 px-4 py-2 text-black">
                     {isEditing ? (
@@ -388,6 +306,17 @@ function TournamentBracket() {
             className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg ml-4"
           >
             Lisää päivä
+          </button>
+        </div>
+      )}
+
+      {isEditing && (
+        <div className="text-center mt-6">
+          <button
+            onClick={handleSave}
+            className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg"
+          >
+            Hyväksy muutokset
           </button>
         </div>
       )}
