@@ -181,7 +181,7 @@ function TournamentBracket() {
         </div>
       )}
 
-      {Object.keys(tempMatchData[selectedGameType] || {}).map((date) => (
+      {Object.keys(matchData[selectedGameType] || {}).map((date) => (
         <div key={date} className="overflow-x-auto mb-6 bg-white/20 backdrop-blur-lg rounded-xl">
           <h3 className="text-xl text-center text-black font-bold mb-2">
             {date}
@@ -192,11 +192,11 @@ function TournamentBracket() {
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Aika</th>
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Ottelu</th>
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Pisteet</th>
-                <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Muokkaa</th>
+                {isEditing && <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Muokkaa</th>}
               </tr>
             </thead>
             <tbody>
-              {tempMatchData[selectedGameType][date].map((match, index) => (
+              {matchData[selectedGameType][date].map((match, index) => (
                 <tr key={index} className="text-center">
                   <td className="border border-gray-400 px-4 py-2 text-black">
                     {isEditing ? (
@@ -264,18 +264,16 @@ function TournamentBracket() {
                       `${match.scoreA} - ${match.scoreB}`
                     )}
                   </td>
-                  <td className="border border-gray-400 px-4 py-2 text-black">
-                    {isEditing && (
-                      <>
-                        <button
-                          onClick={() => handleDeleteMatch(selectedGameType, date, index)}
-                          className="bg-red-600 text-white px-4 py-2 rounded-lg"
-                        >
-                          Poista
-                        </button>
-                      </>
-                    )}
-                  </td>
+                  {isEditing && (
+                    <td className="border border-gray-400 px-4 py-2 text-black">
+                      <button
+                        onClick={() => handleDeleteMatch(selectedGameType, date, index)}
+                        className="bg-red-600 text-white px-4 py-2 rounded-lg"
+                      >
+                        Poista
+                      </button>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
