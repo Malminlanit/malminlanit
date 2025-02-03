@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Timetable from './pages/Timetable';
+import Lore from './pages/Lore';
 import { 
   Monitor, 
   Calendar, 
@@ -152,6 +153,7 @@ function App() {
               <Link to="/about" className="hover:text-purple-400">Tietoa</Link>
               <Link to="/contact" className="hover:text-purple-400">Ohjeet</Link>
 			  <Link to="/timetable" className="hover:text-purple-400">Aikataulu</Link>
+			  <Link to="/Lore" className="hover:text-purple-400">Lore</Link>
             </nav>
 
             <Routes>
@@ -159,6 +161,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
 			  <Route path="/timetable" element={<Timetable />} />
+			  <Route path="/Lore" element={<Timetable />} />
             </Routes>
 
             <div className="fixed bottom-4 right-4 bg-black/50 p-4 rounded-xl shadow-lg">
