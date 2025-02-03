@@ -46,6 +46,8 @@ function TournamentBracket() {
   };
 
   const handleScoreChange = (date, index, team, value) => {
+    if (!isEditing) return;
+
     setMatchData(prevData => {
       const updatedData = {
         ...prevData,
@@ -68,6 +70,8 @@ function TournamentBracket() {
   };
 
   const handleTeamChange = (date, index, team, playerIndex, value) => {
+    if (!isEditing) return;
+
     setMatchData(prevData => {
       const updatedData = {
         ...prevData,
@@ -97,6 +101,8 @@ function TournamentBracket() {
   };
 
   const handleAddMatch = (date) => {
+    if (!isEditing) return;
+
     setMatchData(prevData => {
       const updatedData = { ...prevData };
       if (!updatedData[date]) {
@@ -125,6 +131,8 @@ function TournamentBracket() {
   };
 
   const handleDeleteMatch = (date, index) => {
+    if (!isEditing) return;
+
     setMatchData(prevData => {
       const updatedData = { ...prevData };
       updatedData[date].splice(index, 1);
@@ -143,10 +151,7 @@ function TournamentBracket() {
   };
 
   const handleAddDay = () => {
-    if (!newDay) {
-      alert('Syötä päivämäärä');
-      return;
-    }
+    if (!isEditing || !newDay) return;
 
     setMatchData(prevData => {
       const updatedData = { ...prevData };
@@ -169,6 +174,8 @@ function TournamentBracket() {
   };
 
   const handleDeleteDay = (date) => {
+    if (!isEditing) return;
+
     setMatchData(prevData => {
       const updatedData = { ...prevData };
       delete updatedData[date];
@@ -187,6 +194,8 @@ function TournamentBracket() {
   };
 
   const handleSave = async () => {
+    if (!isEditing) return;
+
     const { error } = await supabase
       .from('matches')
       .upsert({ id: 1, match_data: matchData });
@@ -272,7 +281,8 @@ function TournamentBracket() {
                       type="time" 
                       value={match.time}
                       onChange={(e) => handleScoreChange(date, index, 'time', e.target.value)}
-                      className="w-20 bg-gray-100 rounded-md"
+                      className={`w-20 bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                      disabled={!isEditing}
                     />
                   </td>
                   <td className="border border-gray-400 px-4 py-2 bg-white text-black">
@@ -280,7 +290,8 @@ function TournamentBracket() {
                       type="text" 
                       value={match.match}
                       onChange={(e) => handleScoreChange(date, index, 'match', e.target.value)}
-                      className="w-full bg-gray-100 rounded-md"
+                      className={`w-full bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                      disabled={!isEditing}
                     />
                     <div className="text-sm text-gray-700">
                       <strong>Joukkue A:</strong> 
@@ -290,7 +301,8 @@ function TournamentBracket() {
                           type="text"
                           value={player}
                           onChange={(e) => handleTeamChange(date, index, 'teamA', i, e.target.value)}
-                          className="w-20 bg-gray-100 m-1 rounded-md"
+                          className={`w-20 bg-gray-200 m-1 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                          disabled={!isEditing}
                         />
                       ))}
                       <br />
@@ -301,7 +313,8 @@ function TournamentBracket() {
                           type="text"
                           value={player}
                           onChange={(e) => handleTeamChange(date, index, 'teamB', i, e.target.value)}
-                          className="w-20 bg-gray-100 m-1 rounded-md"
+                          className={`w-20 bg-gray-200 m-1 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                          disabled={!isEditing}
                         />
                       ))}
                     </div>
@@ -312,14 +325,16 @@ function TournamentBracket() {
                         type="number"
                         value={match.scoreA}
                         onChange={(e) => handleScoreChange(date, index, 'scoreA', e.target.value)}
-                        className="w-16 px-3 py-2 bg-gray-100 rounded-md"
+                        className={`w-16 px-3 py-2 bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                        disabled={!isEditing}
                       />
                       -
                       <input
                         type="number"
                         value={match.scoreB}
                         onChange={(e) => handleScoreChange(date, index, 'scoreB', e.target.value)}
-                        className="w-16 px-3 py-2 bg-gray-100 rounded-md"
+                        className={`w-16 px-3 py-2 bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                        disabled={!isEditing}
                       />
                     </div>
                   </td>
