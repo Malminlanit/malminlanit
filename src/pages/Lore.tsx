@@ -36,9 +36,33 @@ const Lore = () => {
         <p className="text-lg leading-relaxed mb-4">
           Seikkailijat palasivat takaisin Malmiin, mutta heidän matkastaan tuli legenda. Malmin kuningatar Taimi oli heille kiitollinen, mutta tiesi, että jokainen seikkailija ja heidän kokemuksensa olivat kätkeytyneet syvälle maan uumeniin.
         </p>
-        <p className="text-lg leading-relaxed">
+        <p className="text-lg leading-relaxed mb-8">
           Ja niin Malmin lännen tarina jäi elämään — niin Kuun polulla kuin sen varjoissa, missä seikkailijat kulkevat edelleen, etsiessään totuuksia ja kohtaamassa voimia, joita ei voi kuvitella.
         </p>
+
+        <section className="bg-black/50 rounded-lg p-6 mb-8">
+          <h2 className="text-2xl font-semibold text-purple-400">Tarina 1: Malmin Kuningatar</h2>
+          <p className="text-white">
+            Tämä on tarina Malmin Kuningattaresta, joka johdatti kylän sankareita ja
+            johdatti heidät moniin seikkailuihin.
+          </p>
+        </section>
+
+        <section className="bg-black/50 rounded-lg p-6 mb-8">
+          <h2 className="text-2xl font-semibold text-purple-400">Tarina 2: Malmin Taistelu</h2>
+          <p className="text-white">
+            Toinen tarina vie meidät Malmin suurimpaan taisteluun, jossa rohkeat
+            sankarit puolustivat kotikyläänsä vaarallisilta hyökkääjiltä.
+          </p>
+        </section>
+
+        <section className="bg-black/50 rounded-lg p-6 mb-8">
+          <h2 className="text-2xl font-semibold text-purple-400">Tarina 3: Ystävyyden voima</h2>
+          <p className="text-white">
+            Tämä on tarina siitä, kuinka Malmin sankarit löysivät voiman ystävyydestä
+            ja seikkailivat yhdessä voittaen suuria esteitä.
+          </p>
+        </section>
       </div>
     </div>
   );
