@@ -65,10 +65,11 @@ const Lore = () => {
 					"Seikkailijat palasivat takaisin Malmiin, mutta heidän matkastaan tuli legenda.\n\n" +
 					"Malmin kuningatar Taimi oli heille kiitollinen, mutta tiesi, että jokainen seikkailija ja heidän kokemuksensa olivat kätkeytyneet syvälle maan uumeniin.\n\n" +
 					"Ja niin Malmin lännen tarina jäi elämään — niin Kuun polulla kuin sen varjoissa, missä seikkailijat kulkevat edelleen, etsiessään totuuksia ja kohtaamassa voimia, joita ei voi kuvitella."
-				}
-				
-          />  
+				}		
+          />		  
           )}
+		</div>
+		
           {selectedStory === 'story2' && (
             <Story
               title="Malmin Taistelu"
