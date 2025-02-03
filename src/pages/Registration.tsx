@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import supabase from '../services/supabase';
 import { motion } from 'framer-motion';
+import supabase from '../services/supabase'; // Oletetaan, että Supabase on konfiguroitu
 
 const RegistrationForm = () => {
   const [gameTag, setGameTag] = useState('');
@@ -8,18 +8,18 @@ const RegistrationForm = () => {
   const [bringingPC, setBringingPC] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const [registeredTags, setRegisteredTags] = useState<string[]>([]);
+  const [registeredUsers, setRegisteredUsers] = useState<string[]>([]);
 
   const availableDays = ['2025-04-17', '2025-04-18', '2025-04-19', '2025-04-20', '2025-04-21'];
 
   useEffect(() => {
-    const fetchRegisteredTags = async () => {
+    const fetchUsers = async () => {
       const { data, error } = await supabase.from('registrations').select('game_tag');
-      if (!error && data) {
-        setRegisteredTags(data.map((item) => item.game_tag));
-      }
+      if (error) console.error('Virhe ladattaessa käyttäjiä:', error);
+      else setRegisteredUsers(data.map((entry) => entry.game_tag));
     };
-    fetchRegisteredTags();
+
+    fetchUsers();
   }, [success]);
 
   const handleDayChange = (day: string) => {
@@ -55,7 +55,7 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="relative p-6 bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white rounded-xl shadow-lg max-w-lg mx-auto">
+    <div className="p-6 bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white rounded-xl shadow-lg max-w-lg mx-auto">
       <h2 className="text-4xl font-bold text-center mb-4">Ilmoittautuminen Lan-tapahtumaan</h2>
 
       {error && <p className="text-red-500">{error}</p>}
@@ -112,21 +112,33 @@ const RegistrationForm = () => {
         </button>
       </form>
 
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {registeredTags.map((tag, index) => (
-          <motion.div
-            key={index}
-            className="absolute bg-white text-black px-2 py-1 rounded shadow-md"
-            initial={{ x: Math.random() * 300, y: Math.random() * 400 }}
-            animate={{
-              x: [Math.random() * 300, Math.random() * 300],
-              y: [Math.random() * 400, Math.random() * 400],
-            }}
-            transition={{ repeat: Infinity, repeatType: 'mirror', duration: 5 }}
-          >
-            {tag}
-          </motion.div>
-        ))}
+      {/* 🎯 Rekisteröityneiden laatikko */}
+      <div className="mt-8">
+        <h3 className="text-2xl font-bold text-center mb-2">Jo rekisteröityneet</h3>
+        <div className="relative h-40 overflow-hidden bg-black bg-opacity-20 rounded-lg border border-indigo-400 shadow-inner">
+          {registeredUsers.map((user, index) => (
+            <motion.div
+              key={index}
+              className="absolute bg-white text-black font-semibold px-3 py-1 rounded-full shadow-md"
+              animate={{
+                x: ['0%', '80%', '0%'], // Pomppii vasemmalta oikealle ja takaisin
+                y: [0, 10, 0], // Kevyt pystysuuntainen pomppu
+              }}
+              transition={{
+                duration: 4 + Math.random() * 2, // Satunnainen kesto
+                repeat: Infinity,
+                repeatType: 'loop',
+                ease: 'easeInOut',
+                delay: Math.random(), // Satunnainen viive
+              }}
+              style={{
+                top: `${Math.random() * 80}%`, // Satunnainen pystysijainti
+              }}
+            >
+              {user}
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );
