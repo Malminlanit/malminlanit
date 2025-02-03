@@ -89,6 +89,30 @@ function Schedule() {
     });
   };
 
+  const handleAddDay = () => {
+    const newDate = "18.4.2025"; // Voit muuttaa tämän dynaamiseksi (esim. päivämääräautomaatio)
+    
+    // Lisätään uusi päivä (taulukko)
+    setScheduleData(prevData => {
+      const updatedData = { ...prevData };
+      if (!updatedData[newDate]) {
+        updatedData[newDate] = []; // Tyhjä taulukko tälle päivälle
+      }
+
+      // Tallennetaan muutos Supabaseen reaaliaikaisesti
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('schedules')
+          .upsert({ id: 1, schedule: updatedData });
+        if (error) {
+          console.error('Virhe aikataulun tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
+      return updatedData;
+    });
+  };
+
   const handleSave = async () => {
     // Tallennetaan aikataulu Supabaseen
     const { error } = await supabase
@@ -122,6 +146,18 @@ function Schedule() {
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Kirjaudu
+          </button>
+        </div>
+      )}
+
+      {/* Lisää uusi päivä */}
+      {isEditing && (
+        <div className="text-center mb-4">
+          <button 
+            onClick={handleAddDay} 
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Lisää uusi päivä
           </button>
         </div>
       )}
