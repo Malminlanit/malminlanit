@@ -12,7 +12,7 @@ const Lore = () => {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-black p-6">
       <div className="text-white text-center p-8 max-w-4xl bg-gray-800 bg-opacity-80 rounded-2xl shadow-2xl">
         <h1 className="text-4xl font-extrabold mb-8 text-purple-400 animate-pulse">
-          Malmin Lännen Tarina: Seikkailu Kuningattaren Varjossa
+          Malmilta kuultuja tarinoita: Seikkailu Kuningattaren Varjossa
         </h1>
 
         <div className="flex justify-center gap-4 mb-6 flex-wrap">
@@ -93,7 +93,23 @@ const Lore = () => {
           {selectedStory === 'story3' && (
             <Story
               title="Ystävyyden Voima"
-              content="Malmin yllä lepäsi jälleen rauha. Kuningatar Taimin viisaus oli johdattanut kaupungin... (jatkuu)"
+              content={
+					"Malmin yllä lepäsi jälleen rauha. Kuningatar Taimin viisaus oli johdattanut kaupungin varjojen halki, ja Väinön, Alman ja Iivarin nimet laulettiin tarinoissa kaikkialla.\n\n" +
+					"Mutta kaikkien suurten seikkailujen jälkeen, kun taistelut on taisteltu ja sankarit palanneet kotiin, jää jäljelle jotain vieläkin arvokkaampaa – ystävyys, joka kantaa yli ajan ja tilan.\n\n" +
+					"Tämä tarina alkaa pienestä kuppilasta Malmin sydämessä, paikassa nimeltä Kultaisen Portin Krouvi. Sen ovet narisivat kuin ne kertoisivat tarinoita menneisyydestä, ja savunharmaat ikkunat heijastivat kaupungin sykettä. Krouvissa istui kolme ystävystä: Väinö, Alma ja Iivari, nyt jo hieman vanhempina, mutta heidän silmissään paloi sama tuli kuin silloin Kuun polulla.\n\n" +
+					"He olivat nähneet maailmoja, taistelleet varjoja vastaan ja pelastaneet Malmin useammin kuin kerran. Mutta sinä iltana he eivät tarvinneet miekkoja tai loitsuja — vain kupillisen lämmintä juomaa ja toistensa seuraa.\n\n" +
+					"Yhtäkkiä krouvin ovi paiskautui auki. Sisään ryntäsi pieni poika, Leo, silmät täynnä pelkoa ja sydän täynnä huolta.\n\n" +
+					"\"Autattehan minua? Veljeni on kadonnut Varjosaarelle!\" poika huusi, äänessään epätoivoa.\n\n" +
+					"Väinö vilkaisi Almaa ja Iivaria. Heidän silmiinsä syttyi tuttu katse, seikkailun kipinä, mutta tällä kertaa he tiesivät, että kyse ei ollut pelkästään sankaruudesta. He ymmärsivät jotain syvempää: ystävyyden voiman.\n\n" +
+					"He lähtivät matkaan Leoa auttamaan, mutta eivät yksin. Malmin ihmiset, joita he olivat auttaneet vuosien varrella, liittyivät mukaan. Oli vanhoja ystäviä, uusia kasvoja, kaupustelijoita, vartijoita ja jopa entisiä vastustajia. Yhdessä he muodostivat joukon, joka ei nojannut pelkoon vaan toisiinsa.\n\n" +
+					"Matka Varjosaarelle oli vaarallinen. Synkät metsät ja hylätyt tornit eivät pelotelleet heitä, sillä jokaisessa askeleessa oli mukana toverin tuki. Kun Väinö kompastui, Iivari oli siellä ojentamassa kätensä. Kun Alma eksyi labyrinttiin, Leo piti hänen kädestään kiinni ja muistutti: \"Et ole yksin.\"\n\n" +
+					"Lopulta he löysivät Leoa etsityn veljen vangittuna vanhaan kivikammioon, jonka ympärille oli kudottu pelon loitsu. Loitsu sai ihmiset epäilemään itseään, kuiskaten heidän korviinsa heidän suurimmat pelkonsa.\n\n" +
+					"Mutta silloin Alma, Väinö ja Iivari tarttuivat toistensa käsiin ja sulkivat silmänsä. He muistivat kaikki ne hetket, jolloin he olivat olleet heikkoja, mutta silti jatkaneet matkaa – yhdessä. Ystävyys oli heidän suojaloitsunsa, vahvempi kuin mikään muinainen taika.\n\n" +
+					"Loitsu murtui. Leo juoksi veljensä luo kyynelsilmin. Ei siksi, että he olisivat voittaneet pelon, vaan siksi, että he olivat tehneet sen yhdessä.\n\n" +
+					"Kun he palasivat Malmiin, ei järjestetty suuria juhlia. Ei tarvinnut. Sillä ystävyyden voima ei ole suurissa teoissa vaan pienissä hetkissä: kädessä, joka pidetään tiukasti kiinni, sanassa, joka lohduttaa, ja katseessa, joka kertoo:\n\n" +
+					"\"Olet tärkeä. Et ole yksin.\"\n\n" +
+					"Ja niin tämä tarina jäi elämään Malmin kujilla ja kaduilla, kulkien korvasta korvaan, sydämestä sydämeen. Ystävyyden voima ei koskaan katoa – se on Malmin todellinen aarre, jota ei voi kahlita varjoihin."
+			    }
             />
           )}
           {selectedStory === 'story4' && (
