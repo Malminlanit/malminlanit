@@ -73,7 +73,6 @@ const Lore = () => {
 					"Ne ovat paikka, jossa Varjokuningas ei koskaan voita. Koska niin kauan kuin joku nauraa, jakaa hetken ystävän kanssa ja muistaa, että he eivät ole yksin, Varjokuningas pysyy siellä, minne hän kuuluu – varjoihin."
 				}
 				/>
-          }
           />  
           )}
           {selectedStory === 'story2' && (
