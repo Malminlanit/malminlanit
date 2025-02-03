@@ -41,7 +41,7 @@ const Lore = () => {
             <Story
               title="Malmin Kuningatar"
                 content={
-					"Malmin lanit eivät olleet koskaan vain pelkkä tapahtuma.\n\n" +
+					"Malmin lanit eivät olleet koskaan vain pelkkä tapahtuma." +
 					"Ne olivat kokoontuminen, jossa sähkö virtasi paitsi koneiden johdoissa myös ihmisten välillä – ystävyyden, kilpailun ja seikkailun kipinöinä. Mutta harva tiesi, että Malmin lanien juuret ulottuivat syvemmälle kuin kaapelit lattialla tai näytöt, jotka valaisivat yötä. Ne kytkeytyivät vanhaan tarinaan, johon liittyi Varjokuningas.\n\n" +
 					"Kauan sitten, ennen kuin ensimmäinen näyttö koskaan syttyi Malmin yössä, alueella asui muinainen voima – Varjokuningas.\n\n" +
 					"Hän ei ollut tavallinen hallitsija. Hän oli unohduksen valtias, varjojen muovaama olento, joka eli ihmisten unohtamissa muistoissa ja kadotetuissa hetkissä. Hänen voimansa kasvoi, kun ihmiset unohtivat vanhat tarinat, ystävyytensä ja itsensä.\n\n" +
