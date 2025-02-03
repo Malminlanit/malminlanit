@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'; 
-import supabase from '../services/supabase.js';  // Tuodaan supabase.js
+import supabase from '../services/supabase.js'; 
 
 const initialScheduleData = {
   "17.4.2025": [
@@ -17,15 +17,14 @@ function Schedule() {
   const [isEditing, setIsEditing] = useState(false);
   const [password, setPassword] = useState('');
   const [scheduleData, setScheduleData] = useState(initialScheduleData);
-  const [newDay, setNewDay] = useState(''); // Uuden päivän päivämäärä
+  const [newDay, setNewDay] = useState(''); 
 
-  // Lataa aikataulu Supabasesta
   useEffect(() => {
     const getSchedule = async () => {
       const { data, error } = await supabase
         .from('schedules')
         .select('schedule')
-        .single();  // Oletetaan, että aikataulu tallennetaan yksittäiseksi objektiksi
+        .single();
 
       if (data) {
         setScheduleData(data.schedule);
@@ -54,11 +53,10 @@ function Schedule() {
         )
       };
 
-      // Tallennetaan muutos Supabaseen reaaliaikaisesti
       const saveToSupabase = async () => {
         const { error } = await supabase
           .from('schedules')
-          .upsert({ id: 1, schedule: updatedData }); // päivitetään aikataulu
+          .upsert({ id: 1, schedule: updatedData });
         if (error) {
           console.error('Virhe aikataulun tallentamisessa:', error);
         }
@@ -76,7 +74,6 @@ function Schedule() {
       }
       updatedData[date].push({ time: "", event: "" });
 
-      // Tallennetaan muutos Supabaseen reaaliaikaisesti
       const saveToSupabase = async () => {
         const { error } = await supabase
           .from('schedules')
@@ -93,9 +90,8 @@ function Schedule() {
   const handleDeleteRow = (date, index) => {
     setScheduleData(prevData => {
       const updatedData = { ...prevData };
-      updatedData[date].splice(index, 1); // Poistaa rivin
+      updatedData[date].splice(index, 1); 
 
-      // Tallennetaan muutos Supabaseen reaaliaikaisesti
       const saveToSupabase = async () => {
         const { error } = await supabase
           .from('schedules')
@@ -115,14 +111,12 @@ function Schedule() {
       return;
     }
 
-    // Lisätään uusi päivä ja tyhjä rivi
     setScheduleData(prevData => {
       const updatedData = { ...prevData };
       if (!updatedData[newDay]) {
-        updatedData[newDay] = [{ time: "", event: "" }]; // Tyhjä taulukko ja ensimmäinen tyhjä rivi
+        updatedData[newDay] = [{ time: "", event: "" }];
       }
 
-      // Tallennetaan muutos Supabaseen reaaliaikaisesti
       const saveToSupabase = async () => {
         const { error } = await supabase
           .from('schedules')
@@ -132,7 +126,7 @@ function Schedule() {
         }
       };
       saveToSupabase();
-      setNewDay(''); // Tyhjennetään syöttökenttä
+      setNewDay('');
       return updatedData;
     });
   };
@@ -140,9 +134,8 @@ function Schedule() {
   const handleDeleteDay = (date) => {
     setScheduleData(prevData => {
       const updatedData = { ...prevData };
-      delete updatedData[date]; // Poistaa päivän
+      delete updatedData[date];
 
-      // Tallennetaan muutos Supabaseen reaaliaikaisesti
       const saveToSupabase = async () => {
         const { error } = await supabase
           .from('schedules')
@@ -157,7 +150,6 @@ function Schedule() {
   };
 
   const handleSave = async () => {
-    // Tallennetaan aikataulu Supabaseen
     const { error } = await supabase
       .from('schedules')
       .upsert({ id: 1, schedule: scheduleData });
@@ -172,8 +164,8 @@ function Schedule() {
   };
 
   return (
-    <div className="schedule-container p-4">
-      <h2 className="text-3xl text-center mb-6">Aikataulu</h2>
+    <div className="schedule-container min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white p-6">
+      <h2 className="text-4xl font-bold text-center mb-6">Aikataulu</h2>
 
       {!isEditing && (
         <div className="text-center mb-4">
@@ -182,30 +174,29 @@ function Schedule() {
             placeholder="Syötä salasana muokataksesi" 
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-400 px-3 py-2 mr-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-400 px-4 py-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
           <button 
             onClick={handleLogin} 
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg focus:outline-none"
           >
             Kirjaudu
           </button>
         </div>
       )}
 
-      {/* Lisää uusi päivä */}
       {isEditing && (
         <div className="text-center mb-4">
           <input 
             type="text" 
-            placeholder="Syötä uusi päivämäärä (esim. 18.4.2025)"
+            placeholder="Syötä uusi päivämäärä"
             value={newDay}
             onChange={(e) => setNewDay(e.target.value)}
-            className="border border-gray-400 px-3 py-2 mr-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-400 px-4 py-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
           <button 
             onClick={handleAddDay} 
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg focus:outline-none"
           >
             Lisää uusi päivä
           </button>
@@ -213,7 +204,7 @@ function Schedule() {
       )}
 
       {Object.keys(scheduleData).map((date) => (
-        <div key={date} className="overflow-x-auto mb-6">
+        <div key={date} className="overflow-x-auto mb-6 bg-white/20 backdrop-blur-lg rounded-xl">
           <h3 className="text-xl text-center text-black font-bold mb-2">
             {date}
             {isEditing && (
@@ -225,7 +216,7 @@ function Schedule() {
               </button>
             )}
           </h3>
-          <table className="w-full table-auto border-collapse border border-gray-500">
+          <table className="w-full table-auto border-collapse">
             <thead>
               <tr>
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Aika</th>
@@ -244,27 +235,32 @@ function Schedule() {
                         type="text"
                         value={event.time}
                         onChange={(e) => handleEventChange(date, index, 'time', e.target.value)}
-                        className="border border-gray-400 px-2 py-1 w-full rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 bg-gray-100 rounded-md"
                       />
                     ) : (
-                      <span className="text-black">{event.time}</span>
+                      event.time
                     )}
                   </td>
-                  <td className="border border-gray-400 px-4 py-2 text-center bg-white">
+                  <td className="border border-gray-400 px-4 py-2 bg-gray-50">
                     {isEditing ? (
                       <input
                         type="text"
                         value={event.event}
                         onChange={(e) => handleEventChange(date, index, 'event', e.target.value)}
-                        className="border border-gray-400 px-2 py-1 w-full rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 bg-gray-100 rounded-md"
                       />
                     ) : (
-                      <span className="text-black">{event.event || "-"}</span>
+                      event.event
                     )}
                   </td>
                   {isEditing && (
-                    <td className="border border-gray-400 px-4 py-2 text-center bg-gray-50">
-                      <button onClick={() => handleDeleteRow(date, index)} className="text-sm text-red-500">Poista rivi</button>
+                    <td className="border border-gray-400 px-4 py-2 bg-gray-50">
+                      <button 
+                        onClick={() => handleDeleteRow(date, index)} 
+                        className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+                      >
+                        Poista
+                      </button>
                     </td>
                   )}
                 </tr>
@@ -272,25 +268,23 @@ function Schedule() {
             </tbody>
           </table>
           {isEditing && (
-            <div className="text-center mt-4">
-              <button 
-                onClick={() => handleAddRow(date)} 
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                Lisää rivi
-              </button>
-            </div>
+            <button 
+              onClick={() => handleAddRow(date)} 
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mt-4"
+            >
+              Lisää rivi
+            </button>
           )}
         </div>
       ))}
 
       {isEditing && (
         <div className="text-center mt-4">
-          <button 
-            onClick={handleSave} 
-            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+          <button
+            onClick={handleSave}
+            className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg"
           >
-            Hyväksy muutokset
+            Tallenna Aikataulu
           </button>
         </div>
       )}
