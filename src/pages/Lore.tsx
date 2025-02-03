@@ -69,8 +69,26 @@ const Lore = () => {
           {selectedStory === 'story2' && (
             <Story
               title="Malmin Taistelu"
-              content="Kauan sen jälkeen, kun Väinö, Alma ja Iivari olivat palanneet Kuun polulta... (jatkuu)"
-            />
+              content={
+					"Eräänä synkkänä yönä, jolloin kuu oli musta ja tuuli kantoi mukanaan kuiskauksia menneisyydestä, Malmin maaperä alkoi täristä.\n\n" +
+					"Vanhoista halkeamista, joita oltiin pidetty suljettuina ja unohdettuina, alkoi nousta jotain… Varjolegioona. Se oli muinaisten pelkojen ruumiillistuma – olentoja, jotka olivat syntyneet Varjokuninkaan katkerista muistoista. Heidän tehtävänsä oli selvä: vapauttaa mestarinsa ja upottaa Malmi ikuiseen varjoon.\n\n" +
+					"Kuningatar Taimi tiesi, että tämä taistelu ei olisi vain miekoilla ja magialla voitettavissa.\n\n" +
+					"Hän lähetti viestin kaikille Malmin kulmille, kutsuen yhteen rohkeimmat sielut. Väinö, nyt kokenut seikkailija, palasi Malmiin yhdessä Alman kanssa, joka oli oppinut hallitsemaan Kuun polun muinaisia loitsuja. Iivari, joka oli kadonnut salaperäisesti vuosia sitten, ilmestyi jälleen, mutta hänen katseessaan oli jotakin muuttunutta — ehkä varjojen kaiku tai salaisuuksia, joita hän ei halunnut jakaa.\n\n" +
+					"Taistelu Malmin sydämessä alkoi.\n\n" +
+					"Malmin aukio, joka oli ennen täynnä markkinakojuja ja naurua, muuttui taistelukentäksi. Katujen varret paloivat sinisin liekein, kun legioona vyöryi eteenpäin. Se ei ollut vain fyysinen taistelu; Varjolegioona hyökkäsi myös mielen ja muistin kimppuun, saaden sotilaat unohtamaan keitä he olivat.\n\n" +
+					"Väinö johti Malmin puolustajia, miekka kädessään ja liekki sydämessään.\n\n" +
+					"Alma käytti ikivanhoja riimuja luodakseen suojia, mutta huomasi pian, että pelkkä magia ei riittänyt. He tarvitsivat Malmin sielun – sen, mikä teki Malmista kodin.\n\n" +
+					"Kuningatar Taimi astui etulinjaan, ei kruunussa vaan panssarissa, johon oli kaiverrettu Malmin vanhimmat symbolit.\n\n" +
+					"Hänen äänensä kantoi yli taistelun myrskyn:\n\n" +
+					"\"Malmi ei ole vain paikka. Se on muisto, ystävyys ja rohkeus. Niin kauan kuin muistamme keitä olemme, mikään varjo ei voi meitä niellä.\"\n\n" +
+					"Nämä sanat sytyttivät toivon liekin jokaisen sotilaan sydämessä.\n\n" +
+					"Iivari, joka oli kamppaillut omien varjojensa kanssa, teki lopulta uhrauksen. Hän hyppäsi suoraan legioonan sydämeen, varastaen heidän johtavan amuletin, joka piti heidät yhteydessä Varjokuninkaaseen. Hänen tekonsa antoi Väinölle ja Almalle mahdollisuuden suorittaa viimeisen rituaalin — sellaisen, jonka voima tuli Malmin ihmisistä itsestään.\n\n" +
+					"Varjolegioona hajosi, ja Varjokuninkaan ote maailmasta murtui.\n\n" +
+					"Taistelun jälkeen Malmi oli arpeutunut, mutta elossa.\n\n" +
+					"Kuningatar Taimi julisti uuden aikakauden alkamisen, jossa muistot menneistä eivät olleet vain tarinoita vaan voimaa. Väinö ja Alma lähtivät uusille seikkailuille, mutta Iivarin nimi jäi kaiverretuksi Malmin kiviseiniin — muistutukseksi siitä, että jopa varjot voivat löytää valon.\n\n" +
+					"Ja niin Malmin Taistelun tarina kulki sukupolvelta toiselle, ei pelkkänä historiana, vaan muistutuksena siitä, että todellinen voima piilee yhteisössä, toivossa ja rohkeudessa kohdata omat varjonsa."
+			    }
+			/>
           )}
           {selectedStory === 'story3' && (
             <Story
