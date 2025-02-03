@@ -20,36 +20,6 @@ function TournamentBracket() {
   const [matchData, setMatchData] = useState(initialMatchData);
   const [newDay, setNewDay] = useState('');
 
-  const calculatePoints = (matchData) => {
-    const points = {};
-
-    // Käydään läpi kaikki päivät ja ottelut, lasketaan pistetilanne
-    Object.keys(matchData).forEach((date) => {
-      matchData[date].forEach((match) => {
-        const teamA = match.match.split(' vs ')[0].trim();
-        const teamB = match.match.split(' vs ')[1].trim();
-        const scoreA = match.scoreA;
-        const scoreB = match.scoreB;
-
-        // Lisää joukkueet pistetilanteeseen, jos niitä ei ole vielä
-        if (!points[teamA]) points[teamA] = 0;
-        if (!points[teamB]) points[teamB] = 0;
-
-        // Laske pisteet
-        if (scoreA > scoreB) {
-          points[teamA] += 3;  // Voitto
-        } else if (scoreA < scoreB) {
-          points[teamB] += 3;  // Voitto
-        } else {
-          points[teamA] += 1;  // Tasapeli
-          points[teamB] += 1;  // Tasapeli
-        }
-      });
-    });
-
-    return points;
-  };
-
   useEffect(() => {
     const getMatchData = async () => {
       const { data, error } = await supabase
@@ -268,8 +238,6 @@ function TournamentBracket() {
     setIsEditing(false);
   };
 
-  const points = calculatePoints(matchData);  // Lasketaan pisteet jokaisen ottelun perusteella
-
   return (
     <div className="bracket-container min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white p-6">
       <h2 className="text-4xl font-bold text-center mb-6">Kahden joukkueen Tappeluturnaus</h2>
@@ -310,105 +278,140 @@ function TournamentBracket() {
         </div>
       )}
 
-      {/* Pisteet taulukko */}
-      <h3 className="text-2xl font-bold text-center mt-6 mb-4">Pistetilanne</h3>
-      <table className="w-full table-auto border-collapse mb-6">
-        <thead>
-          <tr>
-            <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Joukkue</th>
-            <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Pisteet</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.keys(points).map((team, index) => (
-            <tr key={index}>
-              <td className="border border-gray-400 px-4 py-2">{team}</td>
-              <td className="border border-gray-400 px-4 py-2">{points[team]}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <div className="match-data-container">
-        {Object.keys(matchData).map((date, dateIndex) => (
-          <div key={dateIndex} className="date-container mb-6">
-            <h3 className="text-2xl font-bold">{date}</h3>
-            <button
-              onClick={() => handleDeleteDay(date)}
-              className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg focus:outline-none"
-            >
-              Poista päivä
-            </button>
-
-            <div className="match-container mt-4">
-              {matchData[date].map((match, matchIndex) => (
-                <div key={matchIndex} className="match-card mb-4 border border-gray-400 p-4 rounded-lg bg-gray-700">
-                  <div className="match-header flex justify-between items-center mb-4">
-                    <div className="match-time text-lg">{match.time}</div>
-                    <div className="match-result text-xl font-bold">
-                      {match.scoreA} - {match.scoreB}
-                    </div>
-                  </div>
-                  <div className="teams mb-4">
-                    <div className="team flex justify-between">
-                      <div className="team-a">
-                        <strong>Joukkue A:</strong>
-                        {match.teamA.map((player, playerIndex) => (
-                          <div key={playerIndex} className="player flex items-center mt-2">
-                            <input
-                              type="text"
-                              value={player}
-                              onChange={(e) => handleTeamChange(date, matchIndex, 'teamA', playerIndex, e.target.value)}
-                              className="border px-2 py-1 text-black"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                      <div className="team-b ml-8">
-                        <strong>Joukkue B:</strong>
-                        {match.teamB.map((player, playerIndex) => (
-                          <div key={playerIndex} className="player flex items-center mt-2">
-                            <input
-                              type="text"
-                              value={player}
-                              onChange={(e) => handleTeamChange(date, matchIndex, 'teamB', playerIndex, e.target.value)}
-                              className="border px-2 py-1 text-black"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="match-footer">
-                    <button
-                      onClick={() => handleDeleteMatch(date, matchIndex)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg focus:outline-none"
-                    >
-                      Poista ottelu
-                    </button>
-                  </div>
-                </div>
-              ))}
+      {Object.keys(matchData).map((date) => (
+        <div key={date} className="overflow-x-auto mb-6 bg-white/20 backdrop-blur-lg rounded-xl">
+          <h3 className="text-xl text-center text-black font-bold mb-2">
+            {date}
+            {isEditing && (
               <button 
-                onClick={() => handleAddMatch(date)}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg focus:outline-none"
+                onClick={() => handleDeleteDay(date)}
+                className="text-sm text-red-500 ml-4"
               >
-                Lisää ottelu
+                Poista päivä
               </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {isEditing && (
-        <div className="text-center mt-6">
-          <button 
-            onClick={handleSave} 
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg focus:outline-none"
-          >
-            Tallenna
-          </button>
+            )}
+          </h3>
+          <table className="w-full table-auto border-collapse">
+            <thead>
+              <tr>
+                <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Aika</th>
+                <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Ottelu</th>
+                <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Pisteet</th>
+                {isEditing && (
+                  <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Toiminnot</th>
+                )}
+              </tr>
+            </thead>
+            <tbody>
+              {matchData[date].map((match, index) => (
+                <tr key={index}>
+                  <td className="border border-gray-400 px-4 py-2 bg-white text-black">
+                    <input 
+                      type="time" 
+                      value={match.time}
+                      onChange={(e) => handleScoreChange(date, index, 'time', e.target.value)}
+                      className={`w-20 bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                      disabled={!isEditing}
+                    />
+                  </td>
+                  <td className="border border-gray-400 px-4 py-2 bg-white text-black">
+                    <input 
+                      type="text" 
+                      value={match.match}
+                      onChange={(e) => handleScoreChange(date, index, 'match', e.target.value)}
+                      className={`w-full bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                      disabled={!isEditing}
+                    />
+                    <div className="text-sm text-gray-700">
+                      <strong>Joukkue A:</strong> 
+                      {isEditing && match.teamA.map((player, i) => (
+                        <input
+                          key={i}
+                          type="text"
+                          value={player}
+                          onChange={(e) => handleTeamChange(date, index, 'teamA', i, e.target.value)}
+                          className={`w-20 bg-gray-200 m-1 rounded-md text-black`}
+                          disabled={!isEditing}
+                        />
+                      ))}
+                      {isEditing && (
+                        <button
+                          onClick={() => handleAddPlayer(date, index, 'teamA')}
+                          className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
+                        >
+                          Lisää pelaaja A
+                        </button>
+                      )}
+                      <br />
+                      <strong>Joukkue B:</strong> 
+                      {isEditing && match.teamB.map((player, i) => (
+                        <input
+                          key={i}
+                          type="text"
+                          value={player}
+                          onChange={(e) => handleTeamChange(date, index, 'teamB', i, e.target.value)}
+                          className={`w-20 bg-gray-200 m-1 rounded-md text-black`}
+                          disabled={!isEditing}
+                        />
+                      ))}
+                      {isEditing && (
+                        <button
+                          onClick={() => handleAddPlayer(date, index, 'teamB')}
+                          className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
+                        >
+                          Lisää pelaaja B
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                  <td className="border border-gray-400 px-4 py-2 bg-white text-black">
+                    <input 
+                      type="number" 
+                      value={match.scoreA}
+                      onChange={(e) => handleScoreChange(date, index, 'scoreA', e.target.value)}
+                      className={`w-16 bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                      disabled={!isEditing}
+                    />
+                    -
+                    <input 
+                      type="number" 
+                      value={match.scoreB}
+                      onChange={(e) => handleScoreChange(date, index, 'scoreB', e.target.value)}
+                      className={`w-16 bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
+                      disabled={!isEditing}
+                    />
+                  </td>
+                  {isEditing && (
+                    <td className="border border-gray-400 px-4 py-2 bg-white text-black">
+                      <button
+                        onClick={() => handleDeleteMatch(date, index)}
+                        className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg"
+                      >
+                        Poista ottelu
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {isEditing && (
+            <button 
+              onClick={() => handleAddMatch(date)}
+              className="bg-green-500 text-white px-6 py-2 mt-4 rounded-lg"
+            >
+              Lisää uusi ottelu
+            </button>
+          )}
         </div>
+      ))}
+      {isEditing && (
+        <button
+          onClick={handleSave}
+          className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 mt-6 rounded-lg"
+        >
+          Tallenna muutokset
+        </button>
       )}
     </div>
   );
