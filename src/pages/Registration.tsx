@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
-import supabase from '../services/supabase'; // Oletetaan, että Supabase on konfiguroitu
+import React, { useState, useEffect } from 'react';
+import supabase from '../services/supabase';
+import { motion } from 'framer-motion';
 
 const RegistrationForm = () => {
   const [gameTag, setGameTag] = useState('');
-  const [selectedDays, setSelectedDays] = useState<string[]>([]); // Talletetaan valitut päivät
+  const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [bringingPC, setBringingPC] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [registeredTags, setRegisteredTags] = useState<string[]>([]);
 
   const availableDays = ['2025-04-17', '2025-04-18', '2025-04-19', '2025-04-20', '2025-04-21'];
 
+  useEffect(() => {
+    const fetchRegisteredTags = async () => {
+      const { data, error } = await supabase.from('registrations').select('game_tag');
+      if (!error && data) {
+        setRegisteredTags(data.map((item) => item.game_tag));
+      }
+    };
+    fetchRegisteredTags();
+  }, [success]);
+
   const handleDayChange = (day: string) => {
-    setSelectedDays(prevDays =>
-      prevDays.includes(day) ? prevDays.filter(d => d !== day) : [...prevDays, day]
+    setSelectedDays((prevDays) =>
+      prevDays.includes(day) ? prevDays.filter((d) => d !== day) : [...prevDays, day]
     );
   };
 
@@ -25,14 +37,11 @@ const RegistrationForm = () => {
     }
 
     try {
-      // Lajitellaan päivämäärät ennen tallennusta
       const sortedDays = [...selectedDays].sort();
 
       const { error } = await supabase
         .from('registrations')
-        .insert([
-          { game_tag: gameTag, selected_days: sortedDays, bringing_pc: bringingPC }
-        ]);
+        .insert([{ game_tag: gameTag, selected_days: sortedDays, bringing_pc: bringingPC }]);
 
       if (error) throw error;
 
@@ -46,12 +55,12 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="p-6 bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white rounded-xl shadow-lg max-w-lg mx-auto">
+    <div className="relative p-6 bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white rounded-xl shadow-lg max-w-lg mx-auto">
       <h2 className="text-4xl font-bold text-center mb-4">Ilmoittautuminen Lan-tapahtumaan</h2>
 
       {error && <p className="text-red-500">{error}</p>}
       {success && <p className="text-green-500">Ilmoittautuminen onnistui!</p>}
-      
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="gameTag" className="block text-lg">Pelitunnus</label>
@@ -89,19 +98,36 @@ const RegistrationForm = () => {
             type="checkbox"
             id="bringingPC"
             checked={bringingPC}
-            onChange={() => setBringingPC(prevState => !prevState)}
+            onChange={() => setBringingPC((prevState) => !prevState)}
             className="w-4 h-4 mr-2"
           />
           <span className="text-white">Kyllä, tuon koneen.</span>
         </div>
 
-        <button 
+        <button
           type="submit"
           className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
           Ilmoittaudu
         </button>
       </form>
+
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {registeredTags.map((tag, index) => (
+          <motion.div
+            key={index}
+            className="absolute bg-white text-black px-2 py-1 rounded shadow-md"
+            initial={{ x: Math.random() * 300, y: Math.random() * 400 }}
+            animate={{
+              x: [Math.random() * 300, Math.random() * 300],
+              y: [Math.random() * 400, Math.random() * 400],
+            }}
+            transition={{ repeat: Infinity, repeatType: 'mirror', duration: 5 }}
+          >
+            {tag}
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 };
