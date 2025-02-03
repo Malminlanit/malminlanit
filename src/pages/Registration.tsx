@@ -3,7 +3,7 @@ import supabase from '../services/supabase'; // Oletetaan, että Supabase on kon
 
 const RegistrationForm = () => {
   const [gameTag, setGameTag] = useState('');
-  const [arrivalTime, setArrivalTime] = useState('');
+  const [arrivalDate, setArrivalDate] = useState(''); // Muutettu saapumisaika päivämääräksi
   const [bringingPC, setBringingPC] = useState(false); // Uusi tila koneen mukanaololle
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -12,8 +12,8 @@ const RegistrationForm = () => {
     e.preventDefault();
 
     // Yksinkertainen validointi
-    if (!gameTag || !arrivalTime) {
-      setError('Pelitunnus ja saapumisaika ovat pakollisia!');
+    if (!gameTag || !arrivalDate) {
+      setError('Pelitunnus ja saapumispäivämäärä ovat pakollisia!');
       return;
     }
 
@@ -21,7 +21,7 @@ const RegistrationForm = () => {
       const { error } = await supabase
         .from('registrations') // Oletetaan, että taulun nimi on 'registrations'
         .insert([
-          { game_tag: gameTag, arrival_time: arrivalTime, bringing_pc: bringingPC } // Tallennetaan myös 'bringingPC'
+          { game_tag: gameTag, arrival_date: arrivalDate, bringing_pc: bringingPC } // Tallennetaan myös 'bringingPC'
         ]);
 
       if (error) throw error;
@@ -29,7 +29,7 @@ const RegistrationForm = () => {
       // Ilmoittautuminen onnistui
       setSuccess(true);
       setGameTag('');
-      setArrivalTime('');
+      setArrivalDate('');
       setBringingPC(false);
     } catch (error) {
       setError('Ilmoittautuminen epäonnistui. Yritä uudelleen!');
@@ -57,12 +57,12 @@ const RegistrationForm = () => {
         </div>
         
         <div>
-          <label htmlFor="arrivalTime" className="block text-lg">Saapumisaika</label>
+          <label htmlFor="arrivalDate" className="block text-lg">Saapumispäivämäärä</label>
           <input
-            type="time"
-            id="arrivalTime"
-            value={arrivalTime}
-            onChange={(e) => setArrivalTime(e.target.value)}
+            type="date" // Muutettu input-tyypiksi "date"
+            id="arrivalDate"
+            value={arrivalDate}
+            onChange={(e) => setArrivalDate(e.target.value)}
             className="w-full p-2 rounded-md border border-gray-300 bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-600"
             required
           />
