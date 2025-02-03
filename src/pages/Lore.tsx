@@ -17,10 +17,10 @@ const Lore = () => {
 
         <div className="flex justify-center gap-4 mb-6 flex-wrap">
           {[
-            { key: 'story1', label: 'Malmin Kuningatar' },
-            { key: 'story2', label: 'Malmin Taistelu' },
-            { key: 'story3', label: 'Ystävyyden Voima' },
-            { key: 'story4', label: 'Varjokuningas' }
+            { key: 'story1', label: 'Malmin Kuningatar Ep.1' },
+            { key: 'story2', label: 'Malmin Taistelu Ep.2' },
+            { key: 'story3', label: 'Ystävyyden Voima Ep.3' },
+            { key: 'story4', label: 'Varjokuningas Ep.4' }
           ].map(({ key, label }) => (
             <button
               key={key}
