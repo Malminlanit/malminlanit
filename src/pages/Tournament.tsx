@@ -287,7 +287,7 @@ function TournamentBracket() {
                 onClick={() => handleDeleteDay(date)}
                 className="text-sm text-red-500 ml-4"
               >
-                Poista päivä
+                Poista turnaus
               </button>
             )}
           </h3>
