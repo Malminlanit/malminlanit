@@ -2,50 +2,16 @@ import React, { useState, useEffect } from 'react';
 import supabase from '../services/supabase.js';
 
 const initialMatchData = {
-  "Tappelupeli": {
-    "Päivämäärä 1": [
-      {
-        time: "10:00",
-        match: "Joukkue A vs Joukkue B",
-        teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"],
-        teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"],
-        scoreA: 0,
-        scoreB: 0
-      }
-    ]
-  },
-  "FPS": {
-    "Päivämäärä 1": [
-      {
-        time: "12:00",
-        match: "Joukkue A vs Joukkue B",
-        teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"],
-        teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"],
-        scoreA: 0,
-        scoreB: 0
-      }
-    ]
-  },
-  "MOBA": {
-    "Päivämäärä 1": [
-      {
-        time: "14:00",
-        match: "Joukkue A vs Joukkue B",
-        teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"],
-        teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"],
-        scoreA: 0,
-        scoreB: 0
-      }
-    ]
-  }
+  "Päivämäärä 1": [
+    { time: "10:00", match: "Joukkue A vs Joukkue B", teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"], teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"], scoreA: 0, scoreB: 0 }
+  ]
 };
 
 function TournamentBracket() {
   const [isEditing, setIsEditing] = useState(false);
   const [password, setPassword] = useState('');
-  const [selectedGameType, setSelectedGameType] = useState("Tappelupeli");
   const [matchData, setMatchData] = useState(initialMatchData);
-  const [tempMatchData, setTempMatchData] = useState(initialMatchData);
+  const [newDay, setNewDay] = useState('');
 
   useEffect(() => {
     const getMatchData = async () => {
@@ -56,7 +22,6 @@ function TournamentBracket() {
 
       if (data) {
         setMatchData(data.match_data);
-        setTempMatchData(data.match_data);
       } else {
         console.error('Virhe turnauksen tietojen hakemisessa:', error);
       }
@@ -73,59 +38,114 @@ function TournamentBracket() {
     }
   };
 
-  const handleScoreChange = (gameType, date, index, team, value) => {
-    setTempMatchData(prevData => {
+  const handleScoreChange = (date, index, team, value) => {
+    setMatchData(prevData => {
       const updatedData = {
         ...prevData,
-        [gameType]: {
-          ...prevData[gameType],
-          [date]: prevData[gameType][date].map((match, i) =>
-            i === index ? { ...match, [team]: value } : match
-          )
+        [date]: prevData[date].map((match, i) =>
+          i === index ? { ...match, [team]: value } : match
+        )
+      };
+
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('matches')
+          .upsert({ id: 1, match_data: updatedData });
+        if (error) {
+          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
         }
       };
+      saveToSupabase();
       return updatedData;
     });
   };
 
-  const handlePlayerChange = (gameType, date, matchIndex, teamIndex, playerIndex, value) => {
-    setTempMatchData(prevData => {
+  const handleAddMatch = (date) => {
+    setMatchData(prevData => {
       const updatedData = { ...prevData };
-      updatedData[gameType][date][matchIndex][teamIndex][playerIndex] = value;
-      return updatedData;
-    });
-  };
-
-  const handleMatchTimeChange = (gameType, date, matchIndex, value) => {
-    setTempMatchData(prevData => {
-      const updatedData = { ...prevData };
-      updatedData[gameType][date][matchIndex].time = value;
-      return updatedData;
-    });
-  };
-
-  const handleAddMatch = (gameType, date) => {
-    setTempMatchData(prevData => {
-      const updatedData = { ...prevData };
-      if (!updatedData[gameType][date]) {
-        updatedData[gameType][date] = [];
+      if (!updatedData[date]) {
+        updatedData[date] = [];
       }
-      updatedData[gameType][date].push({
+      updatedData[date].push({
         time: "",
         match: "Joukkue A vs Joukkue B",
-        teamA: ["", "", "", "", ""],
-        teamB: ["", "", "", "", ""],
+        teamA: ["", "", "", "", ""],  // Tyhjät pelaajat
+        teamB: ["", "", "", "", ""],  // Tyhjät pelaajat
         scoreA: 0,
         scoreB: 0
       });
+
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('matches')
+          .upsert({ id: 1, match_data: updatedData });
+        if (error) {
+          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
       return updatedData;
     });
   };
 
-  const handleDeleteMatch = (gameType, date, index) => {
-    setTempMatchData(prevData => {
+  const handleDeleteMatch = (date, index) => {
+    setMatchData(prevData => {
       const updatedData = { ...prevData };
-      updatedData[gameType][date].splice(index, 1);
+      updatedData[date].splice(index, 1);
+
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('matches')
+          .upsert({ id: 1, match_data: updatedData });
+        if (error) {
+          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
+      return updatedData;
+    });
+  };
+
+  const handleAddDay = () => {
+    if (!newDay) {
+      alert('Syötä päivämäärä');
+      return;
+    }
+
+    setMatchData(prevData => {
+      const updatedData = { ...prevData };
+      if (!updatedData[newDay]) {
+        updatedData[newDay] = [{ time: "", match: "", teamA: [], teamB: [], scoreA: 0, scoreB: 0 }];
+      }
+
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('matches')
+          .upsert({ id: 1, match_data: updatedData });
+        if (error) {
+          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
+      setNewDay('');
+      return updatedData;
+    });
+  };
+
+  const handleDeleteDay = (date) => {
+    setMatchData(prevData => {
+      const updatedData = { ...prevData };
+      delete updatedData[date];
+
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('matches')
+          .upsert({ id: 1, match_data: updatedData });
+        if (error) {
+          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
       return updatedData;
     });
   };
@@ -133,15 +153,15 @@ function TournamentBracket() {
   const handleSave = async () => {
     const { error } = await supabase
       .from('matches')
-      .upsert({ id: 1, match_data: tempMatchData });
+      .upsert({ id: 1, match_data: matchData });
 
     if (error) {
       console.error('Virhe turnauksen tietojen tallentamisessa:', error);
     } else {
       alert('Turnauksen tiedot tallennettu Supabaseen!');
-      setMatchData(tempMatchData);
-      setIsEditing(false);
     }
+
+    setIsEditing(false);
   };
 
   return (
@@ -150,15 +170,15 @@ function TournamentBracket() {
 
       {!isEditing && (
         <div className="text-center mb-4">
-          <input
-            type="password"
-            placeholder="Syötä salasana muokataksesi"
+          <input 
+            type="password" 
+            placeholder="Syötä salasana muokataksesi" 
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="border border-gray-400 px-4 py-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
-          <button
-            onClick={handleLogin}
+          <button 
+            onClick={handleLogin} 
             className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg focus:outline-none"
           >
             Kirjaudu
@@ -168,23 +188,34 @@ function TournamentBracket() {
 
       {isEditing && (
         <div className="text-center mb-4">
-          <label className="mr-4 text-black">Valitse peli:</label>
-          <select
-            value={selectedGameType}
-            onChange={(e) => setSelectedGameType(e.target.value)}
+          <input 
+            type="text" 
+            placeholder="Syötä uusi päivämäärä"
+            value={newDay}
+            onChange={(e) => setNewDay(e.target.value)}
             className="border border-gray-400 px-4 py-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+          <button 
+            onClick={handleAddDay} 
+            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg focus:outline-none"
           >
-            <option value="Tappelupeli">Tappelupeli</option>
-            <option value="FPS">FPS</option>
-            <option value="MOBA">MOBA</option>
-          </select>
+            Lisää uusi päivä
+          </button>
         </div>
       )}
 
-      {Object.keys(matchData[selectedGameType] || {}).map((date) => (
+      {Object.keys(matchData).map((date) => (
         <div key={date} className="overflow-x-auto mb-6 bg-white/20 backdrop-blur-lg rounded-xl">
           <h3 className="text-xl text-center text-black font-bold mb-2">
             {date}
+            {isEditing && (
+              <button 
+                onClick={() => handleDeleteDay(date)}
+                className="text-sm text-red-500 ml-4"
+              >
+                Poista päivä
+              </button>
+            )}
           </h3>
           <table className="w-full table-auto border-collapse">
             <thead>
@@ -192,85 +223,51 @@ function TournamentBracket() {
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Aika</th>
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Ottelu</th>
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Pisteet</th>
-                {isEditing && <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Muokkaa</th>}
+                {isEditing && (
+                  <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Toiminnot</th>
+                )}
               </tr>
             </thead>
             <tbody>
-              {matchData[selectedGameType][date].map((match, index) => (
-                <tr key={index} className="text-center">
-                  <td className="border border-gray-400 px-4 py-2 text-black">
-                    {isEditing ? (
-                      <input
-                        type="time"
-                        value={match.time}
-                        onChange={(e) => handleMatchTimeChange(selectedGameType, date, index, e.target.value)}
-                        className="border px-2 py-1 rounded-lg"
-                      />
-                    ) : (
-                      match.time
-                    )}
-                  </td>
-                  <td className="border border-gray-400 px-4 py-2 text-black">
-                    <div>
-                      {isEditing ? (
-                        <>
-                          <input
-                            type="text"
-                            value={match.teamA.join(", ")}
-                            onChange={(e) => {
-                              const players = e.target.value.split(", ");
-                              players.forEach((player, playerIndex) => {
-                                handlePlayerChange(selectedGameType, date, index, 'teamA', playerIndex, player);
-                              });
-                            }}
-                            className="border px-2 py-1 rounded-lg"
-                          />
-                          {" vs "}
-                          <input
-                            type="text"
-                            value={match.teamB.join(", ")}
-                            onChange={(e) => {
-                              const players = e.target.value.split(", ");
-                              players.forEach((player, playerIndex) => {
-                                handlePlayerChange(selectedGameType, date, index, 'teamB', playerIndex, player);
-                              });
-                            }}
-                            className="border px-2 py-1 rounded-lg"
-                          />
-                        </>
-                      ) : (
-                        `${match.teamA.join(", ")} vs ${match.teamB.join(", ")}`
-                      )}
+              {matchData[date].map((match, index) => (
+                <tr key={index}>
+                  <td className="border border-gray-400 px-4 py-2 bg-white text-black">{match.time}</td>
+                  <td className="border border-gray-400 px-4 py-2 bg-white text-black">
+                    {match.match} 
+                    <div className="text-sm text-gray-700">
+                      <strong>Joukkue A:</strong> {match.teamA.join(', ')}
+                      <br />
+                      <strong>Joukkue B:</strong> {match.teamB.join(', ')}
                     </div>
                   </td>
-                  <td className="border border-gray-400 px-4 py-2 text-black">
+                  <td className="border border-gray-400 px-4 py-2 bg-white text-black">
                     {isEditing ? (
-                      <>
+                      <div>
                         <input
                           type="number"
                           value={match.scoreA}
-                          onChange={(e) => handleScoreChange(selectedGameType, date, index, 'scoreA', parseInt(e.target.value))}
-                          className="border px-2 py-1 rounded-lg"
+                          onChange={(e) => handleScoreChange(date, index, 'scoreA', e.target.value)}
+                          className="w-16 px-3 py-2 bg-gray-100 rounded-md"
                         />
-                        {" - "}
+                        -
                         <input
                           type="number"
                           value={match.scoreB}
-                          onChange={(e) => handleScoreChange(selectedGameType, date, index, 'scoreB', parseInt(e.target.value))}
-                          className="border px-2 py-1 rounded-lg"
+                          onChange={(e) => handleScoreChange(date, index, 'scoreB', e.target.value)}
+                          className="w-16 px-3 py-2 bg-gray-100 rounded-md"
                         />
-                      </>
+                      </div>
                     ) : (
                       `${match.scoreA} - ${match.scoreB}`
                     )}
                   </td>
                   {isEditing && (
-                    <td className="border border-gray-400 px-4 py-2 text-black">
-                      <button
-                        onClick={() => handleDeleteMatch(selectedGameType, date, index)}
-                        className="bg-red-600 text-white px-4 py-2 rounded-lg"
+                    <td className="border border-gray-400 px-4 py-2 bg-white text-black">
+                      <button 
+                        onClick={() => handleDeleteMatch(date, index)} 
+                        className="bg-red-500 text-white px-4 py-2 rounded-lg"
                       >
-                        Poista
+                        Poista ottelu
                       </button>
                     </td>
                   )}
@@ -278,28 +275,15 @@ function TournamentBracket() {
               ))}
             </tbody>
           </table>
-          {isEditing && (
-            <div className="text-center mt-4">
-              <button
-                onClick={() => handleAddMatch(selectedGameType, date)}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg focus:outline-none"
-              >
-                Lisää Ottelu
-              </button>
-            </div>
-          )}
         </div>
       ))}
-
       {isEditing && (
-        <div className="text-center mt-6">
-          <button
-            onClick={handleSave}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg focus:outline-none"
-          >
-            Tallenna
-          </button>
-        </div>
+        <button 
+          onClick={handleSave}
+          className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg mt-4"
+        >
+          Tallenna muutokset
+        </button>
       )}
     </div>
   );
