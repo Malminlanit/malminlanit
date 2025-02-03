@@ -304,7 +304,35 @@ function TournamentBracket() {
                     )}
                   </td>
                   <td className="border border-gray-400 px-4 py-2 text-black">
-                    {getMatchName(gameType, match.teamA.join(', '), match.teamB.join(', '))}
+                    <div>
+                      {isEditing ? (
+                        <>
+                          <input
+                            type="text"
+                            value={match.teamA.join(", ")}
+                            onChange={(e) =>
+                              match.teamA.map((player, playerIndex) =>
+                                handlePlayerChange(date, index, 'teamA', playerIndex, e.target.value)
+                              )
+                            }
+                            className="border px-2 py-1 rounded-lg"
+                          />
+                          {" vs "}
+                          <input
+                            type="text"
+                            value={match.teamB.join(", ")}
+                            onChange={(e) =>
+                              match.teamB.map((player, playerIndex) =>
+                                handlePlayerChange(date, index, 'teamB', playerIndex, e.target.value)
+                              )
+                            }
+                            className="border px-2 py-1 rounded-lg"
+                          />
+                        </>
+                      ) : (
+                        `${match.teamA.join(', ')} vs ${match.teamB.join(', ')}` 
+                      )}
+                    </div>
                   </td>
                   <td className="border border-gray-400 px-4 py-2 text-black">
                     {isEditing ? (
@@ -345,31 +373,6 @@ function TournamentBracket() {
           </table>
         </div>
       ))}
-
-      <div className="text-center mt-8">
-        <h3 className="text-2xl text-black font-bold mb-4">Tulokset</h3>
-        {Object.keys(gameResults).map((game) => (
-          <div key={game} className="mb-6">
-            <h4 className="text-xl text-black font-bold">{game}</h4>
-            <table className="w-full table-auto border-collapse">
-              <thead>
-                <tr>
-                  <th className="border border-gray-400 px-4 py-2 text-black">Ottelu</th>
-                  <th className="border border-gray-400 px-4 py-2 text-black">Pisteet</th>
-                </tr>
-              </thead>
-              <tbody>
-                {gameResults[game].map((result, index) => (
-                  <tr key={index}>
-                    <td className="border border-gray-400 px-4 py-2 text-black">{result.match}</td>
-                    <td className="border border-gray-400 px-4 py-2 text-black">{result.score}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ))}
-      </div>
 
       {isEditing && (
         <div className="text-center mt-8">
