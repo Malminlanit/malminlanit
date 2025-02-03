@@ -3,7 +3,14 @@ import supabase from '../services/supabase.js';
 
 const initialMatchData = {
   "Päivämäärä 1": [
-    { time: "10:00", match: "Joukkue A vs Joukkue B", teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"], teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"], scoreA: 0, scoreB: 0 }
+    { 
+      time: "10:00", 
+      match: "Joukkue A vs Joukkue B", 
+      teamA: ["Pelaaja 1", "Pelaaja 2", "Pelaaja 3", "Pelaaja 4", "Pelaaja 5"], 
+      teamB: ["Pelaaja 6", "Pelaaja 7", "Pelaaja 8", "Pelaaja 9", "Pelaaja 10"], 
+      scoreA: 0, 
+      scoreB: 0 
+    }
   ]
 };
 
@@ -46,6 +53,59 @@ function TournamentBracket() {
           i === index ? { ...match, [team]: value } : match
         )
       };
+
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('matches')
+          .upsert({ id: 1, match_data: updatedData });
+        if (error) {
+          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
+      return updatedData;
+    });
+  };
+
+  const handlePlayerChange = (date, matchIndex, teamIndex, playerIndex, value) => {
+    setMatchData(prevData => {
+      const updatedData = { ...prevData };
+      updatedData[date][matchIndex][teamIndex][playerIndex] = value;
+
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('matches')
+          .upsert({ id: 1, match_data: updatedData });
+        if (error) {
+          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
+      return updatedData;
+    });
+  };
+
+  const handleAddPlayer = (date, matchIndex, teamIndex) => {
+    setMatchData(prevData => {
+      const updatedData = { ...prevData };
+      updatedData[date][matchIndex][teamIndex].push(`Pelaaja ${updatedData[date][matchIndex][teamIndex].length + 1}`);
+      const saveToSupabase = async () => {
+        const { error } = await supabase
+          .from('matches')
+          .upsert({ id: 1, match_data: updatedData });
+        if (error) {
+          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
+        }
+      };
+      saveToSupabase();
+      return updatedData;
+    });
+  };
+
+  const handleRemovePlayer = (date, matchIndex, teamIndex, playerIndex) => {
+    setMatchData(prevData => {
+      const updatedData = { ...prevData };
+      updatedData[date][matchIndex][teamIndex].splice(playerIndex, 1);
 
       const saveToSupabase = async () => {
         const { error } = await supabase
@@ -239,6 +299,57 @@ function TournamentBracket() {
                       <br />
                       <strong>Joukkue B:</strong> {match.teamB.join(', ')}
                     </div>
+                    {isEditing && (
+                      <div>
+                        <h4 className="text-sm mt-2">Joukkue A</h4>
+                        {match.teamA.map((player, playerIndex) => (
+                          <div key={playerIndex} className="flex items-center space-x-2">
+                            <input
+                              type="text"
+                              value={player}
+                              onChange={(e) => handlePlayerChange(date, index, 'teamA', playerIndex, e.target.value)}
+                              className="border px-2 py-1 rounded"
+                            />
+                            <button
+                              onClick={() => handleRemovePlayer(date, index, 'teamA', playerIndex)}
+                              className="text-red-500"
+                            >
+                              Poista
+                            </button>
+                          </div>
+                        ))}
+                        <button
+                          onClick={() => handleAddPlayer(date, index, 'teamA')}
+                          className="bg-green-500 text-white mt-2"
+                        >
+                          Lisää pelaaja A:han
+                        </button>
+
+                        <h4 className="text-sm mt-4">Joukkue B</h4>
+                        {match.teamB.map((player, playerIndex) => (
+                          <div key={playerIndex} className="flex items-center space-x-2">
+                            <input
+                              type="text"
+                              value={player}
+                              onChange={(e) => handlePlayerChange(date, index, 'teamB', playerIndex, e.target.value)}
+                              className="border px-2 py-1 rounded"
+                            />
+                            <button
+                              onClick={() => handleRemovePlayer(date, index, 'teamB', playerIndex)}
+                              className="text-red-500"
+                            >
+                              Poista
+                            </button>
+                          </div>
+                        ))}
+                        <button
+                          onClick={() => handleAddPlayer(date, index, 'teamB')}
+                          className="bg-green-500 text-white mt-2"
+                        >
+                          Lisää pelaaja B:hen
+                        </button>
+                      </div>
+                    )}
                   </td>
                   <td className="border border-gray-400 px-4 py-2 bg-white text-black">
                     {isEditing ? (
