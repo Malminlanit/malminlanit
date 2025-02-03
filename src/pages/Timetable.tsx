@@ -17,6 +17,7 @@ function Schedule() {
   const [isEditing, setIsEditing] = useState(false);
   const [password, setPassword] = useState('');
   const [scheduleData, setScheduleData] = useState(initialScheduleData);
+  const [newDay, setNewDay] = useState(''); // Uuden päivän päivämäärä
 
   // Lataa aikataulu Supabasesta
   useEffect(() => {
@@ -90,13 +91,16 @@ function Schedule() {
   };
 
   const handleAddDay = () => {
-    const newDate = "18.4.2025"; // Voit muuttaa tämän dynaamiseksi (esim. päivämääräautomaatio)
-    
+    if (!newDay) {
+      alert('Syötä päivämäärä');
+      return;
+    }
+
     // Lisätään uusi päivä ja tyhjä rivi
     setScheduleData(prevData => {
       const updatedData = { ...prevData };
-      if (!updatedData[newDate]) {
-        updatedData[newDate] = [{ time: "", event: "" }]; // Tyhjä taulukko ja ensimmäinen tyhjä rivi
+      if (!updatedData[newDay]) {
+        updatedData[newDay] = [{ time: "", event: "" }]; // Tyhjä taulukko ja ensimmäinen tyhjä rivi
       }
 
       // Tallennetaan muutos Supabaseen reaaliaikaisesti
@@ -109,6 +113,7 @@ function Schedule() {
         }
       };
       saveToSupabase();
+      setNewDay(''); // Tyhjennetään syöttökenttä
       return updatedData;
     });
   };
@@ -153,6 +158,13 @@ function Schedule() {
       {/* Lisää uusi päivä */}
       {isEditing && (
         <div className="text-center mb-4">
+          <input 
+            type="text" 
+            placeholder="Syötä uusi päivämäärä (esim. 18.4.2025)"
+            value={newDay}
+            onChange={(e) => setNewDay(e.target.value)}
+            className="border border-gray-400 px-3 py-2 mr-2 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
           <button 
             onClick={handleAddDay} 
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
