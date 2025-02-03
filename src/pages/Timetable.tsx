@@ -92,11 +92,11 @@ function Schedule() {
   const handleAddDay = () => {
     const newDate = "18.4.2025"; // Voit muuttaa tämän dynaamiseksi (esim. päivämääräautomaatio)
     
-    // Lisätään uusi päivä (taulukko)
+    // Lisätään uusi päivä ja tyhjä rivi
     setScheduleData(prevData => {
       const updatedData = { ...prevData };
       if (!updatedData[newDate]) {
-        updatedData[newDate] = []; // Tyhjä taulukko tälle päivälle
+        updatedData[newDate] = [{ time: "", event: "" }]; // Tyhjä taulukko ja ensimmäinen tyhjä rivi
       }
 
       // Tallennetaan muutos Supabaseen reaaliaikaisesti
