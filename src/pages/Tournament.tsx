@@ -19,6 +19,36 @@ function TournamentBracket() {
   const [password, setPassword] = useState('');
   const [matchData, setMatchData] = useState(initialMatchData);
   const [newDay, setNewDay] = useState('');
+  
+  const calculatePoints = (matchData) => {
+    const points = {};
+
+    // Käydään läpi kaikki päivät ja ottelut, lasketaan pistetilanne
+    Object.keys(matchData).forEach((date) => {
+      matchData[date].forEach((match) => {
+        const teamA = match.match.split(' vs ')[0].trim();
+        const teamB = match.match.split(' vs ')[1].trim();
+        const scoreA = match.scoreA;
+        const scoreB = match.scoreB;
+
+        // Lisää joukkueet pistetilanteeseen, jos niitä ei ole vielä
+        if (!points[teamA]) points[teamA] = 0;
+        if (!points[teamB]) points[teamB] = 0;
+
+        // Laske pisteet
+        if (scoreA > scoreB) {
+          points[teamA] += 3;  // Voitto
+        } else if (scoreA < scoreB) {
+          points[teamB] += 3;  // Voitto
+        } else {
+          points[teamA] += 1;  // Tasapeli
+          points[teamB] += 1;  // Tasapeli
+        }
+      });
+    });
+
+    return points;
+  };
 
   useEffect(() => {
     const getMatchData = async () => {
@@ -238,6 +268,8 @@ function TournamentBracket() {
     setIsEditing(false);
   };
 
+  const points = calculatePoints(matchData);  // Lasketaan pisteet jokaisen ottelun perusteella
+
   return (
     <div className="bracket-container min-h-screen bg-gradient-to-br from-indigo-900 via-teal-900 to-indigo-900 text-white p-6">
       <h2 className="text-4xl font-bold text-center mb-6">Kahden joukkueen Tappeluturnaus</h2>
@@ -278,6 +310,26 @@ function TournamentBracket() {
         </div>
       )}
 
+      {/* Pisteet taulukko */}
+      <h3 className="text-2xl font-bold text-center mt-6 mb-4">Pistetilanne</h3>
+      <table className="w-full table-auto border-collapse mb-6">
+        <thead>
+          <tr>
+            <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Joukkue</th>
+            <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Pisteet</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.keys(points).map((team, index) => (
+            <tr key={index}>
+              <td className="border border-gray-400 px-4 py-2 bg-white text-black">{team}</td>
+              <td className="border border-gray-400 px-4 py-2 bg-white text-black">{points[team]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* Ottelut ja joukkueet */}
       {Object.keys(matchData).map((date) => (
         <div key={date} className="overflow-x-auto mb-6 bg-white/20 backdrop-blur-lg rounded-xl">
           <h3 className="text-xl text-center text-black font-bold mb-2">
@@ -285,83 +337,44 @@ function TournamentBracket() {
             {isEditing && (
               <button 
                 onClick={() => handleDeleteDay(date)}
-                className="text-sm text-red-500 ml-4"
+                className="text-sm text-red-500 ml-2"
               >
                 Poista päivä
               </button>
             )}
           </h3>
-          <table className="w-full table-auto border-collapse">
+          <table className="w-full table-auto">
             <thead>
               <tr>
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Aika</th>
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Ottelu</th>
                 <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Pisteet</th>
                 {isEditing && (
-                  <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Toiminnot</th>
+                  <th className="border border-gray-400 px-4 py-2 bg-gray-100 text-black">Poista</th>
                 )}
               </tr>
             </thead>
             <tbody>
               {matchData[date].map((match, index) => (
                 <tr key={index}>
+                  <td className="border border-gray-400 px-4 py-2 bg-white text-black">{match.time}</td>
                   <td className="border border-gray-400 px-4 py-2 bg-white text-black">
-                    <input 
-                      type="time" 
-                      value={match.time}
-                      onChange={(e) => handleScoreChange(date, index, 'time', e.target.value)}
-                      className={`w-20 bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
-                      disabled={!isEditing}
-                    />
-                  </td>
-                  <td className="border border-gray-400 px-4 py-2 bg-white text-black">
-                    <input 
-                      type="text" 
-                      value={match.match}
-                      onChange={(e) => handleScoreChange(date, index, 'match', e.target.value)}
-                      className={`w-full bg-gray-200 rounded-md text-black ${!isEditing ? 'bg-gray-300' : ''}`}
-                      disabled={!isEditing}
-                    />
-                    <div className="text-sm text-gray-700">
-                      <strong>Joukkue A:</strong> 
-                      {isEditing && match.teamA.map((player, i) => (
-                        <input
-                          key={i}
-                          type="text"
-                          value={player}
-                          onChange={(e) => handleTeamChange(date, index, 'teamA', i, e.target.value)}
-                          className={`w-20 bg-gray-200 m-1 rounded-md text-black`}
-                          disabled={!isEditing}
-                        />
-                      ))}
-                      {isEditing && (
-                        <button
-                          onClick={() => handleAddPlayer(date, index, 'teamA')}
-                          className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
-                        >
-                          Lisää pelaaja A
-                        </button>
-                      )}
-                      <br />
-                      <strong>Joukkue B:</strong> 
-                      {isEditing && match.teamB.map((player, i) => (
-                        <input
-                          key={i}
-                          type="text"
-                          value={player}
-                          onChange={(e) => handleTeamChange(date, index, 'teamB', i, e.target.value)}
-                          className={`w-20 bg-gray-200 m-1 rounded-md text-black`}
-                          disabled={!isEditing}
-                        />
-                      ))}
-                      {isEditing && (
-                        <button
-                          onClick={() => handleAddPlayer(date, index, 'teamB')}
-                          className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
-                        >
-                          Lisää pelaaja B
-                        </button>
-                      )}
+                    <div>
+                      <input
+                        type="text"
+                        value={match.teamA.join(", ")}
+                        onChange={(e) => handleTeamChange(date, index, 'teamA', e.target.value)}
+                        className="w-full bg-gray-200 rounded-md text-black"
+                        disabled={!isEditing}
+                      />
+                      <span>vs</span>
+                      <input
+                        type="text"
+                        value={match.teamB.join(", ")}
+                        onChange={(e) => handleTeamChange(date, index, 'teamB', e.target.value)}
+                        className="w-full bg-gray-200 rounded-md text-black"
+                        disabled={!isEditing}
+                      />
                     </div>
                   </td>
                   <td className="border border-gray-400 px-4 py-2 bg-white text-black">
@@ -405,6 +418,7 @@ function TournamentBracket() {
           )}
         </div>
       ))}
+
       {isEditing && (
         <button
           onClick={handleSave}
