@@ -20,7 +20,6 @@ function TournamentBracket() {
   const [matchData, setMatchData] = useState(initialMatchData);
   const [newDay, setNewDay] = useState('');
   const [gameType, setGameType] = useState('Tappelupeli');
-  const [playerNames, setPlayerNames] = useState({});
   const [gameResults, setGameResults] = useState({
     "Tappelupeli": [],
     "FPS": [],
@@ -92,27 +91,10 @@ function TournamentBracket() {
     });
   };
 
-  const handleAddPlayer = (date, matchIndex, teamIndex) => {
+  const handleMatchTimeChange = (date, matchIndex, value) => {
     setMatchData(prevData => {
       const updatedData = { ...prevData };
-      updatedData[date][matchIndex][teamIndex].push(`Pelaaja ${updatedData[date][matchIndex][teamIndex].length + 1}`);
-      const saveToSupabase = async () => {
-        const { error } = await supabase
-          .from('matches')
-          .upsert({ id: 1, match_data: updatedData });
-        if (error) {
-          console.error('Virhe turnauksen tietojen tallentamisessa:', error);
-        }
-      };
-      saveToSupabase();
-      return updatedData;
-    });
-  };
-
-  const handleRemovePlayer = (date, matchIndex, teamIndex, playerIndex) => {
-    setMatchData(prevData => {
-      const updatedData = { ...prevData };
-      updatedData[date][matchIndex][teamIndex].splice(playerIndex, 1);
+      updatedData[date][matchIndex].time = value;
 
       const saveToSupabase = async () => {
         const { error } = await supabase
@@ -309,7 +291,18 @@ function TournamentBracket() {
             <tbody>
               {matchData[date].map((match, index) => (
                 <tr key={index} className="text-center">
-                  <td className="border border-gray-400 px-4 py-2 text-black">{match.time}</td>
+                  <td className="border border-gray-400 px-4 py-2 text-black">
+                    {isEditing ? (
+                      <input
+                        type="time"
+                        value={match.time}
+                        onChange={(e) => handleMatchTimeChange(date, index, e.target.value)}
+                        className="border px-2 py-1 rounded-lg"
+                      />
+                    ) : (
+                      match.time
+                    )}
+                  </td>
                   <td className="border border-gray-400 px-4 py-2 text-black">
                     {getMatchName(gameType, match.teamA.join(', '), match.teamB.join(', '))}
                   </td>
@@ -377,6 +370,24 @@ function TournamentBracket() {
           </div>
         ))}
       </div>
+
+      {isEditing && (
+        <div className="text-center mt-8">
+          <h3 className="text-xl text-black font-bold mb-4">Lisää uusi päivä</h3>
+          <input
+            type="date"
+            value={newDay}
+            onChange={(e) => setNewDay(e.target.value)}
+            className="border px-4 py-2 rounded-lg bg-white text-black"
+          />
+          <button
+            onClick={handleAddDay}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg ml-4"
+          >
+            Lisää päivä
+          </button>
+        </div>
+      )}
     </div>
   );
 }
