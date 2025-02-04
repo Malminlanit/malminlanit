@@ -1,25 +1,14 @@
 import React, { useState } from 'react';
-import Story from '../components/Story'; // Assuming you have a Story component
+import Story1 from '../components/Story1.js';
+import Story2 from '../components/Story2.js';
+import Story3 from '../components/Story3.js';
+import Story4 from '../components/Story4.js';
 
 const Lore = () => {
   const [selectedStory, setSelectedStory] = useState('story1');
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-  const [audio] = useState(new Audio('/path/to/your/audiobook.mp3')); // replace with your actual audio file path
 
   const handleStoryChange = (story: string) => {
     setSelectedStory(story);
-    setIsAudioPlaying(false); // Stop audio when changing story
-    audio.pause();
-    audio.currentTime = 0;
-  };
-
-  const handlePlayAudio = () => {
-    if (isAudioPlaying) {
-      audio.pause();
-    } else {
-      audio.play();
-    }
-    setIsAudioPlaying(!isAudioPlaying);
   };
 
   return (
@@ -30,7 +19,7 @@ const Lore = () => {
         </h1>
 
         <div className="flex justify-center gap-4 mb-6 flex-wrap">
-          {[
+          {[ 
             { key: 'story1', label: 'Malmin Kuningatar Ep.1' },
             { key: 'story2', label: 'Malmin Taistelu Ep.2' },
             { key: 'story3', label: 'Ystävyyden Voima Ep.3' },
@@ -51,38 +40,10 @@ const Lore = () => {
         </div>
 
         <div className="p-6 bg-gray-700 bg-opacity-70 rounded-xl shadow-inner">
-          {selectedStory === 'story1' && (
-            <Story
-              title="Malmin Kuningatar"
-              content="Your story content here"
-            />
-          )}
-          {selectedStory === 'story2' && (
-            <Story
-              title="Malmin Taistelu"
-              content="Your story content here"
-            />
-          )}
-          {selectedStory === 'story3' && (
-            <Story
-              title="Ystävyyden Voima"
-              content="Your story content here"
-            />
-          )}
-          {selectedStory === 'story4' && (
-            <Story
-              title="Varjokuningas"
-              content="Your story content here"
-            />
-          )}
-
-          {/* Play audio button */}
-          <button
-            onClick={handlePlayAudio}
-            className="mt-6 px-6 py-3 bg-purple-600 text-white rounded-xl transition-all hover:scale-105 shadow-xl"
-          >
-            {isAudioPlaying ? 'Pysäytä äänikirja' : 'Soita äänikirja'}
-          </button>
+          {selectedStory === 'story1' && <Story1 />}
+          {selectedStory === 'story2' && <Story2 />}
+          {selectedStory === 'story3' && <Story3 />}
+          {selectedStory === 'story4' && <Story4 />}
         </div>
       </div>
     </div>
