@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Story from '../components/Story'; // Varmista, että Story-komponentti on oikein tuotu
+import background from '../assets/background-music.mp3';
 
 const Lore = () => {
   const [selectedStory, setSelectedStory] = useState('story1');
@@ -62,8 +63,8 @@ const Lore = () => {
             <>
               <Story title="Malmin Kuningatar" content="Tarina alkaa..." />
               <div>
-                <button onClick={() => handlePlay('story1')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Play</button>
-                <button onClick={() => handlePause('story1')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Pause</button>
+                <button onClick={() => handlePlay('background')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Play</button>
+                <button onClick={() => handlePause('background')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Pause</button>
                 <audio ref={audioRefs.story1} src="/assets/background-music.mp3" />
               </div>
             </>
