@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Story1 from '..src/components/Story1.js';
-import Story2 from '..src/components/Story2.js';
-import Story3 from '..src/components/Story3.js';
-import Story4 from '..src/components/Story4.js';
+import Story1 from './components/Story1';
+import Story2 from './components/Story2';
+import Story3 from './components/Story3';
+import Story4 from './components/Story4';
 
 const Lore = () => {
   const [selectedStory, setSelectedStory] = useState('story1');
