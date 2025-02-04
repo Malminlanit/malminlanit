@@ -14,8 +14,12 @@ const Lore = () => {
     setSelectedStory(story);
     // Pause all audios when switching to a new story
     Object.values(audioRefs).forEach(ref => ref.current?.pause());
-    // Reset the audio position to the start
-    Object.values(audioRefs).forEach(ref => ref.current?.currentTime = 0);
+    // Reset the audio position to the start, ensuring that ref.current exists
+    Object.values(audioRefs).forEach(ref => {
+      if (ref.current) {
+        ref.current.currentTime = 0;
+      }
+    });
   };
 
   const handlePlay = (story: string) => {
