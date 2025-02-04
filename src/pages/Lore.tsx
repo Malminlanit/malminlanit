@@ -1,22 +1,26 @@
 import React, { useState, useRef } from 'react';
 import Story from '../components/Story'; // Varmista, että Story-komponentti on oikein tuotu
-import background from '../assets/background-music.mp3';
+import background from '../assets/background-music.mp3'; // Taustamusiikki
 
 const Lore = () => {
   const [selectedStory, setSelectedStory] = useState('story1');
+  
+  // Viittaukset eri tarinoiden ääniin
   const audioRefs = {
     story1: useRef<HTMLAudioElement>(null),
     story2: useRef<HTMLAudioElement>(null),
     story3: useRef<HTMLAudioElement>(null),
     story4: useRef<HTMLAudioElement>(null),
+    background: useRef<HTMLAudioElement>(null), // Taustamusiikin viite
   };
 
+  // Muutetaan tarinaa ja pysäytetään kaikki äänet
   const handleStoryChange = (story: string) => {
-    console.log(`Changing to story: ${story}`); // Debugging log
+    console.log(`Changing to story: ${story}`);
     setSelectedStory(story);
-    // Pause all audios when switching to a new story
+    // Tauotetaan kaikki äänet
     Object.values(audioRefs).forEach(ref => ref.current?.pause());
-    // Reset the audio position to the start
+    // Palautetaan äänien aikaraja alkuun
     Object.values(audioRefs).forEach(ref => {
       if (ref.current) {
         ref.current.currentTime = 0;
@@ -24,14 +28,28 @@ const Lore = () => {
     });
   };
 
+  // Toistetaan valittu tarina
   const handlePlay = (story: string) => {
-    console.log(`Playing ${story}`); // Debugging log
+    console.log(`Playing ${story}`);
     audioRefs[story].current?.play();
   };
 
+  // Tauotetaan valittu tarina
   const handlePause = (story: string) => {
-    console.log(`Pausing ${story}`); // Debugging log
+    console.log(`Pausing ${story}`);
     audioRefs[story].current?.pause();
+  };
+
+  // Toistetaan taustamusiikki
+  const handlePlayBackground = () => {
+    console.log('Playing background music');
+    audioRefs.background.current?.play();
+  };
+
+  // Tauotetaan taustamusiikki
+  const handlePauseBackground = () => {
+    console.log('Pausing background music');
+    audioRefs.background.current?.pause();
   };
 
   return (
@@ -63,9 +81,9 @@ const Lore = () => {
             <>
               <Story title="Malmin Kuningatar" content="Tarina alkaa..." />
               <div>
-                <button onClick={() => handlePlay('background')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Play</button>
-                <button onClick={() => handlePause('background')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Pause</button>
-                <audio ref={audioRefs.story1} src="/assets/background-music.mp3" />
+                <button onClick={() => handlePlay('story1')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Play</button>
+                <button onClick={() => handlePause('story1')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Pause</button>
+                <audio ref={audioRefs.story1} src="/assets/story1.mp3" />
               </div>
             </>
           )}
@@ -102,6 +120,13 @@ const Lore = () => {
               </div>
             </>
           )}
+        </div>
+
+        {/* Taustamusiikin ohjaus */}
+        <div className="mt-6">
+          <button onClick={handlePlayBackground} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Play Background Music</button>
+          <button onClick={handlePauseBackground} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Pause Background Music</button>
+          <audio ref={audioRefs.background} src={background} loop={true} />
         </div>
       </div>
     </div>
