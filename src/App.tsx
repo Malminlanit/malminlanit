@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import logo3 from './assets/logo3.png';
 import IntroVideo from "./components/IntroVideo";
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -34,6 +34,7 @@ function App() {
   const [volume, setVolume] = useState(1);
   const [showIntro, setShowIntro] = useState(true);
   const audioRef = useRef(null);
+  const location = useLocation(); // React Router hook reitin tarkistamiseen
 
   const handleIntroEnd = () => {
     setShowIntro(false);
@@ -80,12 +81,14 @@ function App() {
   };
 
   useEffect(() => {
-    // Jos introvideo on jo päättynyt, musiikki käynnistetään automaattisesti.
-    if (!showIntro && audioRef.current && !isPlaying) {
-      audioRef.current.play();
+    // Estä introvideo tietyillä sivuilla, mutta musiikki jatkuu
+    if (location.pathname === '/about' || location.pathname === '/contact') {
+      setShowIntro(false);  // Estetään introvideo
+    } else if (!showIntro && audioRef.current && !isPlaying) {
+      audioRef.current.play(); // Jatketaan musiikin toistoa
       setIsPlaying(true);
     }
-  }, [showIntro, isPlaying]);
+  }, [location.pathname, showIntro, isPlaying]);
 
   if (showIntro) {
     return (
@@ -137,7 +140,7 @@ function App() {
         </div>
       </div>
 	  
-	  <div className="absolute top-0 left-0 p-4">
+      <div className="absolute top-0 left-0 p-4">
         <img src={logo3} alt="Logo" className="h-40 w-auto" />
       </div>
 
@@ -246,15 +249,31 @@ function App() {
                   <img src={logo3} alt="Logo" className="h-16 w-auto" />
                   <span className="font-bold text-xl">MALMIN LANIT</span>
                 </div>
-                <p className="text-gray-400">Alkoholin Huuruista Suunnittelua – Jo Vuodesta 2024</p>
+                <p className="text-lg">
+                  Malmin legendat odottavat. Liity mukaan ja luo oma tarinasi!
+                </p>
               </div>
-              
-              <div className="text-center space-y-2">
-                <div className="flex items-center justify-center gap-2">
-                  <Mail className="w-5 h-5 text-purple-400" />
-                  <a href="mailto:malminlanit@gmail.com" className="hover:text-purple-400 transition-colors">
-                    malminlanit@gmail.com
+
+              <div className="text-center md:text-left">
+                <p className="text-lg">info@malminlanit.fi</p>
+                
+                <div className="flex justify-center gap-6 mt-4">
+                  <a href="https://www.facebook.com/Malmin-Lanit" target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="w-6 h-6 text-purple-400" />
                   </a>
+                  <a href="https://twitter.com/malminlanit" target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="w-6 h-6 text-purple-400" />
+                  </a>
+                  <a href="https://www.instagram.com/malminlanit" target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="w-6 h-6 text-purple-400" />
+                  </a>
+                </div>
+              </div>
+              <div className="text-center md:text-right">
+                <h4 className="font-semibold text-xl mb-2">Linkit</h4>
+                <div className="space-y-2">
+                  <a href="/tournament" className="block text-lg hover:text-purple-400">Turnaus</a>
+                  <a href="/registration" className="block text-lg hover:text-purple-400">Ilmoittautuminen</a>
                 </div>
               </div>
             </div>
