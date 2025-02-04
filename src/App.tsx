@@ -157,8 +157,7 @@ function App() {
 			  <Link to="/timetable" className="text-lg hover:text-purple-400">Aikataulu</Link>
 			  <Link to="/Lore" className="text-lg hover:text-purple-400">Lore</Link>
 			  <Link to="/tournament" className="text-lg hover:text-purple-400">Turnaus</Link>
-			  <Link to="/registration" className="text-lg hover:text-purple-400">Ilmoittautuminen</Link>
-			  
+			  <Link to="/registration" className="text-lg hover:text-purple-400">Ilmoittautuminen</Link>		  
             </nav>
 
             <Routes>
@@ -176,7 +175,7 @@ function App() {
                 onClick={togglePlayPause} 
                 className="text-white hover:text-green-400 focus:outline-none"
               >
-                {isPlaying ? 'Volume' : ' '}
+                {isPlaying ? 'Volume' : ' ' }
               </button>
               <input 
                 type="range" 
