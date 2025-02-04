@@ -25,7 +25,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import backgroundMusic from './assets/background-music.mp3';
-import introVideo from './assets/intro.mp4'; // Importoi intro-video
+import introVideo from './assets/intro.mp4'; // Importoi intro-vide
 
 function App() {
   const [email, setEmail] = useState('');
