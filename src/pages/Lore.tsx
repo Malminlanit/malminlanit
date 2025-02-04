@@ -64,7 +64,7 @@ const Lore = () => {
               <div>
                 <button onClick={() => handlePlay('story1')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Play</button>
                 <button onClick={() => handlePause('story1')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Pause</button>
-                <audio ref={audioRefs.story1} src="/assets/story1.mp3" />
+                <audio ref={audioRefs.story1} src="/assets/background-music.mp3" />
               </div>
             </>
           )}
