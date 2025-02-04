@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Story from '../components/Story'; // Assuming you have a Story component
+import background-music from '../assets/background-music.mp3';
 
 const Lore = () => {
   const [selectedStory, setSelectedStory] = useState('story1');
