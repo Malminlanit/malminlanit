@@ -1,18 +1,29 @@
 import React, { useState, useRef } from 'react';
-import Story from '../components/Story';
+import Story from '../components/Story'; // Assuming you have a Story component
 
 const Lore = () => {
   const [selectedStory, setSelectedStory] = useState('story1');
-  const audioRefs = useRef<any>({});
+  const audioRefs = {
+    story1: useRef<HTMLAudioElement>(null),
+    story2: useRef<HTMLAudioElement>(null),
+    story3: useRef<HTMLAudioElement>(null),
+    story4: useRef<HTMLAudioElement>(null),
+  };
 
   const handleStoryChange = (story: string) => {
     setSelectedStory(story);
+    // Pause all audios when switching to a new story
+    Object.values(audioRefs).forEach(ref => ref.current?.pause());
+    // Reset the audio position to the start
+    Object.values(audioRefs).forEach(ref => ref.current?.currentTime = 0);
   };
 
-  const handlePlayAudio = (storyKey: string) => {
-    if (audioRefs.current[storyKey]) {
-      audioRefs.current[storyKey].play();
-    }
+  const handlePlay = (story: string) => {
+    audioRefs[story].current?.play();
+  };
+
+  const handlePause = (story: string) => {
+    audioRefs[story].current?.pause();
   };
 
   return (
@@ -27,15 +38,11 @@ const Lore = () => {
             { key: 'story1', label: 'Malmin Kuningatar Ep.1' },
             { key: 'story2', label: 'Malmin Taistelu Ep.2' },
             { key: 'story3', label: 'Ystävyyden Voima Ep.3' },
-            { key: 'story4', label: 'Varjokuningas Ep.4' }
+            { key: 'story4', label: 'Varjokuningas Ep.4' },
           ].map(({ key, label }) => (
             <button
               key={key}
-              className={`px-4 py-2 rounded-xl transition-transform transform hover:scale-105 shadow-lg ${
-                selectedStory === key
-                  ? 'bg-purple-600 text-white'
-                  : 'bg-purple-500 text-gray-200 hover:bg-purple-700'
-              }`}
+              className={`px-4 py-2 rounded-xl transition-transform transform hover:scale-105 shadow-lg ${selectedStory === key ? 'bg-purple-600 text-white' : 'bg-purple-500 text-gray-200 hover:bg-purple-700'}`}
               onClick={() => handleStoryChange(key)}
             >
               {label}
@@ -45,67 +52,47 @@ const Lore = () => {
 
         <div className="p-6 bg-gray-700 bg-opacity-70 rounded-xl shadow-inner">
           {selectedStory === 'story1' && (
-            <div>
-              <Story
-                title="Malmin Kuningatar"
-                content="Tarina tästä tapahtuu täällä..."
-              />
-              <audio ref={(el) => (audioRefs.current['story1'] = el)} src="/path/to/story1.mp3" />
-              <button
-                className="px-4 py-2 mt-4 bg-purple-600 rounded-xl"
-                onClick={() => handlePlayAudio('story1')}
-              >
-                Play Audio
-              </button>
-            </div>
+            <>
+              <Story title="Malmin Kuningatar" content="..." />
+              <div>
+                <button onClick={() => handlePlay('story1')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Play</button>
+                <button onClick={() => handlePause('story1')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Pause</button>
+                <audio ref={audioRefs.story1} src="path/to/story1.mp3" />
+              </div>
+            </>
           )}
 
           {selectedStory === 'story2' && (
-            <div>
-              <Story
-                title="Malmin Taistelu"
-                content="Tarina tästä tapahtuu täällä..."
-              />
-              <audio ref={(el) => (audioRefs.current['story2'] = el)} src="/path/to/story2.mp3" />
-              <button
-                className="px-4 py-2 mt-4 bg-purple-600 rounded-xl"
-                onClick={() => handlePlayAudio('story2')}
-              >
-                Play Audio
-              </button>
-            </div>
+            <>
+              <Story title="Malmin Taistelu" content="..." />
+              <div>
+                <button onClick={() => handlePlay('story2')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Play</button>
+                <button onClick={() => handlePause('story2')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Pause</button>
+                <audio ref={audioRefs.story2} src="path/to/story2.mp3" />
+              </div>
+            </>
           )}
 
           {selectedStory === 'story3' && (
-            <div>
-              <Story
-                title="Ystävyyden Voima"
-                content="Tarina tästä tapahtuu täällä..."
-              />
-              <audio ref={(el) => (audioRefs.current['story3'] = el)} src="/path/to/story3.mp3" />
-              <button
-                className="px-4 py-2 mt-4 bg-purple-600 rounded-xl"
-                onClick={() => handlePlayAudio('story3')}
-              >
-                Play Audio
-              </button>
-            </div>
+            <>
+              <Story title="Ystävyyden Voima" content="..." />
+              <div>
+                <button onClick={() => handlePlay('story3')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Play</button>
+                <button onClick={() => handlePause('story3')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Pause</button>
+                <audio ref={audioRefs.story3} src="path/to/story3.mp3" />
+              </div>
+            </>
           )}
 
           {selectedStory === 'story4' && (
-            <div>
-              <Story
-                title="Varjokuningas"
-                content="Tarina tästä tapahtuu täällä..."
-              />
-              <audio ref={(el) => (audioRefs.current['story4'] = el)} src="/path/to/story4.mp3" />
-              <button
-                className="px-4 py-2 mt-4 bg-purple-600 rounded-xl"
-                onClick={() => handlePlayAudio('story4')}
-              >
-                Play Audio
-              </button>
-            </div>
+            <>
+              <Story title="Varjokuningas" content="..." />
+              <div>
+                <button onClick={() => handlePlay('story4')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Play</button>
+                <button onClick={() => handlePause('story4')} className="bg-purple-500 text-white px-4 py-2 rounded-xl">Pause</button>
+                <audio ref={audioRefs.story4} src="path/to/story4.mp3" />
+              </div>
+            </>
           )}
         </div>
       </div>
