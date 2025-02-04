@@ -11,6 +11,7 @@ const Lore = () => {
   };
 
   const handleStoryChange = (story: string) => {
+    console.log(`Changing to story: ${story}`); // Debugging log
     setSelectedStory(story);
     // Pause all audios when switching to a new story
     Object.values(audioRefs).forEach(ref => ref.current?.pause());
@@ -23,10 +24,12 @@ const Lore = () => {
   };
 
   const handlePlay = (story: string) => {
+    console.log(`Playing ${story}`); // Debugging log
     audioRefs[story].current?.play();
   };
 
   const handlePause = (story: string) => {
+    console.log(`Pausing ${story}`); // Debugging log
     audioRefs[story].current?.pause();
   };
 
