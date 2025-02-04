@@ -45,7 +45,7 @@ export default function MalmiRace() {
       ctx.fillStyle = '#4ade80';
       ctx.fillRect(car.x, car.y, car.width, car.height);
 
-      // Draw obstacles
+      // Draw obstacle
       setObstacles((prev) => {
         return prev.map((obstacle) => ({ ...obstacle, y: obstacle.y + 4 }));
       });
