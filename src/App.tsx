@@ -94,7 +94,7 @@ function App() {
         <video 
           src={introVideo} 
           autoPlay 
-          className="w-full h-screen object-cover" 
+          className="w-full h-auto max-h-screen object-cover" 
           onEnded={handleIntroEnd} 
           controls
         />
@@ -152,14 +152,14 @@ function App() {
         <Router>
           <div className="min-h-screen text-white relative">
             <nav className="bg-black/30 py-4 px-6 flex justify-center space-x-6">
-              <Link to="/" className="text-lg hover:text-purple-400">Etusivu</Link>
-              <Link to="/about" className="text-lg hover:text-purple-400">Tietoa</Link>
-              <Link to="/contact" className="text-lg hover:text-purple-400">Ohjeet</Link>
-			  <Link to="/timetable" className="text-lg hover:text-purple-400">Aikataulu</Link>
-			  <Link to="/Lore" className="text-lg hover:text-purple-400">Lore</Link>
-			  <Link to="/tournament" className="text-lg hover:text-purple-400">Turnaus</Link>
-			  <Link to="/registration" className="text-lg hover:text-purple-400">Ilmoittautuminen</Link>
-			  <Link to="/lame" className="text-lg hover:text-purple-400">Malmin Kuningatar</Link>
+              <Link to="/" className="text-lg hover:text-purple-400 block sm:inline">Etusivu</Link>
+              <Link to="/about" className="text-lg hover:text-purple-400 block sm:inline">Tietoa</Link>
+              <Link to="/contact" className="text-lg hover:text-purple-400 block sm:inline">Ohjeet</Link>
+			  <Link to="/timetable" className="text-lg hover:text-purple-400 block sm:inline">Aikataulu</Link>
+			  <Link to="/Lore" className="text-lg hover:text-purple-400 block sm:inline">Lore</Link>
+			  <Link to="/tournament" className="text-lg hover:text-purple-400 block sm:inline">Turnaus</Link>
+			  <Link to="/registration" className="text-lg hover:text-purple-400 block sm:inline">Ilmoittautuminen</Link>
+			  <Link to="/lame" className="text-lg hover:text-purple-400 block sm:inline">Malmin Kuningatar</Link>
             </nav>
 
             <Routes>
