@@ -2,23 +2,10 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-// Vastaukset taulukossa, jossa jokaisella kysymyksellä on useampi vaihtoehto
 const responses = {
-  "Kerro tarina": [
-    "Kauan sitten Malmin LANeilla, legendaarinen pelaaja nousi esiin...",
-    "Malmin tarinoissa on aina rohkeita sankareita, mutta tämä oli jotain erityistä...",
-    "Yksi legenda kertoo nuoresta pelaajasta, joka voitti koko turnauksen ja sai valtavan kunnian."
-  ],
-  "Anna vinkki": [
-    "Älä koskaan aliarvioi vastustajaasi – ja muista pitää taukoja!",
-    "Muista, että yhteistyö on tärkeämpää kuin yksilösuoritus. Yksi tiimi, yksi voitto!",
-    "Pysy rauhallisena, vaikka häviätkin – voitat sen takaisin!"
-  ],
-  "Mikä on Malmin lanien salaisuus?": [
-    "Sanotaan, että jos voitat kolme turnausta putkeen, pääset Malmin kuningattaren audienssille...",
-    "Tämä salaisuus ei ole vain peliä – se on elämäntapa, joka vie voittoon.",
-    "Monet sanovat, että se on jännityksen ja ystävyyden sekoitus, joka tekee Malmin LANeista niin erityiset."
-  ]
+  "Kerro tarina": "Kauan sitten Malmin LANeilla, legendaarinen pelaaja nousi esiin...",
+  "Anna vinkki": "Älä koskaan aliarvioi vastustajaasi – ja muista pitää taukoja!",
+  "Mikä on Malmin lanien salaisuus?": "Sanotaan, että jos voitat kolme turnausta putkeen, pääset Malmin kuningattaren audienssille..."
 };
 
 export default function Chatbot() {
@@ -27,9 +14,7 @@ export default function Chatbot() {
 
   const handleQuestion = (question) => {
     setMessage(question);
-    // Valitaan satunnainen vastaus
-    const randomResponse = responses[question][Math.floor(Math.random() * responses[question].length)];
-    setResponse(randomResponse);
+    setResponse(responses[question]);
   };
 
   return (
