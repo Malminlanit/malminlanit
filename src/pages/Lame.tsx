@@ -56,7 +56,7 @@ export default function Chatbot() {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
       <Card className="w-full max-w-md p-6 bg-white shadow-2xl rounded-3xl transform transition-all hover:scale-105">
         <CardContent>
-          <h2 className="text-3xl font-extrabold text-center text-blue-700 mb-4">Malmin Kuningatar</h2>
+          <h2 className="text-3xl font-extrabold text-center text-blue-700 mb-4">👑Malmin Kuningatar👑</h2>
           <p className="text-gray-600 text-center mb-6">Kysy minulta jotain ja löydä Malmin salaisuudet!</p>
 
           <div className="flex flex-col space-y-4 mb-6">
