@@ -151,7 +151,7 @@ function App() {
 
         <Router>
           <div className="min-h-screen text-white relative">
-            <nav className="bg-black/30 py-4 px-6 flex justify-center space-x-6">
+            <nav className="bg-black/30 py-4 px-6 flex flex-wrap justify-center space-x-6 md:space-x-4 text-sm md:text-lg">
               <Link to="/" className="text-lg hover:text-purple-400 block sm:inline">Etusivu</Link>
               <Link to="/about" className="text-lg hover:text-purple-400 block sm:inline">Tietoa</Link>
               <Link to="/contact" className="text-lg hover:text-purple-400 block sm:inline">Ohjeet</Link>
