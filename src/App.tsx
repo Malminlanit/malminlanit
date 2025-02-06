@@ -117,7 +117,7 @@ function App() {
           backgroundImage: 'url("https://images.unsplash.com/photo-1633545505446-586bf83717f0?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
         }}
       >
-        <div className="absolute inset-0 bg-black/50" ></div>
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative text-center px-4 py-24">
           <div className="flex items-center justify-center gap-3 mb-6">
             <Monitor className="w-12 h-12 text-purple-400" />
@@ -130,10 +130,11 @@ function App() {
             onClick={scrollToDetails}
             className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
           >
-			Lue lisää
-			<ChevronDown className="w-8 h-8 text-white chevron-bounce" />
-		  </button>
-          
+            Lue lisää
+          </button>
+          <div className="absolute top-[calc(100%+15px)] left-1/2 -translate-x-1/2 animate-bounce">
+            <ChevronDown className="w-8 h-8 text-white" />
+          </div>
         </div>
       </div>
 	  
