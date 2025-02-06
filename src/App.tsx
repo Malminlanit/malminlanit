@@ -9,7 +9,7 @@ import Timetable from './pages/Timetable';
 import Lore from './pages/Lore';
 import Tournament from './pages/Tournament';
 import Registration from './pages/Registration';
-import Lame from './pages/Lame';
+import Game from './pages/Lame';
 import { 
   Monitor, 
   Calendar, 
@@ -170,7 +170,7 @@ function App() {
 			  <Route path="/Lore" element={<Lore />} />
 			  <Route path="/Tournament" element={<Tournament />} />
 			  <Route path="/Registration" element={<Registration />} />
-			  <Route path="/Lame" element={<Game />} />
+			  <Route path="/lame" element={<Game />} />
             </Routes>
 
             <div className="fixed bottom-4 right-4 bg-black/50 p-4 rounded-xl shadow-lg">
