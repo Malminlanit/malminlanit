@@ -46,7 +46,9 @@ export default function Chatbot() {
   const [response, setResponse] = useState("");
 
   const handleQuestion = (question) => {
-    setMessage(question);    
+    setMessage(question);
+    const firstResponse = responses[question][0];
+	setResponse(firstResponse);
   };
 
   return (
