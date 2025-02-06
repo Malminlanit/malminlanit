@@ -131,7 +131,7 @@ function App() {
             className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
           >
 			Lue lisää
-			<ChevronDown className="w-8 h-8 text-white" />
+			<ChevronDown className="w-8 h-8 text-white chevron-bounce" />
 		  </button>
           
         </div>
