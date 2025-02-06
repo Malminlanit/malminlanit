@@ -130,10 +130,9 @@ function App() {
             onClick={scrollToDetails}
             className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
           >
-            Lue lisää
-          
-            <ChevronDown className="absolute bottom-2 w-6 h-6 text-white animate-bounce" />
-		  </button>
+				Lue lisää
+				<ChevronDown className="w-8 h-8 text-white" />
+			</button>
           </div>
         </div>
       </div>
