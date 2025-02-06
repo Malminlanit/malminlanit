@@ -18,7 +18,7 @@ const responses = {
     "Sanotaan, että jos voitat kolme turnausta putkeen, pääset Malmin kuningattaren audienssille...",
     "Tämä salaisuus ei ole vain peliä – se on elämäntapa, joka vie voittoon.",
     "Monet sanovat, että se on jännityksen ja ystävyyden sekoitus, joka tekee Malmin LANeista niin erityiset."
-  ]
+  ],
   "Faktoja Malmista": [
     "Malmi on vähän syrjemmällä, mutta ei liian kaukana keskustasta – about 10 kilsaa pohjoiseen.",
     "Alkoholi ja huumeet – osa arkea, ei tuomita, kaikki tekee omat juttunsa.",
