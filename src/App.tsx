@@ -9,7 +9,7 @@ import Timetable from './pages/Timetable';
 import Lore from './pages/Lore';
 import Tournament from './pages/Tournament';
 import Registration from './pages/Registration';
-import Game from './pages/Lame';
+import Lame from './pages/Lame';
 import { 
   Monitor, 
   Calendar, 
@@ -159,7 +159,7 @@ function App() {
 			  <Link to="/Lore" className="text-lg hover:text-purple-400">Lore</Link>
 			  <Link to="/tournament" className="text-lg hover:text-purple-400">Turnaus</Link>
 			  <Link to="/registration" className="text-lg hover:text-purple-400">Ilmoittautuminen</Link>
-			  <Link to="/lame" className="text-lg hover:text-purple-400">Peli</Link>
+			  <Link to="/lame" className="text-lg hover:text-purple-400">Malmin Kuningatar-botti</Link>
             </nav>
 
             <Routes>
