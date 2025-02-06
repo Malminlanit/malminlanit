@@ -10,7 +10,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),  // Lisää alias src-hakemistoll
+      '@': path.resolve(__dirname, 'src'),  // Lisää alias src-hakemistolle
     },
   },
   base: '/malminlanit/',  // Muokkaa tämä, jos käytät GitHub Pagesia tai muuta isännöintipalvelua
