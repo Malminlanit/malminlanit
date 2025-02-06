@@ -13,4 +13,5 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),  // Lisää alias src-hakemistolle
     },
   },
+  base: '/malminlanit/',  // Muokkaa tämä, jos käytät GitHub Pagesia tai muuta isännöintipalvelua
 });
