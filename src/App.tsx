@@ -159,7 +159,7 @@ function App() {
 			  <Link to="/Lore" className="text-lg hover:text-purple-400">Lore</Link>
 			  <Link to="/tournament" className="text-lg hover:text-purple-400">Turnaus</Link>
 			  <Link to="/registration" className="text-lg hover:text-purple-400">Ilmoittautuminen</Link>
-			  <Link to="/lame" className="text-lg hover:text-purple-400">Peli</Link>
+			  <Link to="/lame" className="text-lg hover:text-purple-400">MalminKuningatar</Link>
             </nav>
 
             <Routes>
