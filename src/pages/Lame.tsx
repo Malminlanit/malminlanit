@@ -18,24 +18,32 @@ export default function Chatbot() {
   };
 
   return (
-    <Card className="w-96 p-4">
-      <CardContent>
-        <h2 className="text-xl font-bold">Malmin Kuningatar</h2>
-        <p className="text-gray-600 mb-4">Kysy minulta jotain!</p>
-        <div className="flex flex-col space-y-2">
-          {Object.keys(responses).map((question) => (
-            <Button key={question} onClick={() => handleQuestion(question)}>
-              {question}
-            </Button>
-          ))}
-        </div>
-        {message && (
-          <div className="mt-4 p-2 bg-gray-100 rounded">
-            <p className="font-semibold">{message}</p>
-            <p>{response}</p>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+      <Card className="w-full max-w-md p-6 bg-white shadow-2xl rounded-3xl transform transition-all hover:scale-105">
+        <CardContent>
+          <h2 className="text-3xl font-extrabold text-center text-blue-700 mb-4">Malmin Kuningatar</h2>
+          <p className="text-gray-600 text-center mb-6">Kysy minulta jotain ja löydä Malmin salaisuudet!</p>
+
+          <div className="flex flex-col space-y-4 mb-6">
+            {Object.keys(responses).map((question) => (
+              <Button
+                key={question}
+                onClick={() => handleQuestion(question)}
+                className="bg-blue-600 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-xl shadow-md transition-all"
+              >
+                {question}
+              </Button>
+            ))}
           </div>
-        )}
-      </CardContent>
-    </Card>
+
+          {message && (
+            <div className="mt-6 p-4 bg-gray-100 rounded-xl shadow-lg transform transition-all hover:scale-105">
+              <p className="text-lg font-semibold text-gray-800 mb-2">{message}</p>
+              <p className="text-gray-600">{response}</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }
