@@ -132,8 +132,8 @@ function App() {
           >
             Lue lisää
           </button>
-          <div className="absolute bottom-[0px] left-1/2 -translate-x-1/2 w-6 h-6 text-white animate-bounce">
-            <ChevronDown className="w-8 h-8 text-white" />
+          <div className="absolute top- [calc(100%+15px)]left-1/2 -translate-x-1/2 animate-bounce">
+            <ChevronDown className="absolute bottom-2 w-6 h-6 text-white animate-bounce" />
           </div>
         </div>
       </div>
@@ -151,7 +151,7 @@ function App() {
 
         <Router>
           <div className="min-h-screen text-white relative">
-            <nav className="bg-black/30 py-4 px-6 flex flex-wrap justify-center space-x-6 md:space-x-4 text-sm md:text-lg">
+            <nav className="bg-black/30 py-4 px-6 flex justify-center space-x-6">
               <Link to="/" className="text-lg hover:text-purple-400 block sm:inline">Etusivu</Link>
               <Link to="/about" className="text-lg hover:text-purple-400 block sm:inline">Tietoa</Link>
               <Link to="/contact" className="text-lg hover:text-purple-400 block sm:inline">Ohjeet</Link>
