@@ -19,6 +19,19 @@ const responses = {
     "Tämä salaisuus ei ole vain peliä – se on elämäntapa, joka vie voittoon.",
     "Monet sanovat, että se on jännityksen ja ystävyyden sekoitus, joka tekee Malmin LANeista niin erityiset."
   ]
+  "Faktoja Malmista": [
+    "Malmi on vähän syrjemmällä, mutta ei liian kaukana keskustasta – about 10 kilsaa pohjoiseen.",
+    "Alkoholi ja huumeet – osa arkea, ei tuomita, kaikki tekee omat juttunsa.",
+    "Elämä menee omalla painollaan – ei ole kiirettä, kaikki tekee mitä tekee.",
+	"Täällä on väkeä noin 24 860, eli ei mikään pikkupaikka, mutta ei myöskään ruuhkainen keskusta.",
+	"Malmin asema on iso juttu, junat vie keskustaan tosi nopeesti.",
+	"Malmin tori – tänne pääsee aina vähän sumeena, mutta ei se haittaa. Täällä on aina joku juttu, mitä etsit, vaikka et ihan tietäisikään mitä. Ehkä löytää muutaman halvan tölkin tai sen kahvin, joka maistuu kuin aurinko olis jäänyt pohjaan, mutta menee kuitenkin alas.",
+	"Malmin baari-ilta – täällä voi joskus kuulla legendaarisia juttuja, joilla on vähän huonot loppuratkaisut mutta aivan huikea alku. Malmilla on oma tapa pitää hauskaa – ei se aina mene suunnitelmien mukaan, mutta aina se menee."
+	
+	
+	
+	
+  ]
 };
 
 export default function Chatbot() {
