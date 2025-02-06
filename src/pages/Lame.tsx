@@ -46,10 +46,7 @@ export default function Chatbot() {
   const [response, setResponse] = useState("");
 
   const handleQuestion = (question) => {
-    setMessage(question);
-    // Valitaan satunnainen vastaus
-    const randomResponse = responses[question][Math.floor(Math.random() * responses[question].length)];
-    setResponse(randomResponse);
+    setMessage(question);    
   };
 
   return (
