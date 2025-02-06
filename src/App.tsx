@@ -9,7 +9,7 @@ import Timetable from './pages/Timetable';
 import Lore from './pages/Lore';
 import Tournament from './pages/Tournament';
 import Registration from './pages/Registration';
-import Game from './pages/Game';
+import Game from './src/pages/Game.tsx';
 import { 
   Monitor, 
   Calendar, 
