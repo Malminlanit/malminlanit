@@ -27,7 +27,14 @@ const responses = {
 	"Malmin asema on iso juttu, junat vie keskustaan tosi nopeesti.",
 	"Malmin tori – tänne pääsee aina vähän sumeena, mutta ei se haittaa. Täällä on aina joku juttu, mitä etsit, vaikka et ihan tietäisikään mitä. Ehkä löytää muutaman halvan tölkin tai sen kahvin, joka maistuu kuin aurinko olis jäänyt pohjaan, mutta menee kuitenkin alas.",
 	"Malmin baari-ilta – täällä voi joskus kuulla legendaarisia juttuja, joilla on vähän huonot loppuratkaisut mutta aivan huikea alku. Malmilla on oma tapa pitää hauskaa – ei se aina mene suunnitelmien mukaan, mutta aina se menee."
-	
+	"Luck Lady – Jos et ole koskaan käynyt Luck Ladyssä, et ole oikeasti kokenut Malmin ykköspaikkoja. Täällä voi törmätä kaveriin, jonka kanssa ei ole puhuttu vuoteen, ja seuraavana hetkenä olla karaokessa laulamassa 80-luvun hittejä. Vähän kuin vanhan koulun kapakka, mutta silti elävä ja hauska.",
+	"Crazy Horse – Okei, jos etsit paikkaa, jossa meno ei lopu, niin Crazy Horse on se, jossa fiilis on korkealla. Täällä voi törmätä tyyppeihin, jotka nauttii elämästään yhtä villisti kuin nimenkin perusteella voisi kuvitella. Vähän rosoinen, mutta rehellinen – ja aina naurua riittää.",
+	"Konja – Konja on se paikka, jossa voi juoda ja jutella, eikä kukaan kyseenalaista, jos vähän viivytkin pidempään. Ei kiirettä, ei häslinkiä – täällä vaan on hyvä olla ja nauttia hetkestä, vähän kuten hyvän baarin kuuluukin olla.",
+	"Tissibaari – Tissibaari... no, nimi kertoo jo jotain. Tämä on se paikka, jossa naurua ja naurattavia tilanteita ei puutu. Vähemmän hienostelua, enemmän perinteistä Malmin meininkiä. Jos et ota itseäsi liian vakavasti, nautit tästä paikasta.",
+	"Tillikka – Täällä voi istua ihan rauhassa ja nauttia, ja vieläpä löytää paikallisia, jotka ovat valmiita jakamaan elämän viisauksiaan – ja ehkä vähän juomansakin. Tillikka on vähän kuin se tutun oloinen baari, johon et ehkä aluksi usko, mutta kun astut sisään, et haluakaan lähteä.",
+	"Suski – Suski on se mukava ja tutun oloinen paikka, jossa aina joku tuntee jonkun. Siinä ei ole mitään kummallista, mutta se ei olekaan tarpeen – täällä mennään fiiliksellä, ja illasta tulee helposti sellainen, jota et ollut edes suunnitellut, mutta nautit silti ihan täysillä.",
+	"King Bar Restaurant – Tässä yhdistyy perinteinen baari ja ravintola, mutta ihan omalla twistillä. Jos haluat ottaa vähän ruokaa ja juomaa rennosti samalla, King Bar on oikea valinta. Ei liian hieno, mutta ei liian ronskikaan – juuri sopiva, jos haluat illan, joka ei ole ihan perus baari-ilta.",
+	"Ekes – Ekes on se pienempi ja intiimimpi paikka, mutta silti juuri se oikea fiilis, jos haluat olla vähän omassa kuplassasi. Ei turhaa hälinää, vaan rauhallinen paikka, jossa voi keskustella ja nauttia, ilman että pitää huutaa toista korvaan."
 	
 	
 	
