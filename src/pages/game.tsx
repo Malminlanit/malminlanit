@@ -1,93 +1,41 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
-export default function MalmiRace() {
-  const canvasRef = useRef(null);
-  const [car, setCar] = useState({ x: 180, y: 350, width: 40, height: 60 });
-  const [obstacles, setObstacles] = useState([]);
-  const [score, setScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
+const responses = {
+  "Kerro tarina": "Kauan sitten Malmin LANeilla, legendaarinen pelaaja nousi esiin...",
+  "Anna vinkki": "Älä koskaan aliarvioi vastustajaasi – ja muista pitää taukoja!",
+  "Mikä on Malmin lanien salaisuus?": "Sanotaan, että jos voitat kolme turnausta putkeen, pääset Malmin kuningattaren audienssille..."
+};
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    const width = canvas.width;
-    const height = canvas.height;
+export default function Chatbot() {
+  const [message, setMessage] = useState("");
+  const [response, setResponse] = useState("");
 
-    const moveCar = (e) => {
-      if (e.key === 'ArrowLeft' && car.x > 0) {
-        setCar((prev) => ({ ...prev, x: prev.x - 20 }));
-      } else if (e.key === 'ArrowRight' && car.x < width - car.width) {
-        setCar((prev) => ({ ...prev, x: prev.x + 20 }));
-      }
-    };
-    window.addEventListener('keydown', moveCar);
-
-    const createObstacle = () => {
-      const obstacleX = Math.random() * (width - 30);
-      setObstacles((prev) => [...prev, { x: obstacleX, y: 0, width: 30, height: 30 }]);
-    };
-
-    const checkCollision = (car, obstacle) => {
-      return (
-        car.x < obstacle.x + obstacle.width &&
-        car.x + car.width > obstacle.x &&
-        car.y < obstacle.y + obstacle.height &&
-        car.y + car.height > obstacle.y
-      );
-    };
-
-    const gameLoop = () => {
-      if (gameOver) return;
-
-      ctx.clearRect(0, 0, width, height);
-
-      // Draw car
-      ctx.fillStyle = '#4ade80';
-      ctx.fillRect(car.x, car.y, car.width, car.height);
-
-      // Draw obstacle
-      setObstacles((prev) => {
-        return prev.map((obstacle) => ({ ...obstacle, y: obstacle.y + 4 }));
-      });
-
-      obstacles.forEach((obstacle) => {
-        ctx.fillStyle = '#ef4444';
-        ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
-
-        if (checkCollision(car, obstacle)) {
-          setGameOver(true);
-        }
-      });
-
-      // Remove obstacles that have gone off-screen
-      setObstacles((prev) => prev.filter((obstacle) => obstacle.y < height));
-
-      // Update score
-      setScore((prev) => prev + 1);
-
-      requestAnimationFrame(gameLoop);
-    };
-
-    const interval = setInterval(createObstacle, 1500);
-    gameLoop();
-
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener('keydown', moveCar);
-    };
-  }, [car, obstacles, gameOver]);
+  const handleQuestion = (question) => {
+    setMessage(question);
+    setResponse(responses[question]);
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-      <h1 className="text-3xl font-bold mb-4">Malmi Race</h1>
-      <p className="text-xl mb-2">Pisteet: {score}</p>
-      {gameOver && <p className="text-red-400 text-2xl">Peli ohi! 🚗💥</p>}
-      <canvas
-        ref={canvasRef}
-        width={400}
-        height={400}
-        className="border-4 border-green-400 rounded-xl bg-gray-800"
-      />
-    </div>
+    <Card className="w-96 p-4">
+      <CardContent>
+        <h2 className="text-xl font-bold">Malmin Kuningatar</h2>
+        <p className="text-gray-600 mb-4">Kysy minulta jotain!</p>
+        <div className="flex flex-col space-y-2">
+          {Object.keys(responses).map((question) => (
+            <Button key={question} onClick={() => handleQuestion(question)}>
+              {question}
+            </Button>
+          ))}
+        </div>
+        {message && (
+          <div className="mt-4 p-2 bg-gray-100 rounded">
+            <p className="font-semibold">{message}</p>
+            <p>{response}</p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }
