@@ -1,12 +1,11 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import path from 'path';
 
+// Vite-konfiguraatio, joka määrittelee aliasit ja muut asetukset
 export default defineConfig({
-  plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src') // Varmistaa, että @ viittaa src-hakemistoon
+      '@': path.resolve(__dirname, 'src')  // Alias @ viittaa src-hakemistoon
     }
   }
 });
