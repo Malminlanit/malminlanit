@@ -132,7 +132,7 @@ function App() {
           >
             Lue lisää
           </button>
-          <div className="absolute bottom-[-6px] left-1/2 -translate-x-1/2 w-6 h-6 text-white animate-bounce">
+          <div className="absolute bottom-[0px] left-1/2 -translate-x-1/2 w-6 h-6 text-white animate-bounce">
             <ChevronDown className="w-8 h-8 text-white" />
           </div>
         </div>
