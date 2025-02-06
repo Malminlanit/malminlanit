@@ -132,7 +132,7 @@ function App() {
           >
             Lue lisää
           
-			<div className="absolute top-full left-1/2 -translate-x-1/2 transform -translate-y-8 animate-bounce">
+			<div className="absolute top-full left-1/2 -translate-x-1/2 transform -translate-y-20 animate-bounce">
 				<ChevronDown className="w-8 h-8 text-white" />
 			
 			</div>
