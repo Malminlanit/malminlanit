@@ -26,7 +26,7 @@ const responses = {
 	"Täällä on väkeä noin 24 860, eli ei mikään pikkupaikka, mutta ei myöskään ruuhkainen keskusta.",
 	"Malmin asema on iso juttu, junat vie keskustaan tosi nopeesti.",
 	"Malmin tori – tänne pääsee aina vähän sumeena, mutta ei se haittaa. Täällä on aina joku juttu, mitä etsit, vaikka et ihan tietäisikään mitä. Ehkä löytää muutaman halvan tölkin tai sen kahvin, joka maistuu kuin aurinko olis jäänyt pohjaan, mutta menee kuitenkin alas.",
-	"Malmin baari-ilta – täällä voi joskus kuulla legendaarisia juttuja, joilla on vähän huonot loppuratkaisut mutta aivan huikea alku. Malmilla on oma tapa pitää hauskaa – ei se aina mene suunnitelmien mukaan, mutta aina se menee."
+	"Malmin baari-ilta – täällä voi joskus kuulla legendaarisia juttuja, joilla on vähän huonot loppuratkaisut mutta aivan huikea alku. Malmilla on oma tapa pitää hauskaa – ei se aina mene suunnitelmien mukaan, mutta aina se menee.",
 	"Luck Lady – Jos et ole koskaan käynyt Luck Ladyssä, et ole oikeasti kokenut Malmin ykköspaikkoja. Täällä voi törmätä kaveriin, jonka kanssa ei ole puhuttu vuoteen, ja seuraavana hetkenä olla karaokessa laulamassa 80-luvun hittejä. Vähän kuin vanhan koulun kapakka, mutta silti elävä ja hauska.",
 	"Crazy Horse – Okei, jos etsit paikkaa, jossa meno ei lopu, niin Crazy Horse on se, jossa fiilis on korkealla. Täällä voi törmätä tyyppeihin, jotka nauttii elämästään yhtä villisti kuin nimenkin perusteella voisi kuvitella. Vähän rosoinen, mutta rehellinen – ja aina naurua riittää.",
 	"Konja – Konja on se paikka, jossa voi juoda ja jutella, eikä kukaan kyseenalaista, jos vähän viivytkin pidempään. Ei kiirettä, ei häslinkiä – täällä vaan on hyvä olla ja nauttia hetkestä, vähän kuten hyvän baarin kuuluukin olla.",
