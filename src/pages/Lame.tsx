@@ -23,9 +23,9 @@ const responses = {
     "Malmi on vähän syrjemmällä, mutta ei liian kaukana keskustasta – about 10 kilsaa pohjoiseen.",
     "Alkoholi ja huumeet – osa arkea, ei tuomita, kaikki tekee omat juttunsa.",
     "Elämä menee omalla painollaan – ei ole kiirettä, kaikki tekee mitä tekee.",
-	"Täällä on väkeä noin 24 860, eli ei mikään pikkupaikka, mutta ei myöskään ruuhkainen keskusta.",
-	"Malmin asema on iso juttu, junat vie keskustaan tosi nopeesti.",
-	"Malmin tori – tänne pääsee aina vähän sumeena, mutta ei se haittaa. Täällä on aina joku juttu, mitä etsit, vaikka et ihan tietäisikään mitä. Ehkä löytää muutaman halvan tölkin tai sen kahvin, joka maistuu kuin aurinko olis jäänyt pohjaan, mutta menee kuitenkin alas.",
+    "Täällä on väkeä noin 24 860, eli ei mikään pikkupaikka, mutta ei myöskään ruuhkainen keskusta.",
+    "Malmin asema on iso juttu, junat vie keskustaan tosi nopeesti.",
+    "Malmin tori – tänne pääsee aina vähän sumeena, mutta ei se haittaa. Täällä on aina joku juttu, mitä etsit, vaikka et ihan tietäisikään mitä.",
 	"Malmin baari-ilta – täällä voi joskus kuulla legendaarisia juttuja, joilla on vähän huonot loppuratkaisut mutta aivan huikea alku. Malmilla on oma tapa pitää hauskaa – ei se aina mene suunnitelmien mukaan, mutta aina se menee.",
 	"Luck Lady – Jos et ole koskaan käynyt Luck Ladyssä, et ole oikeasti kokenut Malmin ykköspaikkoja. Täällä voi törmätä kaveriin, jonka kanssa ei ole puhuttu vuoteen, ja seuraavana hetkenä olla karaokessa laulamassa 80-luvun hittejä. Vähän kuin vanhan koulun kapakka, mutta silti elävä ja hauska.",
 	"Crazy Horse – Okei, jos etsit paikkaa, jossa meno ei lopu, niin Crazy Horse on se, jossa fiilis on korkealla. Täällä voi törmätä tyyppeihin, jotka nauttii elämästään yhtä villisti kuin nimenkin perusteella voisi kuvitella. Vähän rosoinen, mutta rehellinen – ja aina naurua riittää.",
@@ -35,20 +35,29 @@ const responses = {
 	"Suski – Suski on se mukava ja tutun oloinen paikka, jossa aina joku tuntee jonkun. Siinä ei ole mitään kummallista, mutta se ei olekaan tarpeen – täällä mennään fiiliksellä, ja illasta tulee helposti sellainen, jota et ollut edes suunnitellut, mutta nautit silti ihan täysillä.",
 	"King Bar Restaurant – Tässä yhdistyy perinteinen baari ja ravintola, mutta ihan omalla twistillä. Jos haluat ottaa vähän ruokaa ja juomaa rennosti samalla, King Bar on oikea valinta. Ei liian hieno, mutta ei liian ronskikaan – juuri sopiva, jos haluat illan, joka ei ole ihan perus baari-ilta.",
 	"Ekes – Ekes on se pienempi ja intiimimpi paikka, mutta silti juuri se oikea fiilis, jos haluat olla vähän omassa kuplassasi. Ei turhaa hälinää, vaan rauhallinen paikka, jossa voi keskustella ja nauttia, ilman että pitää huutaa toista korvaan."
-	
-	
-	
   ]
 };
 
 export default function Chatbot() {
   const [message, setMessage] = useState("");
   const [response, setResponse] = useState("");
+  const [responseIndex, setResponseIndex] = useState({});
 
   const handleQuestion = (question) => {
     setMessage(question);
-    const firstResponse = responses[question][0];
-	setResponse(firstResponse);
+
+    // Haetaan nykyinen vastausindeksi kyseiselle kysymykselle
+    const currentIndex = responseIndex[question] || 0;
+
+    // Valitaan seuraava vastaus (rullataan järjestyksessä)
+    const nextResponse = responses[question][currentIndex];
+
+    // Päivitetään vastaus ja seuraava index
+    setResponse(nextResponse);
+    setResponseIndex((prevIndex) => ({
+      ...prevIndex,
+      [question]: (currentIndex + 1) % responses[question].length
+    }));
   };
 
   return (
