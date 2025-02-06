@@ -9,7 +9,7 @@ import Timetable from './pages/Timetable';
 import Lore from './pages/Lore';
 import Tournament from './pages/Tournament';
 import Registration from './pages/Registration';
-import Game from './pages/Game';
+import Game from './pages/Lame';
 import { 
   Monitor, 
   Calendar, 
@@ -159,7 +159,7 @@ function App() {
 			  <Link to="/Lore" className="text-lg hover:text-purple-400">Lore</Link>
 			  <Link to="/tournament" className="text-lg hover:text-purple-400">Turnaus</Link>
 			  <Link to="/registration" className="text-lg hover:text-purple-400">Ilmoittautuminen</Link>
-			  <Link to="/game" className="text-lg hover:text-purple-400">Peli</Link>
+			  <Link to="/lame" className="text-lg hover:text-purple-400">Peli</Link>
             </nav>
 
             <Routes>
@@ -170,7 +170,7 @@ function App() {
 			  <Route path="/Lore" element={<Lore />} />
 			  <Route path="/Tournament" element={<Tournament />} />
 			  <Route path="/Registration" element={<Registration />} />
-			  <Route path="/Game" element={<Game />} />
+			  <Route path="/Lame" element={<Game />} />
             </Routes>
 
             <div className="fixed bottom-4 right-4 bg-black/50 p-4 rounded-xl shadow-lg">
